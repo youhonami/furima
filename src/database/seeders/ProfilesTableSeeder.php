@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\Profile;
 
 class ProfilesTableSeeder extends Seeder
@@ -15,15 +14,31 @@ class ProfilesTableSeeder extends Seeder
      */
     public function run()
     {
-        // 既存のユーザーに対してプロフィールを作成
-        User::all()->each(function ($user) {
-            Profile::create([
-                'user_id' => $user->id,
-                'img' => 'images/banana.png',  // デフォルト画像のパス
-                'postal_code' => '123-4567',                    // 仮の郵便番号
-                'address' => '東京都渋谷区1-1-1',               // 仮の住所
-                'building' => '渋谷ビル',                        // 仮の建物名
-            ]);
-        });
+        // ユーザー1のプロフィール
+        Profile::create([
+            'user_id' => 1, // ユーザー1のID
+            'img' => 'profile_images/grapes.png',  // ユーザー1の画像
+            'postal_code' => '111-1111',
+            'address' => '東京都新宿区2-2-2',
+            'building' => '新宿タワー',
+        ]);
+
+        // ユーザー2のプロフィール
+        Profile::create([
+            'user_id' => 2, // ユーザー2のID
+            'img' => 'profile_images/banana.png',  // ユーザー2の画像
+            'postal_code' => '222-2222',
+            'address' => '東京都千代田区3-3-3',
+            'building' => '千代田ビル',
+        ]);
+
+        // ユーザー3のプロフィール
+        Profile::create([
+            'user_id' => 3, // ユーザー3のID
+            'img' => 'profile_images/kiwi.png',
+            'postal_code' => '333-3333',
+            'address' => '東京都港区4-4-4',
+            'building' => '港タワー',
+        ]);
     }
 }

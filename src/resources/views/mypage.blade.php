@@ -21,12 +21,17 @@
 
     <section class="products">
         <h2>出品した商品</h2>
-        <div class="product-list">
-            <div class="product">
-                <img src="{{ asset('storage/images/product-placeholder.png') }}" alt="商品画像">
-                <p>商品名</p>
-            </div>
-            <!-- ここに商品データをループで追加 -->
+        <div class="item-grid">
+            @foreach ($items as $item)
+            <a href="{{ route('item.show', $item->id) }}" class="item-card">
+                <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="商品画像" class="item-image">
+                <h2 class="item-name">{{ $item->name }}</h2>
+            </a>
+            @endforeach
+
+            @if ($items->isEmpty())
+            <p>出品した商品はありません。</p>
+            @endif
         </div>
     </section>
 </main>

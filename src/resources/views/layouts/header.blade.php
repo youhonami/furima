@@ -30,12 +30,12 @@
                 <button type="submit">ログアウト</button>
             </form>
             <a href="{{ route('mypage') }}">マイページ</a>
-            <a href="#">出品</a>
+            <a href="{{ route('sell.index') }}">出品</a> <!-- 出品リンク -->
             @else
             <!-- ログインしていない場合 -->
             <a href="/login">ログイン</a>
             <a href="#" style="pointer-events: none; color: gray;">マイページ</a> <!-- リンクを無効にする -->
-            <a href="#">出品</a>
+            <a href="#" style="pointer-events: none; color: gray;">出品</a> <!-- 出品リンクを無効にする -->
             @endauth
         </nav>
     </header>

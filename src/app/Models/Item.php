@@ -9,7 +9,7 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'description', 'img', 'condition_id', 'category_id'];
+    protected $fillable = ['name', 'price', 'description', 'img', 'condition_id', 'category_id', 'user_id'];
 
     public function condition()
     {
@@ -18,6 +18,10 @@ class Item extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_item');
+        return $this->belongsToMany(Category::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

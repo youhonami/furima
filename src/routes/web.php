@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SellController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,13 @@ Route::put('/profile/update', [ProfileController::class, 'update'])->name('profi
 Route::get('/mypage', [ProfileController::class, 'show'])->name('mypage'); // マイページ表示
 Route::get('/mypage/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/mypage/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+
+// 商品一覧を表示するためのルート（必要な場合）
+Route::get('/sell', [SellController::class, 'index'])->name('sell.index');
+
+// 商品出品ページ（現在の目的）
+Route::get('/sell/create', [SellController::class, 'create'])->name('sell.create');
+Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
+
+Route::get('/mypage', [UserController::class, 'index'])->name('mypage');

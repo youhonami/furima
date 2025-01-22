@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration
             $table->text('description')->nullable();
             $table->string('img')->nullable();
             $table->foreignId('condition_id')->constrained('conditions')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // ユーザーとのリレーションを追加
             $table->timestamps();
         });
     }
