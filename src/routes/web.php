@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\PurchaseController;
 
 
 /*
@@ -41,3 +42,8 @@ Route::get('/sell/create', [SellController::class, 'create'])->name('sell.create
 Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
 
 Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+
+Route::get('/purchase/{id}', [PurchaseController::class, 'index'])->name('purchase');
+
+Route::get('/address/edit', [ProfileController::class, 'editAddress'])->name('address.edit');
+Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');

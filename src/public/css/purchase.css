@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    color: #fff;
+}
+
+.main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.purchase-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.product-details,
+.payment-details {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-details .product-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.product-name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1.2em;
+    color: #d9534f;
+}
+
+.payment-details h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.5em;
+    color: #d9534f;
+    margin-bottom: 20px;
+}
+
+.payment-method {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #fff;
+}
+
+.address {
+    margin: 20px 0;
+}
+
+.change-address {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.change-address:hover {
+    text-decoration: underline;
+}
+
+.purchase-button {
+    display: block;
+    width: 100%;
+    background-color: #d9534f;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.purchase-button:hover {
+    background-color: #c9302c;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    background-color: #000;
+}

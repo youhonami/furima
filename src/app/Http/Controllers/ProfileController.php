@@ -68,4 +68,14 @@ class ProfileController extends Controller
 
         return redirect('/')->with('success', 'プロフィールが更新されました。');
     }
+
+    public function editAddress()
+    {
+        // ユーザー情報を取得
+        $user = Auth::user();
+        $profile = $user->profile; // ユーザーの住所情報（関連付けされている場合）
+
+        // address.blade.php を表示
+        return view('address', compact('profile'));
+    }
 }
