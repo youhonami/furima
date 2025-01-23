@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,5 @@ Route::get('/address/edit', function () {
 Route::post('/items/{id}/like', [LikeController::class, 'toggleLike'])->name('like');
 
 Route::get('/items', [ItemController::class, 'index'])->name('item.index');
+
+Route::post('/comments/{item}', [CommentController::class, 'store'])->name('comments.store');

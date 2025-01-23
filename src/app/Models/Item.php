@@ -34,4 +34,9 @@ class Item extends Model
     {
         return $this->likes->contains($user);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
