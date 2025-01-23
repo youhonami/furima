@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\PurchaseController;
-
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +47,11 @@ Route::get('/purchase/{id}', [PurchaseController::class, 'index'])->name('purcha
 
 Route::get('/address/edit', [ProfileController::class, 'editAddress'])->name('address.edit');
 Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');
+
+Route::get('/address/edit', function () {
+    return view('address');
+})->name('address.edit');
+
+Route::post('/items/{id}/like', [LikeController::class, 'toggleLike'])->name('like');
+
+Route::get('/items', [ItemController::class, 'index'])->name('item.index');

@@ -95,3 +95,25 @@ body {
 .comments button:hover {
     background-color: #c9302c;
 }
+
+.like-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.like-btn:hover {
+    opacity: 0.8;
+}
+
+.like-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-count {
+    font-size: 1em;
+    color: #555;
+}

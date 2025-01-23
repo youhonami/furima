@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
-        return view('index', compact('items'));
-    }
+        $filter = $request->input('filter', 'recommended');
 
-    public function item()
-    {
-        // アイテムを取得して渡す
-        $item = Item::first();  // ここは必要に応じて修正
-        return view('item', compact('item'));
+        if ($filter === 'mylist') {
+            $items = Auth::user()->likedItems; // ユーザーが「いいね」した商品のみ取得
+        } else {
+            $items = Item::all(); // 全商品を取得（おすすめ用）
+        }
+
+        return view('index', compact('items'));
     }
 
     // 商品詳細ページ

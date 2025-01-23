@@ -59,4 +59,9 @@ class User extends Authenticatable
             ]);
         });
     }
+
+    public function likedItems()
+    {
+        return $this->belongsToMany(Item::class, 'item_user_likes')->withTimestamps();
+    }
 }

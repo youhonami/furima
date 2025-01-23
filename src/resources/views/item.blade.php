@@ -15,8 +15,16 @@
             <h1 class="item-name">{{ $item->name }}</h1>
             <p class="item-price">¥{{ number_format($item->price) }}（税込）</p>
             <div class="item-actions">
+                <form action="{{ route('like', ['id' => $item->id]) }}" method="POST" class="like-form">
+                    @csrf
+                    <button type="submit" class="like-btn">
+                        {{ $item->isLikedBy(Auth::user()) ? '❤️' : '🤍' }}
+                    </button>
+                    <span class="like-count">{{ $item->likes->count() }}</span>
+                </form>
                 <a href="{{ route('purchase', ['id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
             </div>
+
             <div class="item-description">
                 <h2>商品説明</h2>
                 <p>{{ $item->description }}</p>

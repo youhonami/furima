@@ -7,8 +7,10 @@
 @section('content')
 <main>
     <div class="tab-menu">
-        <span class="tab active">おすすめ</span>
-        <span class="tab">マイリスト</span>
+        <a href="{{ route('item.index', ['filter' => 'recommended']) }}"
+            class="tab {{ request('filter') !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ route('item.index', ['filter' => 'mylist']) }}"
+            class="tab {{ request('filter') === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>
     <div class="item-grid">
         @foreach($items as $item)
@@ -19,6 +21,7 @@
         @endforeach
     </div>
 </main>
+
 
 <footer class="footer">
     © 2025 COACHTECH

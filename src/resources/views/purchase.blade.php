@@ -40,7 +40,6 @@
             @endif
             <a href="{{ route('address.edit') }}" class="change-address">変更する</a>
 
-
             <button class="purchase-button">購入する</button>
         </div>
     </div>
