@@ -45,6 +45,10 @@
             <input type="text" id="name" name="name" required>
         </div>
         <div class="form-group">
+            <label for="name">ブランド名</label>
+            <input type="text" id="brand" name="brand">
+        </div>
+        <div class="form-group">
             <label for="description">商品説明</label>
             <textarea id="description" name="description" rows="4" required></textarea>
         </div>

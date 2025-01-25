@@ -1,53 +1,66 @@
+/* 全体レイアウト */
 .main {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
+    min-height: 100vh;
     background-color: #f9f9f9;
+    padding: 20px;
 }
 
+/* コンテナ */
 .address-container {
     width: 400px;
     background: #fff;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    text-align: center;
+    margin: 0 auto; /* センター揃えの保険 */
 }
 
-.title {
+/* タイトル */
+.address-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    text-align: center;
 }
 
+/* フォームグループ */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
-label {
+/* ラベル */
+.form-label {
     display: block;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    color: #333;
 }
 
-input[type="text"] {
+/* 入力フィールド */
+.form-input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
-input[type="text"]:focus {
+.form-input:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
-.update-button {
+/* ボタン */
+.btn-submit {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #ff6b6b;
     border: none;
     color: #fff;
@@ -55,19 +68,9 @@ input[type="text"]:focus {
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-.update-button:hover {
+.btn-submit:hover {
     background-color: #ff5252;
-}
-
-.footer {
-    text-align: center;
-    padding: 10px 0;
-    background: #333;
-    color: #fff;
-    font-size: 14px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
 }

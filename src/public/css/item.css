@@ -28,7 +28,7 @@ body {
 
 .item-name {
     font-size: 2em;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .item-price {
@@ -136,4 +136,10 @@ body {
 
 .comments button:hover {
     background-color: #c9302c;
+}
+
+.item-brand {
+    font-size: 0.7em; /* 小さく表示 */
+    color: #888; /* 薄い色にして目立たなく */
+    margin-top: 0; /* ブランド名の上に余白を追加しない */
 }

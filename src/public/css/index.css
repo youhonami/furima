@@ -43,11 +43,13 @@ body {
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; /* カード全体のリンク装飾を削除 */
 }
 
 .item-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none; /* ホバー時もアンダーバーを削除 */
 }
 
 .item-image {
@@ -60,6 +62,7 @@ body {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
+    text-decoration: none; /* アンダーバーを削除 */
 }
 
 .tab-menu {
@@ -80,4 +83,11 @@ body {
     font-weight: bold;
     border-bottom: 2px solid #d9534f;
     color: #d9534f;
+}
+
+.tab.disabled {
+    pointer-events: none; /* クリックを無効化 */
+    color: gray; /* 色を薄くする */
+    cursor: not-allowed; /* カーソルを「禁止」マークにする */
+    text-decoration: none; /* 下線を削除 */
 }

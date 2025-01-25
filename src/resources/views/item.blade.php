@@ -13,6 +13,8 @@
         </div>
         <div class="item-details">
             <h1 class="item-name">{{ $item->name }}</h1>
+            <p class="item-brand">{{ $item->brand ?? 'ノーブランド' }}</p> <!-- ブランド名が無ければ「ノーブランド」と表示 -->
+
             <p class="item-price">¥{{ number_format($item->price) }}（税込）</p>
             <div class="item-actions">
                 <form action="{{ route('like', ['id' => $item->id]) }}" method="POST" class="like-form">
@@ -30,7 +32,6 @@
                 <!-- 購入手続きボタン -->
                 <a href="{{ route('purchase', ['id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
             </div>
-
 
             <div class="item-description">
                 <h2>商品説明</h2>

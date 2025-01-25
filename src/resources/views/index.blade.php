@@ -9,9 +9,17 @@
     <div class="tab-menu">
         <a href="{{ route('item.index', ['filter' => 'recommended']) }}"
             class="tab {{ request('filter') !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+
+        @auth
+        <!-- ログインしている場合は通常のリンク -->
         <a href="{{ route('item.index', ['filter' => 'mylist']) }}"
             class="tab {{ request('filter') === 'mylist' ? 'active' : '' }}">マイリスト</a>
+        @else
+        <!-- ログインしていない場合はリンクを無効化 -->
+        <span class="tab disabled">マイリスト</span>
+        @endauth
     </div>
+
     <div class="item-grid">
         @foreach($items as $item)
         <a href="{{ route('item.show', $item->id) }}" class="item-card">
@@ -21,7 +29,6 @@
         @endforeach
     </div>
 </main>
-
 
 <footer class="footer">
     © 2025 COACHTECH
