@@ -8,6 +8,7 @@ use App\Http\Controllers\SellController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,6 @@ Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 Route::get('/purchase/{id}', [PurchaseController::class, 'index'])->name('purchase');
 
 Route::get('/address/edit', [ProfileController::class, 'editAddress'])->name('address.edit');
-Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');
 
 Route::get('/address/edit', function () {
     return view('address');
@@ -58,3 +58,6 @@ Route::post('/items/{id}/like', [LikeController::class, 'toggleLike'])->name('li
 Route::get('/items', [ItemController::class, 'index'])->name('item.index');
 
 Route::post('/comments/{item}', [CommentController::class, 'store'])->name('comments.store');
+
+Route::post('/address/update', [AddressController::class, 'updateAddress'])->name('address.update');
+Route::post('/purchase/complete', [PurchaseController::class, 'completePurchase'])->name('purchase.complete');

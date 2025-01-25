@@ -17,6 +17,12 @@
             <p class="product-price">¥{{ number_format($item->price) }}</p>
         </div>
 
+        <!-- 商品IDをセッションに保存 -->
+        @php
+        session(['current_item_id' => $item->id]);
+        @endphp
+
+
         <div class="payment-details">
             <h2>商品代金</h2>
             <p class="price">¥{{ number_format($item->price) }}</p>
@@ -29,7 +35,13 @@
             </select>
 
             <h2>配送先</h2>
-            @if ($profile)
+            @if (session('temp_address'))
+            <p class="address">
+                〒{{ session('temp_address.postal_code') }}<br>
+                {{ session('temp_address.address') }}<br>
+                {{ session('temp_address.building') }}
+            </p>
+            @elseif ($profile)
             <p class="address">
                 〒{{ $profile->postal_code }}<br>
                 {{ $profile->address }}<br>
@@ -39,6 +51,7 @@
             <p class="address">配送先が登録されていません。</p>
             @endif
             <a href="{{ route('address.edit') }}" class="change-address">変更する</a>
+
 
             <button class="purchase-button">購入する</button>
         </div>
