@@ -24,10 +24,12 @@
         </div>
 
         <div class="search-bar">
-            <form method="GET" action="{{ route('item.index') }}">
-                <input type="text" name="search" placeholder="なにをお探しですか？" value="{{ $search ?? '' }}">
-                <button type="submit">検索</button>
+            <form method="GET" action="{{ route('item.index') }}" class="search-form">
+                <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
+                <input type="text" name="search" placeholder="商品名を検索" value="{{ request('search') }}" class="search-input">
+                <button type="submit" class="search-button">検索</button>
             </form>
+
         </div>
 
 
