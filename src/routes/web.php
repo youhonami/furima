@@ -61,3 +61,5 @@ Route::post('/comments/{item}', [CommentController::class, 'store'])->name('comm
 
 Route::post('/address/update', [AddressController::class, 'updateAddress'])->name('address.update');
 Route::post('/purchase/complete', [PurchaseController::class, 'completePurchase'])->name('purchase.complete');
+
+Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');

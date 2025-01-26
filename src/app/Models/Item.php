@@ -39,4 +39,10 @@ class Item extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function isSold()
+    {
+        // この商品がpurchasesテーブルに存在するかチェック
+        return \App\Models\Purchase::where('item_id', $this->id)->exists();
+    }
 }

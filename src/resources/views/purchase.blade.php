@@ -28,11 +28,15 @@
             <p class="price">¥{{ number_format($item->price) }}</p>
 
             <h2>支払い方法</h2>
-            <select class="payment-method">
-                <option value="" selected>選択してください</option>
-                <option value="convenience_store">コンビニ払い</option>
-                <option value="credit_card">クレジットカード</option>
-            </select>
+            <form action="{{ route('purchase.store') }}" method="POST">
+                @csrf
+                <select name="payment_method" class="payment-method" required>
+                    <option value="" selected>選択してください</option>
+                    <option value="convenience_store">コンビニ払い</option>
+                    <option value="credit_card">クレジットカード</option>
+                </select>
+
+            </form>
 
             <h2>配送先</h2>
             @if (session('temp_address'))
@@ -53,7 +57,18 @@
             <a href="{{ route('address.edit') }}" class="change-address">変更する</a>
 
 
-            <button class="purchase-button">購入する</button>
+            <form action="{{ route('purchase.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="payment_method" id="payment-method">
+                <button type="submit" class="purchase-button" onclick="setPaymentMethod()">購入する</button>
+            </form>
+
+            <script>
+                function setPaymentMethod() {
+                    const selectedMethod = document.querySelector('.payment-method').value;
+                    document.getElementById('payment-method').value = selectedMethod;
+                }
+            </script>
         </div>
     </div>
 </main>
