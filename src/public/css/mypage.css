@@ -37,15 +37,16 @@
     padding: 6px 12px; /* ボタンの内側の余白を調整してテキストにフィットさせる */
     font-size: 1rem; /* フォントサイズを設定 */
     color: #fff;
-    background-color: #007bff;
+    background-color: #ff6b6b;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .edit-profile:hover {
-    background-color: #0056b3;
+    background-color: #e64444;
 }
 
 body {
@@ -93,6 +94,7 @@ body {
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; /* もしリンクのアンダーバーが表示されていれば削除 */
 }
 
 .item-card:hover {
@@ -110,4 +112,5 @@ body {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
+    text-decoration: none;
 }

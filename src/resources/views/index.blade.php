@@ -6,20 +6,18 @@
 
 @section('content')
 <main>
+
+    <!-- タブメニュー -->
     <div class="tab-menu">
         <a href="{{ route('item.index', ['filter' => 'recommended']) }}"
             class="tab {{ request('filter') !== 'mylist' ? 'active' : '' }}">おすすめ</a>
 
-        @auth
         <!-- ログインしている場合は通常のリンク -->
         <a href="{{ route('item.index', ['filter' => 'mylist']) }}"
             class="tab {{ request('filter') === 'mylist' ? 'active' : '' }}">マイリスト</a>
-        @else
-        <!-- ログインしていない場合はリンクを無効化 -->
-        <span class="tab disabled">マイリスト</span>
-        @endauth
     </div>
 
+    <!-- 商品一覧 -->
     <div class="item-grid">
         @foreach($items as $item)
         <a href="{{ route('item.show', $item->id) }}" class="item-card">
@@ -28,6 +26,11 @@
         </a>
         @endforeach
     </div>
+
+    <!-- 検索結果がない場合のメッセージ -->
+    @if($items->isEmpty())
+    <p>マイリストが見つかりません。</p>
+    @endif
 </main>
 
 <footer class="footer">

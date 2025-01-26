@@ -12,14 +12,27 @@ class ItemController extends Controller
     {
         $filter = $request->input('filter', 'recommended');
 
+        // ログインユーザーが出品した商品を除外
+        $query = Item::query();
+        if (Auth::check()) {
+            $query->where('user_id', '!=', Auth::id()); // ログインユーザーが出品した商品を除外
+        }
+
+        // フィルタリング条件
         if ($filter === 'mylist') {
-            $items = Auth::user()->likedItems; // ユーザーが「いいね」した商品のみ取得
+            // ログインしていない場合、マイリストは空にする
+            if (Auth::check()) {
+                $items = Auth::user()->likedItems; // ユーザーが「いいね」した商品のみ取得
+            } else {
+                $items = collect(); // ログインしていない場合は空のコレクション
+            }
         } else {
-            $items = Item::all(); // 全商品を取得（おすすめ用）
+            $items = $query->get(); // フィルターなしの場合、除外した商品のリストを取得
         }
 
         return view('index', compact('items'));
     }
+
 
     // 商品詳細ページ
     public function show($id)

@@ -20,17 +20,27 @@ body {
     font-size: 1.2em;
     color: #333;
     cursor: pointer;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
 }
 
 .tab.active {
     font-weight: bold;
-    color: #000;
-    border-bottom: 2px solid #000;
+    color: #d9534f;
+    border-bottom: 2px solid #d9534f;
+}
+
+.tab.disabled {
+    pointer-events: none;
+    color: gray;
+    cursor: not-allowed;
+    text-decoration: none;
 }
 
 .item-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 横に4アイテム */
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 0 20px;
 }
@@ -43,13 +53,12 @@ body {
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none; /* カード全体のリンク装飾を削除 */
+    text-decoration: none;
 }
 
 .item-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    text-decoration: none; /* ホバー時もアンダーバーを削除 */
 }
 
 .item-image {
@@ -62,32 +71,5 @@ body {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
-    text-decoration: none; /* アンダーバーを削除 */
-}
-
-.tab-menu {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.tab {
-    padding: 10px 20px;
-    cursor: pointer;
     text-decoration: none;
-    color: #555;
-    border-bottom: 2px solid transparent;
-}
-
-.tab.active {
-    font-weight: bold;
-    border-bottom: 2px solid #d9534f;
-    color: #d9534f;
-}
-
-.tab.disabled {
-    pointer-events: none; /* クリックを無効化 */
-    color: gray; /* 色を薄くする */
-    cursor: not-allowed; /* カーソルを「禁止」マークにする */
-    text-decoration: none; /* 下線を削除 */
 }

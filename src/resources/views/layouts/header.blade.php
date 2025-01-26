@@ -24,8 +24,14 @@
         </div>
 
         <div class="search-bar">
-            <input type="text" placeholder="なにをお探しですか？">
+            <form method="GET" action="{{ route('item.index') }}">
+                <input type="text" name="search" placeholder="なにをお探しですか？" value="{{ $search ?? '' }}">
+                <button type="submit">検索</button>
+            </form>
         </div>
+
+
+
 
         <nav class="nav-links">
             @auth
@@ -38,11 +44,12 @@
             <a href="{{ route('sell.index') }}">出品</a> <!-- 出品リンク -->
             @else
             <!-- ログインしていない場合 -->
-            <a href="/login">ログイン</a>
-            <a href="#" style="pointer-events: none; color: gray;">マイページ</a> <!-- リンクを無効にする -->
-            <a href="#" style="pointer-events: none; color: gray;">出品</a> <!-- 出品リンクを無効にする -->
+            <a href="{{ route('login') }}">ログイン</a>
+            <a href="{{ route('login') }}">マイページ</a> <!-- ログインページに遷移 -->
+            <a href="{{ route('login') }}">出品</a> <!-- ログインページに遷移 -->
             @endauth
         </nav>
+
     </header>
 
     <main>
