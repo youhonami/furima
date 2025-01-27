@@ -23,17 +23,15 @@
             </a>
         </div>
 
+        <!-- /login と /register では表示しない -->
+        @unless (request()->is('login') || request()->is('register'))
         <div class="search-bar">
             <form method="GET" action="{{ route('item.index') }}" class="search-form">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
-                <input type="text" name="search" placeholder="商品名を検索" value="{{ request('search') }}" class="search-input">
-                <button type="submit" class="search-button">検索</button>
+                <input type="text" name="search" placeholder="なにをお探しですか？" value="{{ request('search') }}" class="search-input">
+
             </form>
-
         </div>
-
-
-
 
         <nav class="nav-links">
             @auth
@@ -51,7 +49,7 @@
             <a href="{{ route('login') }}">出品</a> <!-- ログインページに遷移 -->
             @endauth
         </nav>
-
+        @endunless
     </header>
 
     <main>

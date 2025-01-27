@@ -15,12 +15,15 @@ class AddressController extends Controller
             'building' => 'nullable|max:255',
         ]);
 
+        // 空白も保存されるように処理
+        $building = $request->building !== null ? trim($request->building) : '';
+
         // 入力データをセッションに保存
         session([
             'temp_address' => [
                 'postal_code' => $request->postal_code,
                 'address' => $request->address,
-                'building' => $request->building,
+                'building' => $building, // 修正後の建物名を保存
             ]
         ]);
 

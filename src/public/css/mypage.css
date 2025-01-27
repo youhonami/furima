@@ -12,7 +12,13 @@ body {
 .profile {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* ユーザー名と編集ボタンを左右に分ける */
     margin-bottom: 20px;
+}
+
+.user-icon {
+    display: flex; /* ユーザーアイコンと名前を左寄せに配置 */
+    align-items: center;
 }
 
 .user-icon img {
@@ -21,18 +27,25 @@ body {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
+    margin-left: 400px;
     border: 2px solid #ddd;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
 }
 
 .user-info h1 {
     margin: 0;
     font-size: 1.8em;
     color: #333;
+    margin-right: auto; /* ユーザー名を左寄せ */
 }
 
 .user-info .edit-profile {
-    display: inline-block;
-    margin-top: 10px;
+    margin-left: 400px; /* 編集ボタンの余白を設定 */
+    margin-right: 200px;
     font-size: 0.9em;
     color: #d9534f;
     text-decoration: none;

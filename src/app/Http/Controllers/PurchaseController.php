@@ -41,6 +41,11 @@ class PurchaseController extends Controller
             return redirect()->back()->withErrors('必要な情報が不足しています。');
         }
 
+        // 建物名の処理（空文字を明示的に保存する）
+        $building = isset($tempAddress['building'])
+            ? (trim($tempAddress['building']) === '' ? '' : $tempAddress['building'])
+            : ($profile->building ?? '');
+
         // 購入データの保存
         Purchase::create([
             'user_id' => $user->id,
@@ -48,7 +53,7 @@ class PurchaseController extends Controller
             'payment_method' => $request->input('payment_method'),
             'postal_code' => $tempAddress['postal_code'] ?? $profile->postal_code,
             'address' => $tempAddress['address'] ?? $profile->address,
-            'building' => $tempAddress['building'] ?? $profile->building,
+            'building' => $building, // 明示的に設定された建物名を保存
         ]);
 
         // トップページにリダイレクト

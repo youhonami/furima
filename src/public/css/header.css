@@ -24,6 +24,9 @@ body {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    width: 300px; /* 検索フォームの幅を指定 */
+    max-width: 100%; /* レスポンシブ対応 */
+    box-sizing: border-box; /* パディングを幅に含める */
 }
 
 .header .nav-links a,
