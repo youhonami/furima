@@ -17,4 +17,16 @@ class Purchase extends Model
         'address',
         'building',
     ];
+
+    // 購入商品とユーザーのリレーション
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // 購入商品とアイテムのリレーション
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id'); // リレーション定義
+    }
 }

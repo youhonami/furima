@@ -1,54 +1,3 @@
-/* プロフィールセクション */
-.profile {
-    display: flex;
-    align-items: center; /* 高さを揃える */
-    gap: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    justify-content: center; /* アイコン、ユーザー名、ボタンを中央寄せ */
-    margin: 0 auto; /* セクションを中央に配置 */
-    width: 80%; /* 横幅を制限して中央寄せ */
-}
-
-/* ユーザーアイコン */
-.user-icon img {
-    width: 80px; /* アイコンのサイズを小さく変更 */
-    height: 80px;
-    border-radius: 50%; /* 完全な円形にする */
-    object-fit: cover;
-    border: 2px solid #ddd;
-}
-
-/* ユーザー情報 */
-.user-info {
-    flex-grow: 1;
-    display: flex; /* 横並びにする */
-    justify-content: space-between; /* ユーザー名とボタンを左右に配置 */
-    align-items: center; /* ユーザー名とボタンの高さを揃える */
-}
-
-.user-info h1 {
-    font-size: 1.8rem;
-    margin: 0;
-    color: #333;
-}
-
-.edit-profile {
-    padding: 6px 12px; /* ボタンの内側の余白を調整してテキストにフィットさせる */
-    font-size: 1rem; /* フォントサイズを設定 */
-    color: #fff;
-    background-color: #ff6b6b;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-}
-
-.edit-profile:hover {
-    background-color: #e64444;
-}
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -56,8 +5,46 @@ body {
     background-color: #f8f8f8;
 }
 
-.main {
+.mypage-container {
     padding: 20px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-icon img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 2px solid #ddd;
+}
+
+.user-info h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.user-info .edit-profile {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #d9534f;
+    text-decoration: none;
+    border: 1px solid #d9534f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.user-info .edit-profile:hover {
+    background-color: #d9534f;
+    color: #fff;
 }
 
 .tab-menu {
@@ -71,17 +58,28 @@ body {
     font-size: 1.2em;
     color: #333;
     cursor: pointer;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
 }
 
 .tab.active {
     font-weight: bold;
-    color: #000;
-    border-bottom: 2px solid #000;
+    color: #d9534f;
+    border-bottom: 2px solid #d9534f;
+}
+
+.item-section {
+    display: none;
+}
+
+.item-section.active {
+    display: block;
 }
 
 .item-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 横に4アイテム */
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 0 20px;
 }
@@ -94,7 +92,7 @@ body {
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none; /* もしリンクのアンダーバーが表示されていれば削除 */
+    text-decoration: none;
 }
 
 .item-card:hover {
@@ -113,4 +111,56 @@ body {
     margin: 10px 0;
     color: #333;
     text-decoration: none;
+}
+
+.item-card.sold {
+    position: relative;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.sold-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #d9534f;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+    margin: 0 10px;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+    font-weight: bold;
+    color: #d9534f;
+    border-bottom: 2px solid #d9534f;
+}
+
+.tab-content .tab-pane {
+    display: none;
+}
+
+.tab-content .tab-pane.active {
+    display: block;
 }

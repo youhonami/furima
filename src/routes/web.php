@@ -63,3 +63,6 @@ Route::post('/address/update', [AddressController::class, 'updateAddress'])->nam
 Route::post('/purchase/complete', [PurchaseController::class, 'completePurchase'])->name('purchase.complete');
 
 Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
+
+
+Route::get('/mypage', [UserController::class, 'show'])->middleware('auth')->name('mypage');

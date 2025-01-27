@@ -13,13 +13,10 @@
         <a href="{{ route('item.index', ['filter' => 'recommended', 'search' => request('search')]) }}"
             class="tab {{ request('filter') !== 'mylist' ? 'active' : '' }}">おすすめ</a>
 
-        @auth
         <a href="{{ route('item.index', ['filter' => 'mylist', 'search' => request('search')]) }}"
             class="tab {{ request('filter') === 'mylist' ? 'active' : '' }}">マイリスト</a>
-        @else
-        <span class="tab disabled">マイリスト</span>
-        @endauth
     </div>
+
 
 
     <!-- 商品一覧 -->
