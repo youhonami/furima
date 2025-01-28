@@ -1,53 +1,87 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Arial", sans-serif;
+    background-color: #f8f8f8;
     margin: 0;
     padding: 0;
 }
 
-.header {
-    background-color: #000;
-    color: #fff;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 main {
-    padding: 2rem;
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 15px;
 }
 
 label {
+    font-weight: bold;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 5px;
 }
 
-input,
-select,
+input[type="text"],
+input[type="number"],
 textarea,
-button {
+select {
     width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-button.submit-button {
-    background-color: #ff4b4b;
-    color: #fff;
-    border: none;
+textarea {
+    resize: vertical;
+}
+
+input[type="file"] {
+    display: block;
+}
+
+#categories label {
+    display: inline-block;
+    background-color: white; /* 未選択の色 */
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d; /* 未選択時の枠線 */
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
     cursor: pointer;
-    padding: 1rem;
-    font-size: 1.2rem;
+    margin: 5px 3px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-button.submit-button:hover {
-    background-color: #ff2a2a;
+#categories input[type="checkbox"] {
+    display: none; /* チェックボックスを非表示 */
+}
+
+#categories input[type="checkbox"]:checked + label {
+    background-color: #ffebeb; /* 未選択の色 */
+    color: #ff4d4d;
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #e04343;
 }

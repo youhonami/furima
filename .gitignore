@@ -1,0 +1,5 @@
+docker/mysql/data/undo_001
+docker/mysql/data/#ib_16384_0.dblwr
+docker/mysql/data/ib_logfile0
+docker/mysql/data/ib_logfile1
+docker/mysql/data/undo_002

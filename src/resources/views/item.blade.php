@@ -17,31 +17,38 @@
 
             <p class="item-price">¥{{ number_format($item->price) }}（税込）</p>
             <div class="item-actions">
-                <!-- いいねボタン -->
-                @auth
-                <form action="{{ route('like', ['id' => $item->id]) }}" method="POST" class="like-form">
-                    @csrf
-                    <button type="submit" class="like-btn">
-                        {{ $item->isLikedBy(Auth::user()) ? '❤️' : '🤍' }}
-                    </button>
+                <div class="like-comment-wrapper">
+                    <!-- いいねボタン -->
+                    @auth
+                    <form action="{{ route('like', ['id' => $item->id]) }}" method="POST" class="like-form">
+                        @csrf
+                        <button type="submit" class="like-btn">
+                            {{ $item->isLikedBy(Auth::user()) ? '❤️' : '🤍' }}
+                        </button>
+                        <span class="like-count">{{ $item->likes->count() }}</span>
+                    </form>
+                    @else
+                    <a href="{{ route('login') }}" class="like-btn">🤍</a>
                     <span class="like-count">{{ $item->likes->count() }}</span>
-                </form>
-                @else
-                <a href="{{ route('login') }}" class="like-btn">🤍</a>
-                <span class="like-count">{{ $item->likes->count() }}</span>
-                @endauth
-                <!-- コメント数アイコン -->
-                <div class="comment-count">
-                    <i class="bi bi-chat"></i> <!-- シンプルな吹き出し -->
-                    <span>{{ $item->comments->count() }}</span> <!-- コメント数 -->
+                    @endauth
+
+                    <!-- コメント数アイコン -->
+                    <div class="comment-count">
+                        <i class="bi bi-chat"></i> <!-- シンプルな吹き出し -->
+                        <span>{{ $item->comments->count() }}</span> <!-- コメント数 -->
+                    </div>
                 </div>
+
                 <!-- 購入手続きボタン -->
-                @auth
-                <a href="{{ route('purchase', ['id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
-                @else
-                <a href="{{ route('login') }}" class="purchase-btn">購入手続きへ</a>
-                @endauth
+                <div class="purchase-btn-wrapper">
+                    @auth
+                    <a href="{{ route('purchase', ['id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
+                    @else
+                    <a href="{{ route('login') }}" class="purchase-btn">購入手続きへ</a>
+                    @endauth
+                </div>
             </div>
+
 
             <div class="item-description">
                 <h2>商品説明</h2>

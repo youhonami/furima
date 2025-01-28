@@ -39,9 +39,19 @@ body {
 
 .item-actions {
     display: flex;
-    align-items: center;
-    gap: 10px; /* アイコン間のスペース */
-    margin-bottom: 20px;
+    flex-direction: column; /* 縦配置 */
+    align-items: start;
+    gap: 10px; /* 間隔を調整 */
+}
+
+.like-comment-wrapper {
+    display: flex;
+    align-items: center; /* 高さを揃える */
+    gap: 15px; /* いいねボタンとコメント数の間隔 */
+}
+
+.purchase-btn-wrapper {
+    margin-top: 10px; /* 上のアイコンとの間隔を少し開ける */
 }
 
 .purchase-btn {

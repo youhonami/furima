@@ -20,10 +20,8 @@
             <label for="categories">カテゴリー</label>
             <div id="categories">
                 @foreach ($categories as $category)
-                <label>
-                    <input type="checkbox" name="categories[]" value="{{ $category->id }}">
-                    {{ $category->name }}
-                </label>
+                <input type="checkbox" id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}">
+                <label for="category-{{ $category->id }}">{{ $category->name }}</label>
                 @endforeach
             </div>
         </div>
