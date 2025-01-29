@@ -85,3 +85,38 @@ input[type="file"] {
 .submit-button:hover {
     background-color: #e04343;
 }
+
+@media (min-width: 1400px) and (max-width: 1540px) {
+    main {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 850px) {
+    main {
+        width: 90%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .submit-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    #categories label {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}

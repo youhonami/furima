@@ -1,18 +1,16 @@
-/* 全体の背景色を黒に */
+/* 基本のスタイル（変更なし） */
 body {
-    background-color: #000000;
+    background-color: #f8f8f8;
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
 
-/* メインコンテンツの中央寄せ */
 .main {
     display: flex;
     justify-content: center;
     padding: 50px 0;
 }
 
-/* 購入ページのコンテナ */
 .purchase-container {
     display: flex;
     background-color: #ffffff;
@@ -20,10 +18,9 @@ body {
     padding: 30px;
     border-radius: 10px;
     width: 800px;
-    gap: 20px; /* 左右の余白を適度に */
+    gap: 20px;
 }
 
-/* 商品情報（左側） */
 .product-details {
     flex: 1;
     display: flex;
@@ -31,7 +28,6 @@ body {
     align-items: center;
 }
 
-/* 商品画像 */
 .product-image {
     width: 250px;
     height: auto;
@@ -39,7 +35,6 @@ body {
     border-radius: 5px;
 }
 
-/* 支払い方法と配送先（画像下） */
 .purchase-info {
     width: 100%;
     margin-top: 20px;
@@ -56,7 +51,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* 配送先情報 */
 .address {
     font-size: 14px;
     line-height: 1.5;
@@ -73,7 +67,6 @@ body {
     text-decoration: underline;
 }
 
-/* 商品情報（右側） */
 .product-summary {
     flex: 1;
     display: flex;
@@ -94,7 +87,6 @@ body {
     font-weight: bold;
 }
 
-/* 購入ボタン */
 .purchase-button {
     display: block;
     width: 100%;
@@ -112,7 +104,6 @@ body {
     background-color: #d9534f;
 }
 
-/* 小計画面 */
 .subtotal-box {
     background-color: #f8f8f8;
     padding: 15px;
@@ -134,4 +125,53 @@ body {
 #selected-payment {
     font-weight: bold;
     color: #555;
+}
+
+/* 1400px〜1540pxサイズ */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .purchase-container {
+        width: 100%;
+        max-width: 1200px; /* 最大幅を設定 */
+        gap: 40px; /* コンテナ内の間隔を広げる */
+    }
+
+    .product-details,
+    .product-summary {
+        flex: 1 1 50%; /* 左右の要素を並べて50%ずつの幅に */
+    }
+
+    .product-image {
+        width: 300px; /* 画像サイズを調整 */
+    }
+
+    .purchase-button {
+        font-size: 20px; /* ボタンのフォントサイズを大きく */
+    }
+}
+
+/* 768px〜850pxサイズ */
+@media (min-width: 768px) and (max-width: 850px) {
+    .purchase-container {
+        flex-direction: row; /* 横並びに変更 */
+        width: 90%;
+        gap: 20px; /* アイテム間の間隔を調整 */
+    }
+
+    .product-details,
+    .product-summary {
+        flex: 1 1 50%; /* 左右両方に50%の幅を設定 */
+        align-items: center; /* アイテム中央寄せ */
+    }
+
+    .product-image {
+        width: 200px; /* 画像サイズを縮小 */
+    }
+
+    .purchase-button {
+        font-size: 16px; /* ボタンのフォントサイズを縮小 */
+    }
+
+    .subtotal-box {
+        text-align: center; /* 小計のテキストを中央寄せ */
+    }
 }

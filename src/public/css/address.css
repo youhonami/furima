@@ -74,3 +74,43 @@
 .btn-submit:hover {
     background-color: #ff5252;
 }
+
+/* 1400px〜1540pxサイズ */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .address-container {
+        width: 500px; /* 幅を広げて調整 */
+        padding: 40px; /* パディングを広げて、中央の余白を調整 */
+    }
+
+    .address-title {
+        font-size: 28px; /* タイトルのフォントサイズを調整 */
+    }
+
+    .form-input {
+        font-size: 18px; /* 入力フィールドのフォントサイズを調整 */
+    }
+
+    .btn-submit {
+        font-size: 18px; /* ボタンのフォントサイズを調整 */
+    }
+}
+
+/* 768px〜850pxサイズ */
+@media (min-width: 768px) and (max-width: 850px) {
+    .address-container {
+        width: 100%; /* 幅を100%にして余白を減らす */
+        padding: 20px; /* パディングを小さく */
+    }
+
+    .address-title {
+        font-size: 20px; /* タイトルのフォントサイズを調整 */
+    }
+
+    .form-input {
+        font-size: 14px; /* 入力フィールドのフォントサイズを調整 */
+    }
+
+    .btn-submit {
+        font-size: 14px; /* ボタンのフォントサイズを調整 */
+    }
+}

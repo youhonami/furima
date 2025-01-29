@@ -1,3 +1,4 @@
+/* ページ全体の中央配置 */
 .profile-container {
     max-width: 800px;
     margin: 0 auto;
@@ -6,20 +7,25 @@
     font-family: Arial, sans-serif;
 }
 
+/* タイトル */
 .profile-title {
     font-size: 1.8em;
     margin-bottom: 30px;
     font-weight: bold;
 }
 
+/* プロフィールカード */
 .profile-card {
     background: #fff;
     padding: 30px;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
+/* アイコンのスタイル */
 .profile-icon {
     margin-bottom: 20px;
     position: relative;
@@ -32,6 +38,7 @@
     border: 1px solid #ccc;
 }
 
+/* 画像選択ボタン */
 .change-icon-btn {
     margin-top: 10px;
     padding: 8px 15px;
@@ -40,12 +47,14 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
 }
 
 .change-icon-btn:hover {
     background-color: #e0e0e0;
 }
 
+/* 入力フォーム */
 .profile-form {
     text-align: left;
     margin-top: 20px;
@@ -69,6 +78,7 @@
     border-radius: 5px;
 }
 
+/* 更新ボタン */
 .update-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -79,29 +89,60 @@
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    width: 100%;
 }
 
 .update-btn:hover {
     background-color: #ff4a4a;
 }
 
-.change-icon-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 15px;
-    font-size: 0.9em;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.change-icon-btn:hover {
-    background-color: #e0e0e0;
-}
-
 /* ファイル選択インプットは非表示 */
 input[type="file"] {
     display: none;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* 1400px - 1540px の場合 */
+@media screen and (max-width: 1540px) and (min-width: 1400px) {
+    .profile-container {
+        max-width: 750px;
+    }
+    .profile-card {
+        max-width: 550px;
+    }
+}
+
+/* 768px - 850px の場合 */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .profile-container {
+        max-width: 700px;
+        padding: 15px;
+    }
+    .profile-card {
+        max-width: 500px;
+    }
+}
+
+/* 画面幅が768px以下の場合 */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+        padding: 10px;
+    }
+    .profile-card {
+        width: 100%;
+        padding: 20px;
+    }
+    .profile-title {
+        font-size: 1.5em;
+    }
+    .profile-icon img {
+        width: 80px;
+        height: 80px;
+    }
+    .change-icon-btn {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
 }

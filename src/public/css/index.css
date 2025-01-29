@@ -40,7 +40,7 @@ body {
 
 .item-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* 常に4列 */
     gap: 20px;
     padding: 0 20px;
 }
@@ -94,4 +94,35 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+/* メディアクエリ：1400px〜1540px */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .tab-menu {
+        margin-bottom: 15px;
+    }
+
+    .tab {
+        font-size: 1.1em;
+        padding: 8px 16px;
+    }
+}
+
+/* メディアクエリ：768px〜850px */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .tab-menu {
+        flex-direction: row; /* 横並びに修正 */
+        justify-content: center; /* タブを中央に配置 */
+        margin-bottom: 15px;
+    }
+
+    .tab {
+        font-size: 1.1em;
+        padding: 8px 16px;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 10px 0;
+    }
 }

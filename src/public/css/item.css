@@ -14,6 +14,8 @@ body {
 .item-container {
     display: flex;
     gap: 20px;
+    justify-content: center; /* 中央寄せ */
+    flex-wrap: wrap; /* 画面サイズが小さい場合に自動で折り返す */
 }
 
 .item-image img {
@@ -154,4 +156,39 @@ body {
     font-size: 0.7em; /* 小さく表示 */
     color: #888; /* 薄い色にして目立たなく */
     margin-top: 0; /* ブランド名の上に余白を追加しない */
+}
+
+/* 1400px〜1540px サイズ */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .item-container {
+        justify-content: center; /* 画像と詳細を中央に寄せる */
+    }
+
+    .item-details {
+        max-width: 800px; /* 詳細部分の最大幅を設定 */
+    }
+}
+
+/* 768px〜850px サイズ */
+@media (min-width: 768px) and (max-width: 850px) {
+    .item-container {
+        flex-direction: row; /* 横並び */
+    }
+
+    .item-image img {
+        max-width: 400px; /* 画像の最大幅を調整 */
+    }
+
+    .item-details {
+        flex: 1;
+        padding: 10px; /* 画像と詳細の間隔を調整 */
+    }
+
+    .purchase-btn-wrapper {
+        margin-top: 20px; /* ボタンの間隔を広げる */
+    }
+
+    .comment-list {
+        margin-top: 20px;
+    }
 }

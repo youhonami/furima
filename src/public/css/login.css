@@ -107,3 +107,64 @@ body {
 .register__button-submit:hover {
     color: #e64444;
 }
+
+@media screen and (max-width: 1540px) {
+    .login__content {
+        max-width: 450px; /* フォームの最大幅を広げる */
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .login__content {
+        max-width: 400px; /* 標準サイズ */
+    }
+}
+
+/* 768px - 850px のレスポンシブ対応 */
+@media screen and (max-width: 850px) {
+    .login__content {
+        width: 90%; /* フォームを画面幅の90%に広げる */
+        max-width: 350px; /* 幅を小さくして見やすく */
+        margin: 80px auto; /* 上下の余白を調整 */
+        padding: 30px 20px; /* 余白を小さめに */
+    }
+
+    .login__title {
+        font-size: 22px; /* タイトルを少し小さく */
+    }
+
+    .form__input--text input {
+        padding: 10px; /* モバイル向けに入力フィールドを調整 */
+    }
+
+    .form__button-submit {
+        padding: 10px 0; /* ボタンの高さを少し小さく */
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login__content {
+        width: 95%; /* フォームの横幅をさらに広げる */
+        max-width: 320px;
+        margin: 60px auto;
+        padding: 25px 15px;
+    }
+
+    .login__title {
+        font-size: 20px;
+    }
+
+    .form__label {
+        font-size: 13px; /* ラベルのフォントサイズを小さめに */
+    }
+
+    .form__button-submit {
+        font-size: 14px;
+        padding: 10px 0;
+    }
+
+    .register__button-submit {
+        font-size: 13px;
+    }
+}
