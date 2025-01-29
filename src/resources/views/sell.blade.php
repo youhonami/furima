@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="condition">商品の状態</label>
             <select id="condition" name="condition">
-                <option value="">選択してください</option>
+                <option value="" selected disabled>選択してください</option>
                 @foreach ($conditions as $condition)
                 <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
                 @endforeach
