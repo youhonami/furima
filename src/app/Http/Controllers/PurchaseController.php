@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Item; // 商品モデルをインポート
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PurchaseRequest;
+use App\Models\Item;
 use App\Models\Purchase;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -23,13 +23,8 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(PurchaseRequest $request)
     {
-        // バリデーション
-        $request->validate([
-            'payment_method' => 'required|string',
-        ]);
-
         // 必要な情報を取得
         $user = Auth::user();
         $itemId = session('current_item_id');
@@ -42,9 +37,7 @@ class PurchaseController extends Controller
         }
 
         // 建物名の処理（空文字を明示的に保存する）
-        $building = isset($tempAddress['building'])
-            ? (trim($tempAddress['building']) === '' ? '' : $tempAddress['building'])
-            : ($profile->building ?? '');
+        $building = $tempAddress['building'] ?? ($profile->building ?? '');
 
         // 購入データの保存
         Purchase::create([
@@ -53,7 +46,7 @@ class PurchaseController extends Controller
             'payment_method' => $request->input('payment_method'),
             'postal_code' => $tempAddress['postal_code'] ?? $profile->postal_code,
             'address' => $tempAddress['address'] ?? $profile->address,
-            'building' => $building, // 明示的に設定された建物名を保存
+            'building' => $building,
         ]);
 
         // トップページにリダイレクト

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Profile;
+use App\Http\Requests\ProfileRequest; // 追加
 
 class ProfileController extends Controller
 {
@@ -25,16 +26,16 @@ class ProfileController extends Controller
     }
 
     // プロフィール更新処理
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         $user = Auth::user();
 
         // バリデーション
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|',
             'postal_code' => 'required|string|max:10',
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
+            'address' => 'required',
+            'building' => 'nullable',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 画像のバリデーション
         ]);
 

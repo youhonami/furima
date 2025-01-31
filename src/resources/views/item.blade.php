@@ -93,7 +93,12 @@
                 <!-- コメント投稿フォーム -->
                 <form action="{{ route('comments.store', ['item' => $item->id]) }}" method="POST">
                     @csrf
-                    <textarea name="comment" placeholder="コメントを入力してください" required></textarea>
+                    <textarea name="content" placeholder="コメントを入力してください">{{ old('content') }}</textarea>
+
+                    @error('content')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
+
                     <button type="submit">コメントを投稿</button>
                 </form>
 

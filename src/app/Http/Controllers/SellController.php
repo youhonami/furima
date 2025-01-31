@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
+use App\Http\Requests\ExhibitionRequest; // 追加
 
 class SellController extends Controller
 {
@@ -18,18 +19,10 @@ class SellController extends Controller
         return view('sell', compact('categories', 'conditions'));
     }
 
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
-        // バリデーション
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer|min:0',
-            'description' => 'nullable|string',
-            'condition' => 'required|exists:conditions,id',
-            'categories' => 'required|array',
-            'categories.*' => 'exists:categories,id',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        // バリデーション済みデータを取得
+        $validated = $request->validated();
 
         // 画像保存
         $imagePath = null;

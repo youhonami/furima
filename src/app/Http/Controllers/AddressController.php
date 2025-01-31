@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddressRequest; // 追加
 
 class AddressController extends Controller
 {
-    public function updateAddress(Request $request)
+    public function updateAddress(AddressRequest $request)
     {
         // バリデーション
         $request->validate([

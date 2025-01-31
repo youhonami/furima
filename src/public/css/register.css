@@ -3,11 +3,100 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* 画面中央に配置 */
-    background-color: #f8f8f8; /* 背景色 */
+}
+
+/* 会員登録フォーム全体のスタイル */
+.register__content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 100px auto;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+/* 見出し */
+.register__title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333333;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* フォーム全体 */
+.form {
+    width: 100%;
+}
+
+.form__group {
+    margin-bottom: 20px;
+}
+
+/* ラベル */
+.form__label {
+    display: block;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* テキスト入力 */
+.form__input--text input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form__input--text input:focus {
+    border-color: #ff6b6b;
+}
+
+/* エラーメッセージ */
+.form__error {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+/* 登録ボタン */
+.form__button-submit {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form__button-submit:hover {
+    background-color: #e64444;
+}
+
+/* ログインリンク */
+.login__button-submit {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login__button-submit:hover {
+    color: #e64444;
 }
 
 /* 会員登録フォーム全体のスタイル */
@@ -31,13 +120,5 @@ body {
 @media screen and (max-width: 850px) and (min-width: 768px) {
     .register__content {
         width: 380px;
-    }
-}
-
-/* 画面幅が768px以下の場合 */
-@media screen and (max-width: 768px) {
-    .register__content {
-        width: 90%;
-        padding: 30px 20px;
     }
 }

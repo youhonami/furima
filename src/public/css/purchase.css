@@ -175,3 +175,9 @@ body {
         text-align: center; /* 小計のテキストを中央寄せ */
     }
 }
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
