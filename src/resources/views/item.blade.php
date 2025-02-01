@@ -42,11 +42,18 @@
                 <!-- 購入手続きボタン -->
                 <div class="purchase-btn-wrapper">
                     @auth
+                    @if ($item->user_id !== Auth::id()) <!-- 出品者以外の場合にボタンを表示 -->
                     <a href="{{ route('purchase', ['id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
+                    @else
+                    <!-- 出品者にはボタンを無効化し、グレーに表示 -->
+                    <button class="purchase-btn disabled" disabled>購入手続きへ</button>
+                    @endif
                     @else
                     <a href="{{ route('login') }}" class="purchase-btn">購入手続きへ</a>
                     @endauth
                 </div>
+
+
             </div>
 
 

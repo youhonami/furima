@@ -168,3 +168,12 @@ body {
         font-size: 13px;
     }
 }
+
+/* エラーメッセージを赤字にする */
+.form__error {
+    font-size: 12px;
+    color: #ff0000;
+    margin-top: 5px;
+    text-align: left;
+    font-weight: bold;
+}

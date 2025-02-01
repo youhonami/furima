@@ -65,11 +65,12 @@
                 </div>
                 <div class="form__error">
                     @error('password_confirmation')
-                    {{ $message }}
+                    {{ $message }} <!-- エラーメッセージを表示 -->
                     @enderror
                 </div>
             </div>
         </div>
+
 
         <!-- 登録ボタン -->
         <div class="form__button">

@@ -122,3 +122,11 @@ body {
         width: 380px;
     }
 }
+
+/* エラーメッセージ */
+.form__error {
+    color: red; /* 赤字で表示 */
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: left;
+}

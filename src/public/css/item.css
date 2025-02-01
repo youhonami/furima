@@ -71,6 +71,18 @@ body {
     background-color: #c9302c;
 }
 
+.purchase-btn.disabled {
+    background-color: #ccc; /* グレーの背景色 */
+    color: #666; /* ボタンの文字色を薄く */
+    cursor: not-allowed; /* ポインターを無効にする */
+    opacity: 0.6; /* 少し透過させる */
+}
+
+.purchase-btn.disabled:hover {
+    background-color: #ccc; /* グレー背景をそのままに */
+    color: #666; /* 文字色を薄く */
+}
+
 .item-description,
 .item-info {
     margin-top: 20px;

@@ -13,6 +13,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -52,15 +55,21 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
-        RateLimiter::for('login', function (Request $request) {
-            $email = (string) $request->email;
+        // Fortify のログイン処理前に `LoginRequest` のバリデーションを適用
+        Fortify::authenticateUsing(function (Request $request) {
+            // フォームリクエストを適用
+            $validated = app(LoginRequest::class)->validated();
 
-            return Limit::perMinute(10)->by($email . $request->ip());
+            // 認証処理
+            $user = User::where('email', $validated['email'])->first();
+
+            if (!$user || !Hash::check($validated['password'], $user->password)) {
+                return null; // 認証失敗
+            }
+
+            return $user; // 認証成功
         });
 
-        Fortify::registerView(function () {
-            return view('auth.register');
-        });
         // 登録後のリダイレクト先をカスタマイズ
         app()->singleton(
             \Laravel\Fortify\Contracts\RegisterResponse::class,
@@ -68,7 +77,6 @@ class FortifyServiceProvider extends ServiceProvider
                 return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
                     public function toResponse($request)
                     {
-                        // プロフィール設定画面にリダイレクト
                         return Redirect::to('/profile/edit');
                     }
                 };
