@@ -26,7 +26,6 @@ class FortifyServiceProvider extends ServiceProvider
     {
         //
     }
-
     /**
      * Bootstrap any application services.
      */
@@ -57,8 +56,8 @@ class FortifyServiceProvider extends ServiceProvider
 
         // Fortify のログイン処理前に `LoginRequest` のバリデーションを適用
         Fortify::authenticateUsing(function (Request $request) {
-            // フォームリクエストを適用
-            $validated = app(LoginRequest::class)->validated();
+            // `LoginRequest` のバリデーションを適用
+            $validated = $request->validate((new LoginRequest())->rules(), (new LoginRequest())->messages());
 
             // 認証処理
             $user = User::where('email', $validated['email'])->first();
@@ -69,6 +68,7 @@ class FortifyServiceProvider extends ServiceProvider
 
             return $user; // 認証成功
         });
+
 
         // 登録後のリダイレクト先をカスタマイズ
         app()->singleton(

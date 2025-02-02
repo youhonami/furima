@@ -31,15 +31,17 @@
             <label for="email" class="form__label">メールアドレス</label>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" />
+                    <input id="email" type="text" name="email" value="{{ old('email') }}" />
+
                 </div>
                 <div class="form__error">
                     @error('email')
-                    {{ $message }}
+                    {{ $message }} <!-- エラーメッセージを表示 -->
                     @enderror
                 </div>
             </div>
         </div>
+
 
         <!-- パスワード入力 -->
         <div class="form__group">
