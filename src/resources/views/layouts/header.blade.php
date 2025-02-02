@@ -29,9 +29,9 @@
             <form method="GET" action="{{ route('item.index') }}" class="search-form">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
                 <input type="text" name="search" placeholder="なにをお探しですか？" value="{{ request('search') }}" class="search-input">
-
             </form>
         </div>
+
 
         <nav class="nav-links">
             @auth

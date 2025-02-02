@@ -13,10 +13,19 @@ class ItemController extends Controller
         $filter = $request->input('filter', 'recommended');
         $search = $request->input('search');
 
-        // ログインユーザーが出品した商品を除外
-        $query = Item::query();
-        if (Auth::check()) {
-            $query->where('user_id', '!=', Auth::id());
+        if ($filter === 'mylist') {
+            if (Auth::check()) {
+                // ユーザーが「いいね」した商品のみ取得
+                $query = Item::whereIn('id', Auth::user()->likedItems->pluck('id'));
+            } else {
+                $query = Item::whereRaw('1 = 0'); // ログインしていない場合は空
+            }
+        } else {
+            // ログインユーザーが出品した商品を除外
+            $query = Item::query();
+            if (Auth::check()) {
+                $query->where('user_id', '!=', Auth::id());
+            }
         }
 
         // 検索処理（商品名のみを対象）
@@ -24,19 +33,11 @@ class ItemController extends Controller
             $query->where('name', 'like', "%{$search}%");
         }
 
-        // フィルタリング条件
-        if ($filter === 'mylist') {
-            if (Auth::check()) {
-                $items = Auth::user()->likedItems; // ユーザーが「いいね」した商品のみ取得
-            } else {
-                $items = collect(); // ログインしていない場合は空のコレクション
-            }
-        } else {
-            $items = $query->get(); // フィルターなしの場合、除外した商品のリストを取得
-        }
+        $items = $query->get();
 
         return view('index', compact('items', 'search', 'filter'));
     }
+
 
     // 商品詳細ページ
     public function show($id)

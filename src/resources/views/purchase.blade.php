@@ -44,6 +44,19 @@
                     </p>
                     <a href="{{ route('address.edit') }}" class="change-address">変更する</a>
 
+                    <!-- 配送先のバリデーションエラー -->
+                    @error('postal_code')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
+
+                    @error('address')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
+
+                    @error('building')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
+
                     <button type="submit" class="purchase-button">購入する</button>
                 </form>
             </div>
