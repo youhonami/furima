@@ -31,6 +31,8 @@
 
 ## テーブル設計
 
+![テーブル]table.drawio.png
+
 ## ER 図
 
 ![ER図](er.drawio.png)
