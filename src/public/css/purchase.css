@@ -1,73 +1,74 @@
-/* 基本のスタイル（変更なし） */
 body {
     background-color: #f8f8f8;
-    color: #ffffff;
+    color: #000;
     font-family: Arial, sans-serif;
 }
 
-.main {
+.purchase__main {
     display: flex;
     justify-content: center;
     padding: 50px 0;
 }
 
-.purchase-container {
+.purchase__container {
     display: flex;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #fff;
+    color: #000;
     padding: 30px;
     border-radius: 10px;
     width: 800px;
     gap: 20px;
 }
 
-.product-details {
+.purchase__details {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.product-image {
+.purchase__image {
     width: 250px;
     height: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.purchase-info {
+.purchase__info {
     width: 100%;
     margin-top: 20px;
 }
 
-.purchase-info h2 {
+.purchase__info-title {
     font-size: 16px;
     margin-bottom: 8px;
 }
 
-.payment-method {
+.purchase__payment-method {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.address {
+.purchase__address {
     font-size: 14px;
     line-height: 1.5;
 }
 
-.change-address {
+.purchase__change-address {
     display: block;
     margin-top: 5px;
     color: #007bff;
     text-decoration: none;
 }
 
-.change-address:hover {
+.purchase__change-address:hover {
     text-decoration: underline;
 }
 
-.product-summary {
+.purchase__summary {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -75,23 +76,23 @@ body {
     text-align: left;
 }
 
-.product-name {
+.purchase__product-name {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.product-price {
+.purchase__product-price {
     font-size: 22px;
     color: #d9534f;
     font-weight: bold;
 }
 
-.purchase-button {
+.purchase__button {
     display: block;
     width: 100%;
     background-color: #ff4b4b;
-    color: #ffffff;
+    color: #fff;
     font-size: 18px;
     padding: 10px;
     border: none;
@@ -100,11 +101,11 @@ body {
     margin-top: 20px;
 }
 
-.purchase-button:hover {
+.purchase__button:hover {
     background-color: #d9534f;
 }
 
-.subtotal-box {
+.purchase__subtotal {
     background-color: #f8f8f8;
     padding: 15px;
     border-radius: 5px;
@@ -112,72 +113,66 @@ body {
     text-align: left;
 }
 
-.subtotal-box h2 {
+.purchase__subtotal-title {
     font-size: 18px;
     margin-bottom: 10px;
 }
 
-.subtotal-price {
+.purchase__subtotal-price {
     font-weight: bold;
     color: #333;
 }
 
-#selected-payment {
-    font-weight: bold;
-    color: #555;
+.purchase__error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
 }
 
 /* 1400px〜1540pxサイズ */
 @media (min-width: 1400px) and (max-width: 1540px) {
-    .purchase-container {
-        width: 100%;
-        max-width: 1200px; /* 最大幅を設定 */
-        gap: 40px; /* コンテナ内の間隔を広げる */
+    .purchase__container {
+        max-width: 1200px;
+        gap: 40px;
     }
 
-    .product-details,
-    .product-summary {
-        flex: 1 1 50%; /* 左右の要素を並べて50%ずつの幅に */
+    .purchase__details,
+    .purchase__summary {
+        flex: 1 1 50%;
     }
 
-    .product-image {
-        width: 300px; /* 画像サイズを調整 */
+    .purchase__image {
+        width: 300px;
     }
 
-    .purchase-button {
-        font-size: 20px; /* ボタンのフォントサイズを大きく */
+    .purchase__button {
+        font-size: 20px;
     }
 }
 
 /* 768px〜850pxサイズ */
 @media (min-width: 768px) and (max-width: 850px) {
-    .purchase-container {
-        flex-direction: row; /* 横並びに変更 */
+    .purchase__container {
+        flex-direction: row;
         width: 90%;
-        gap: 20px; /* アイテム間の間隔を調整 */
+        gap: 20px;
     }
 
-    .product-details,
-    .product-summary {
-        flex: 1 1 50%; /* 左右両方に50%の幅を設定 */
-        align-items: center; /* アイテム中央寄せ */
+    .purchase__details,
+    .purchase__summary {
+        flex: 1 1 50%;
+        align-items: center;
     }
 
-    .product-image {
-        width: 200px; /* 画像サイズを縮小 */
+    .purchase__image {
+        width: 200px;
     }
 
-    .purchase-button {
-        font-size: 16px; /* ボタンのフォントサイズを縮小 */
+    .purchase__button {
+        font-size: 16px;
     }
 
-    .subtotal-box {
-        text-align: center; /* 小計のテキストを中央寄せ */
+    .purchase__subtotal {
+        text-align: center;
     }
-}
-
-.error-message {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 5px;
 }

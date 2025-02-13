@@ -146,6 +146,7 @@ return [
 
     'features' => [
         Features::registration(),
+        Features::emailVerification(), // メール認証を有効化
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),

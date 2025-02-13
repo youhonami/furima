@@ -5,46 +5,46 @@ body {
     background-color: #f8f8f8;
 }
 
-.mypage-container {
+.mypage__container {
     padding: 20px;
 }
 
-.profile {
+.mypage__profile {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ユーザー名と編集ボタンを左右に分ける */
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.user-icon {
+.mypage__icon {
     display: flex;
     align-items: center;
 }
 
-.user-icon img {
+.mypage__icon img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px; /* ユーザー名との間隔を調整 */
+    margin-right: 10px;
     border: 2px solid #ddd;
     margin-left: 400px;
 }
 
-.user-icon h1 {
+.mypage__username {
     font-size: 1.8em;
     color: #333;
     margin: 0;
 }
 
-.user-info {
+.mypage__info {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
 
-.user-info .edit-profile {
+.mypage__edit-btn {
     margin-left: 400px;
     margin-right: 200px;
     font-size: 0.9em;
@@ -56,18 +56,18 @@ body {
     transition: background-color 0.2s, color 0.2s;
 }
 
-.user-info .edit-profile:hover {
+.mypage__edit-btn:hover {
     background-color: #d9534f;
     color: #fff;
 }
 
-.tab-menu {
+.mypage__tab-menu {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
 
-.tab {
+.mypage__tab {
     margin: 0 10px;
     font-size: 1.2em;
     color: #333;
@@ -77,28 +77,20 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.tab.active {
+.mypage__tab--active {
     font-weight: bold;
     color: #d9534f;
     border-bottom: 2px solid #d9534f;
 }
 
-.item-section {
-    display: none;
-}
-
-.item-section.active {
-    display: block;
-}
-
-.item-grid {
+.mypage__item-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 0 20px;
 }
 
-.item-card {
+.mypage__item-card {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -109,25 +101,25 @@ body {
     text-decoration: none;
 }
 
-.item-card:hover {
+.mypage__item-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.item-image {
+.mypage__item-image {
     max-width: 100%;
     border-radius: 8px;
     margin-bottom: 10px;
 }
 
-.item-name {
+.mypage__item-name {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
     text-decoration: none;
 }
 
-.item-card.sold {
+.mypage__item-card--sold {
     position: relative;
     background-color: #f8f8f8;
     border: 1px solid #ddd;
@@ -136,7 +128,7 @@ body {
     pointer-events: none;
 }
 
-.sold-label {
+.mypage__sold-label {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -149,75 +141,45 @@ body {
     border-radius: 5px;
 }
 
-.tab-menu {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.tab {
-    margin: 0 10px;
-    font-size: 1.2em;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-decoration: none;
-    color: #333;
-    border-bottom: 2px solid transparent;
-}
-
-.tab.active {
-    font-weight: bold;
-    color: #d9534f;
-    border-bottom: 2px solid #d9534f;
-}
-
-.tab-content .tab-pane {
-    display: none;
-}
-
-.tab-content .tab-pane.active {
-    display: block;
-}
-
 @media screen and (max-width: 1540px) {
-    .user-icon img {
+    .mypage__icon img {
         margin-left: 200px;
     }
 
-    .user-info .edit-profile {
+    .mypage__edit-btn {
         margin-left: 200px;
         margin-right: 100px;
     }
 }
 
 @media screen and (max-width: 1400px) {
-    .user-icon img {
+    .mypage__icon img {
         margin-left: 100px;
     }
 
-    .user-info .edit-profile {
+    .mypage__edit-btn {
         margin-left: 100px;
         margin-right: 50px;
     }
 }
 
 @media screen and (max-width: 850px) {
-    .profile {
+    .mypage__profile {
         flex-direction: row;
         justify-content: center;
     }
 
-    .user-icon img {
+    .mypage__icon img {
         margin-left: 0;
         width: 80px;
         height: 80px;
     }
 
-    .user-icon h1 {
+    .mypage__username {
         font-size: 1.5em;
     }
 
-    .user-info .edit-profile {
+    .mypage__edit-btn {
         margin-left: 20px;
     }
 }

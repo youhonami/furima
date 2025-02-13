@@ -16,19 +16,17 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Route; // 追加
+use Illuminate\Support\Facades\URL;
 
 class FortifyServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -36,38 +34,44 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // ログインリクエストの制限
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
-
             return Limit::perMinute(5)->by($throttleKey);
         });
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
-
+        // 登録ビューの設定
         Fortify::registerView(function () {
             return view('auth.register');
         });
-
+        // ログインビュー
         Fortify::loginView(function () {
             return view('auth.login');
         });
 
-        // Fortify のログイン処理前に `LoginRequest` のバリデーションを適用
         Fortify::authenticateUsing(function (Request $request) {
-            // `LoginRequest` のバリデーションを適用
-            $validated = $request->validate((new LoginRequest())->rules(), (new LoginRequest())->messages());
+            $validated = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-            // 認証処理
             $user = User::where('email', $validated['email'])->first();
 
             if (!$user || !Hash::check($validated['password'], $user->password)) {
                 return null; // 認証失敗
             }
 
+            if (!$user->hasVerifiedEmail()) {
+                // メール認証が未完了の場合、認証メールを再送信
+                $user->sendEmailVerificationNotification();
+                throw ValidationException::withMessages([
+                    'email' => ['メールアドレスの確認が必要です。認証メールをご確認ください。'],
+                ]);
+            }
+
             return $user; // 認証成功
         });
+
 
 
         // 登録後のリダイレクト先をカスタマイズ

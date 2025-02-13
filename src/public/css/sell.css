@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-main {
+.sell__container {
     max-width: 600px;
     margin: 40px auto;
     background: #fff;
@@ -14,26 +14,25 @@ main {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.sell__title {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.form-group {
+.sell__group {
     margin-bottom: 15px;
 }
 
-label {
+.sell__label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="number"],
-textarea,
-select {
+.sell__input,
+.sell__textarea,
+.sell__select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -41,19 +40,19 @@ select {
     font-size: 16px;
 }
 
-textarea {
+.sell__textarea {
     resize: vertical;
 }
 
-input[type="file"] {
-    display: block;
+.sell__categories input[type="checkbox"] {
+    display: none;
 }
 
-#categories label {
+.sell__category-label {
     display: inline-block;
-    background-color: white; /* 未選択の色 */
+    background-color: white;
     color: #ff4d4d;
-    border: 1px solid #ff4d4d; /* 未選択時の枠線 */
+    border: 1px solid #ff4d4d;
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 14px;
@@ -62,16 +61,12 @@ input[type="file"] {
     transition: background-color 0.3s, color 0.3s;
 }
 
-#categories input[type="checkbox"] {
-    display: none; /* チェックボックスを非表示 */
-}
-
-#categories input[type="checkbox"]:checked + label {
-    background-color: #ffebeb; /* 未選択の色 */
+.sell__categories input[type="checkbox"]:checked + .sell__category-label {
+    background-color: #ffebeb;
     color: #ff4d4d;
 }
 
-.submit-button {
+.sell__submit-button {
     width: 100%;
     background-color: #ff4d4d;
     color: white;
@@ -82,47 +77,45 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.submit-button:hover {
+.sell__submit-button:hover {
     background-color: #e04343;
 }
 
+.sell__error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 @media (min-width: 1400px) and (max-width: 1540px) {
-    main {
+    .sell__container {
         max-width: 700px;
     }
 }
 
 @media (max-width: 850px) {
-    main {
+    .sell__container {
         width: 90%;
         padding: 15px;
     }
 
-    h2 {
+    .sell__title {
         font-size: 20px;
     }
 
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select {
+    .sell__input,
+    .sell__textarea {
         font-size: 14px;
         padding: 8px;
     }
 
-    .submit-button {
+    .sell__submit-button {
         font-size: 14px;
         padding: 10px;
     }
 
-    #categories label {
+    .sell__category-label {
         font-size: 12px;
         padding: 4px 8px;
     }
-}
-
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
 }

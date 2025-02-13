@@ -7,54 +7,55 @@
     <title>furima</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
-
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     @yield('css')
 </head>
 
 <body>
     <header class="header">
-        <div class="logo">
+        <div class="header__logo">
             <a href="/">
                 <img src="{{ asset('storage/images/logo.svg') }}" alt="COACHTECH Logo">
             </a>
         </div>
 
-        <!-- /login と /register では表示しない -->
         @unless (request()->is('login') || request()->is('register'))
-        <div class="search-bar">
-            <form method="GET" action="{{ route('item.index') }}" class="search-form">
+        <div class="header__search-bar">
+            <form method="GET" action="{{ route('item.index') }}">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
-                <input type="text" name="search" placeholder="なにをお探しですか？" value="{{ request('search') }}" class="search-input">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="なにをお探しですか？"
+                    value="{{ request('search') }}">
             </form>
         </div>
 
-
-        <nav class="nav-links">
+        <nav class="header__nav-links">
             @auth
-            <!-- ログインしている場合 -->
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
                 <button type="submit">ログアウト</button>
             </form>
             <a href="{{ route('mypage') }}">マイページ</a>
-            <a href="{{ route('sell.index') }}">出品</a> <!-- 出品リンク -->
+            <a href="{{ route('sell.index') }}">出品</a>
             @else
-            <!-- ログインしていない場合 -->
             <a href="{{ route('login') }}">ログイン</a>
-            <a href="{{ route('login') }}">マイページ</a> <!-- ログインページに遷移 -->
-            <a href="{{ route('login') }}">出品</a> <!-- ログインページに遷移 -->
+            <a href="{{ route('login') }}">マイページ</a>
+            <a href="{{ route('login') }}">出品</a>
             @endauth
         </nav>
         @endunless
     </header>
 
-    <main>
+    <main class="main">
         @yield('content')
     </main>
+
+    <footer class="footer">
+        &copy; 2025 COACHTECH
+    </footer>
 </body>
 
 </html>

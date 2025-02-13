@@ -1,39 +1,30 @@
-/* 全体レイアウト */
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+body {
     background-color: #f9f9f9;
-    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
-/* コンテナ */
-.address-container {
+.address__container {
     width: 400px;
     background: #fff;
     padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center;
-    margin: 0 auto; /* センター揃えの保険 */
+    margin: 20px auto;
 }
 
-/* タイトル */
-.address-title {
+.address__title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-/* フォームグループ */
-.form-group {
+.address__group {
     margin-bottom: 20px;
     text-align: left;
 }
 
-/* ラベル */
-.form-label {
+.address__label {
     display: block;
     font-size: 14px;
     font-weight: bold;
@@ -41,8 +32,7 @@
     color: #333;
 }
 
-/* 入力フィールド */
-.form-input {
+.address__input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -51,14 +41,13 @@
     box-sizing: border-box;
 }
 
-.form-input:focus {
+.address__input:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
-/* ボタン */
-.btn-submit {
+.address__submit {
     width: 100%;
     padding: 12px;
     background-color: #ff6b6b;
@@ -71,52 +60,54 @@
     margin-top: 10px;
 }
 
-.btn-submit:hover {
+.address__submit:hover {
     background-color: #ff5252;
 }
 
-/* 1400px〜1540pxサイズ */
-@media (min-width: 1400px) and (max-width: 1540px) {
-    .address-container {
-        width: 500px; /* 幅を広げて調整 */
-        padding: 40px; /* パディングを広げて、中央の余白を調整 */
-    }
-
-    .address-title {
-        font-size: 28px; /* タイトルのフォントサイズを調整 */
-    }
-
-    .form-input {
-        font-size: 18px; /* 入力フィールドのフォントサイズを調整 */
-    }
-
-    .btn-submit {
-        font-size: 18px; /* ボタンのフォントサイズを調整 */
-    }
-}
-
-/* 768px〜850pxサイズ */
-@media (min-width: 768px) and (max-width: 850px) {
-    .address-container {
-        width: 100%; /* 幅を100%にして余白を減らす */
-        padding: 20px; /* パディングを小さく */
-    }
-
-    .address-title {
-        font-size: 20px; /* タイトルのフォントサイズを調整 */
-    }
-
-    .form-input {
-        font-size: 14px; /* 入力フィールドのフォントサイズを調整 */
-    }
-
-    .btn-submit {
-        font-size: 14px; /* ボタンのフォントサイズを調整 */
-    }
-}
-
-.error-message {
+.address__error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
+}
+
+/* レスポンシブ対応 */
+
+/* 1400px〜1540px */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .address__container {
+        width: 500px;
+        padding: 40px;
+    }
+
+    .address__title {
+        font-size: 28px;
+    }
+
+    .address__input {
+        font-size: 18px;
+    }
+
+    .address__submit {
+        font-size: 18px;
+    }
+}
+
+/* 768px〜850px */
+@media (min-width: 768px) and (max-width: 850px) {
+    .address__container {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .address__title {
+        font-size: 20px;
+    }
+
+    .address__input {
+        font-size: 14px;
+    }
+
+    .address__submit {
+        font-size: 14px;
+    }
 }

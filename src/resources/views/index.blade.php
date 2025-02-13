@@ -5,35 +5,36 @@
 @endsection
 
 @section('content')
-<main>
-
+<main class="main">
 
     <!-- タブメニュー -->
-    <div class="tab-menu">
+    <div class="tabs">
         <a href="{{ route('item.index', ['filter' => 'recommended', 'search' => request('search')]) }}"
-            class="tab {{ request('filter') !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+            class="tabs__item {{ request('filter') !== 'mylist' ? 'tabs__item--active' : '' }}">
+            おすすめ
+        </a>
 
         <a href="{{ route('item.index', ['filter' => 'mylist', 'search' => request('search')]) }}"
-            class="tab {{ request('filter') === 'mylist' ? 'active' : '' }}">マイリスト</a>
+            class="tabs__item {{ request('filter') === 'mylist' ? 'tabs__item--active' : '' }}">
+            マイリスト
+        </a>
     </div>
 
-
-
     <!-- 商品一覧 -->
-    <div class="item-grid">
+    <div class="item-list">
         @foreach($items as $item)
         @if($item->isSold())
         <!-- 購入済み商品 -->
-        <div class="item-card sold">
-            <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-image">
-            <h2 class="item-name">{{ $item->name }}</h2>
-            <p class="sold-label">Sold</p>
+        <div class="item-list__card item-list__card--sold">
+            <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-list__image">
+            <h2 class="item-list__name">{{ $item->name }}</h2>
+            <p class="item-list__sold-label">Sold</p>
         </div>
         @else
         <!-- 購入可能商品 -->
-        <a href="{{ route('item.show', $item->id) }}" class="item-card">
-            <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-image">
-            <h2 class="item-name">{{ $item->name }}</h2>
+        <a href="{{ route('item.show', $item->id) }}" class="item-list__card">
+            <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-list__image">
+            <h2 class="item-list__name">{{ $item->name }}</h2>
         </a>
         @endif
         @endforeach
@@ -44,11 +45,4 @@
     <p>検索結果が見つかりませんでした。</p>
     @endif
 </main>
-
-<footer class="footer">
-    © 2025 COACHTECH
-</footer>
-</body>
-
-</html>
 @endsection

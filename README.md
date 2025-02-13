@@ -10,6 +10,7 @@
 
 - 新規会員登録
 - ログイン
+- メール認証機能（MailHog）
 - ログアウト
 - プロフィール設定
 - 商品の出品
@@ -28,6 +29,7 @@
 - PHP8.3.0
 - Laravel8.83.27
 - MySQL8.0.26
+- MailHog
 
 ## テーブル設計
 
@@ -91,5 +93,6 @@ php artisan db:seed
 
 ## URL
 
-- 開発環境：http://localhost
-- phpMyAdmin:：http://localhost:8080/
+- 開発環境:http://localhost
+- phpMyAdmin:http://localhost:8080/
+- MailHog:http://localhost:8025/

@@ -1,3 +1,4 @@
+/* Global */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,17 +6,19 @@ body {
     background-color: #f8f8f8;
 }
 
+/* Main (コンテンツ部分) */
 .main {
     padding: 20px;
 }
 
-.tab-menu {
+/* タブメニュー (BEM: Block = .tabs) */
+.tabs {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
 
-.tab {
+.tabs__item {
     margin: 0 10px;
     font-size: 1.2em;
     color: #333;
@@ -25,27 +28,21 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.tab.active {
+.tabs__item--active {
     font-weight: bold;
     color: #d9534f;
     border-bottom: 2px solid #d9534f;
 }
 
-.tab.disabled {
-    pointer-events: none;
-    color: gray;
-    cursor: not-allowed;
-    text-decoration: none;
-}
-
-.item-grid {
+/* 商品一覧 (BEM: Block = .item-list) */
+.item-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 常に4列 */
     gap: 20px;
     padding: 0 20px;
 }
 
-.item-card {
+.item-list__card {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -54,27 +51,28 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
+    color: inherit; /* hover時の文字色変化を防ぐため */
 }
 
-.item-card:hover {
+.item-list__card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.item-image {
+.item-list__image {
     max-width: 100%;
     border-radius: 8px;
     margin-bottom: 10px;
 }
 
-.item-name {
+.item-list__name {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
-    text-decoration: none;
 }
 
-.item-card.sold {
+/* 購入済みのカード */
+.item-list__card--sold {
     position: relative;
     background-color: #f8f8f8;
     border: 1px solid #ddd;
@@ -83,7 +81,7 @@ body {
     pointer-events: none;
 }
 
-.sold-label {
+.item-list__sold-label {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -96,33 +94,26 @@ body {
     border-radius: 5px;
 }
 
-/* メディアクエリ：1400px〜1540px */
-@media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .tab-menu {
-        margin-bottom: 15px;
-    }
+/* == Media Queries == */
 
-    .tab {
+/* 1400px〜1540px */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .tabs__item {
         font-size: 1.1em;
         padding: 8px 16px;
     }
 }
 
-/* メディアクエリ：768px〜850px */
+/* 768px〜850px */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .tab-menu {
-        flex-direction: row; /* 横並びに修正 */
-        justify-content: center; /* タブを中央に配置 */
+    .tabs {
+        flex-direction: row;
+        justify-content: center;
         margin-bottom: 15px;
     }
 
-    .tab {
+    .tabs__item {
         font-size: 1.1em;
         padding: 8px 16px;
-    }
-
-    .footer {
-        text-align: center;
-        padding: 10px 0;
     }
 }

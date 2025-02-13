@@ -10,7 +10,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
 use Laravel\Fortify\Fortify;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,8 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
 
 Route::get('/mypage', [ProfileController::class, 'show'])->name('mypage'); // マイページ表示
 Route::get('/mypage/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -67,3 +67,22 @@ Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.s
 
 
 Route::get('/mypage', [UserController::class, 'show'])->middleware('auth')->name('mypage');
+
+
+// 1) 認証待ちページ
+Route::get('/email/verify', function () {
+    return view('auth.verify-email'); // ここで「メール認証してください」画面を表示
+})->middleware('auth')->name('verification.notice');
+
+// 2) 認証リンクをクリックしたとき
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // 認証を完了
+    // 認証完了後のリダイレクト先（例: プロフィール編集画面）
+    return redirect()->route('profile.edit');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// 3) 認証メール再送
+Route::post('/email/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', '認証メールを再送しました！');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
