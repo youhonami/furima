@@ -100,3 +100,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     // ログイン時は商品一覧ページへリダイレクト
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
+    Route::get('/sell', [SellController::class, 'index'])->name('sell.index');
+});

@@ -15,12 +15,16 @@
 <body>
     <header class="header">
         <div class="header__logo">
+            @unless (request()->is('email/verify'))
             <a href="/">
                 <img src="{{ asset('storage/images/logo.svg') }}" alt="COACHTECH Logo">
             </a>
+            @else
+            <img src="{{ asset('storage/images/logo.svg') }}" alt="COACHTECH Logo">
+            @endunless
         </div>
 
-        @unless (request()->is('login') || request()->is('register'))
+        @unless (request()->is('login') || request()->is('register') || request()->is('email/verify'))
         <div class="header__search-bar">
             <form method="GET" action="{{ route('item.index') }}">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
@@ -48,6 +52,7 @@
         </nav>
         @endunless
     </header>
+
 
     <main class="main">
         @yield('content')

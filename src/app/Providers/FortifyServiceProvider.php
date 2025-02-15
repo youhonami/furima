@@ -36,6 +36,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // メール認証でカスタム通知を使用する（ここで設定）
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new \App\Notifications\CustomVerifyEmail())->toMail($notifiable);
+        });
+
         // ログインリクエストの制限
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
@@ -46,11 +51,13 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('auth.register');
         });
+
         // ログインビュー
         Fortify::loginView(function () {
             return view('auth.login');
         });
 
+        // ログイン時のカスタム認証処理
         Fortify::authenticateUsing(function (Request $request) {
             $validated = $request->validate([
                 'email' => 'required|email',
@@ -63,18 +70,14 @@ class FortifyServiceProvider extends ServiceProvider
                 return null; // 認証失敗
             }
 
-            // 毎回メール認証を再送信
-            $user->sendEmailVerificationNotification();
+            // メール認証が未完了の場合、最初のリクエスト時にメール送信
+            if (is_null($user->email_verified_at) && !$request->session()->has('verification_mail_sent')) {
+                $user->sendEmailVerificationNotification();
+                $request->session()->put('verification_mail_sent', true); // メール送信済みフラグを設定
+            }
 
             return $user; // 認証成功
-
-
-            // メール認証でカスタム通知を使用する
-            VerifyEmail::toMailUsing(function ($notifiable, $url) {
-                return (new CustomVerifyEmail)->toMail($notifiable);
-            });
         });
-
 
 
         // 登録後のリダイレクト先を認証待ちページにカスタマイズ
@@ -84,23 +87,20 @@ class FortifyServiceProvider extends ServiceProvider
                 return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
                     public function toResponse($request)
                     {
-                        // セッションに登録から来たことを記録
                         session(['from_registration' => true]);
-
-                        // 登録後にメール認証ページへ
                         return Redirect::to('/email/verify');
                     }
                 };
             }
         );
 
+        // ログイン後のリダイレクト先をメール認証待ちページに変更
         app()->singleton(
             \Laravel\Fortify\Contracts\LoginResponse::class,
             function () {
                 return new class implements \Laravel\Fortify\Contracts\LoginResponse {
                     public function toResponse($request)
                     {
-                        // ログイン後にメール認証ページへ
                         return Redirect::to('/email/verify');
                     }
                 };

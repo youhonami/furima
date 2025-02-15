@@ -146,7 +146,9 @@ return [
 
     'features' => [
         Features::registration(),
-        Features::emailVerification(), // メール認証を有効化
+        Features::emailVerification([
+            'expire' => 60,  // リンク有効期限を60分（1時間）に変更
+        ]),
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),
