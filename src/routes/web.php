@@ -12,6 +12,8 @@ use App\Http\Controllers\AddressController;
 use Laravel\Fortify\Fortify;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,11 +76,10 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email'); // ここで「メール認証してください」画面を表示
 })->middleware('auth')->name('verification.notice');
 
-// 2) 認証リンクをクリックしたとき
+// 認証リンクをクリックしたときの処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill(); // 認証を完了
-    // 認証完了後のリダイレクト先（例: プロフィール編集画面）
-    return redirect()->route('profile.edit');
+    return redirect()->route('profile.edit'); // 認証後にプロフィール編集ページへリダイレクト
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // 3) 認証メール再送
@@ -86,3 +87,16 @@ Route::post('/email/resend', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', '認証メールを再送しました！');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // 認証を完了
+
+    // ユーザーの直前のページを確認
+    if (session('from_registration')) {
+        session()->forget('from_registration'); // セッション削除
+        return redirect()->route('profile.edit'); // 新規会員登録後はプロフィール編集へ
+    }
+
+    // ログイン時は商品一覧ページへリダイレクト
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');

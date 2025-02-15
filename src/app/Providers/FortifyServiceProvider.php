@@ -19,6 +19,8 @@ use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Route; // 追加
 use Illuminate\Support\Facades\URL;
+use App\Notifications\CustomVerifyEmail;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -61,27 +63,45 @@ class FortifyServiceProvider extends ServiceProvider
                 return null; // 認証失敗
             }
 
-            if (!$user->hasVerifiedEmail()) {
-                // メール認証が未完了の場合、認証メールを再送信
-                $user->sendEmailVerificationNotification();
-                throw ValidationException::withMessages([
-                    'email' => ['メールアドレスの確認が必要です。認証メールをご確認ください。'],
-                ]);
-            }
+            // 毎回メール認証を再送信
+            $user->sendEmailVerificationNotification();
 
             return $user; // 認証成功
+
+
+            // メール認証でカスタム通知を使用する
+            VerifyEmail::toMailUsing(function ($notifiable, $url) {
+                return (new CustomVerifyEmail)->toMail($notifiable);
+            });
         });
 
 
 
-        // 登録後のリダイレクト先をカスタマイズ
+        // 登録後のリダイレクト先を認証待ちページにカスタマイズ
         app()->singleton(
             \Laravel\Fortify\Contracts\RegisterResponse::class,
             function () {
                 return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
                     public function toResponse($request)
                     {
-                        return Redirect::to('/profile/edit');
+                        // セッションに登録から来たことを記録
+                        session(['from_registration' => true]);
+
+                        // 登録後にメール認証ページへ
+                        return Redirect::to('/email/verify');
+                    }
+                };
+            }
+        );
+
+        app()->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            function () {
+                return new class implements \Laravel\Fortify\Contracts\LoginResponse {
+                    public function toResponse($request)
+                    {
+                        // ログイン後にメール認証ページへ
+                        return Redirect::to('/email/verify');
                     }
                 };
             }
