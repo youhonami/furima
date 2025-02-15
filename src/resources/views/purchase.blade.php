@@ -60,7 +60,7 @@
         </div>
     </div>
 </main>
-
+<script src="https://js.stripe.com/v3/"></script>
 <script>
     document.querySelector('.purchase__payment-method').addEventListener('change', function() {
         document.getElementById('selected-payment').innerText = this.options[this.selectedIndex].text;

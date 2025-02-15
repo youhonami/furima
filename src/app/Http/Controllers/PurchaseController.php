@@ -6,6 +6,9 @@ use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\Checkout\Session as StripeSession;
 
 class PurchaseController extends Controller
 {
@@ -23,33 +26,38 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function store(PurchaseRequest $request)
+    public function store(Request $request)
     {
-        // 必要な情報を取得
-        $user = Auth::user();
-        $itemId = session('current_item_id');
-        $profile = $user->profile;
-        $tempAddress = session('temp_address');
-
-        // 必要なデータが揃っているか確認
-        if (!$itemId || (!$tempAddress && !$profile)) {
-            return redirect()->back()->withErrors('必要な情報が不足しています。');
-        }
-
-        // 建物名の処理（空文字を明示的に保存する）
-        $building = $tempAddress['building'] ?? ($profile->building ?? '');
-
-        // 購入データの保存
-        Purchase::create([
-            'user_id' => $user->id,
-            'item_id' => $itemId,
-            'payment_method' => $request->input('payment_method'),
-            'postal_code' => $tempAddress['postal_code'] ?? $profile->postal_code,
-            'address' => $tempAddress['address'] ?? $profile->address,
-            'building' => $building,
+        $request->validate([
+            'payment_method' => 'required',
         ]);
 
-        // トップページにリダイレクト
-        return redirect('/')->with('success', '購入が完了しました！');
+        $user = Auth::user();
+        $itemId = session('current_item_id');
+        $item = Item::findOrFail($itemId);
+
+        // Stripe APIキー設定
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        // Stripeセッションの作成
+        $session = StripeSession::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->name,
+                    ],
+                    'unit_amount' => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('purchase.success'),
+            'cancel_url' => route('purchase', ['id' => $item->id]),  // 商品購入画面に戻るURLを設定
+        ]);
+
+        // StripeのCheckoutページにリダイレクト
+        return redirect($session->url);
     }
 }

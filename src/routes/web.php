@@ -107,3 +107,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
     Route::get('/sell', [SellController::class, 'index'])->name('sell.index');
 });
+
+Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
+
+Route::get('/purchase/success', function () {
+    return view('purchase.success');
+})->name('purchase.success');
+
+Route::get('/purchase/cancel', function () {
+    return view('purchase.cancel');
+})->name('purchase.cancel');
