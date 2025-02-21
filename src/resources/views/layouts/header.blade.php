@@ -26,15 +26,17 @@
 
         @unless (request()->is('login') || request()->is('register') || request()->is('email/verify'))
         <div class="header__search-bar">
-            <form method="GET" action="{{ route('item.index') }}">
+            <form method="GET" action="{{ route('item.index') }}" id="searchForm">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
                 <input
                     type="text"
                     name="search"
+                    id="searchInput"
                     placeholder="なにをお探しですか？"
                     value="{{ request('search') }}">
             </form>
         </div>
+
 
         <nav class="header__nav-links">
             @auth
@@ -62,5 +64,22 @@
         &copy; 2025 COACHTECH
     </footer>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const searchForm = document.getElementById('searchForm');
+
+        let timeout = null;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+
+            // 入力後500ms待ってから検索を実行
+            timeout = setTimeout(() => {
+                searchForm.submit();
+            }, 500);
+        });
+    });
+</script>
 
 </html>

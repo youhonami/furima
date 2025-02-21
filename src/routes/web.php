@@ -117,3 +117,5 @@ Route::get('/purchase/success', function () {
 Route::get('/purchase/cancel', function () {
     return view('purchase.cancel');
 })->name('purchase.cancel');
+
+Route::get('/items', [ItemController::class, 'index'])->name('item.index');
