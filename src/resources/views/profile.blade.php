@@ -13,13 +13,14 @@
             @method('PUT')
 
             <div class="profile__icon">
-                <!-- ✅ デフォルト画像のパスを定義 -->
+                <!-- ✅ デフォルト画像の設定 -->
                 @php
                 $defaultImage = asset('storage/images/default-user-icon.png');
+                $userImage = $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : $defaultImage;
                 @endphp
 
-                <!-- ✅ プレビュー用の画像タグ -->
-                <img id="profile-preview" src="{{ $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : $defaultImage }}" alt="ユーザーアイコン">
+                <!-- プレビュー用の画像タグ -->
+                <img id="profile-preview" src="{{ $userImage }}" alt="ユーザーアイコン" style="width: 120px; height: 120px; border-radius: 50%; border: 1px solid #ccc;">
 
                 <label for="profile_image" class="profile__icon-btn">画像を選択する</label>
                 <input type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(event)">
