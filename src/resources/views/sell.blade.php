@@ -13,7 +13,13 @@
         <!-- 商品画像 -->
         <div class="sell__group">
             <label for="image" class="sell__label">商品画像</label>
-            <input type="file" id="image" name="image" class="sell__input" accept="image/*">
+
+            <!-- ✅ プレビュー用の枠を追加 -->
+            <div class="sell__image-preview">
+                <img id="image-preview" src="{{ asset('storage/images/default-product.png') }}" alt="商品プレビュー">
+            </div>
+
+            <input type="file" id="image" name="image" class="sell__input" accept="image/*" onchange="previewImage(event)">
             @error('image')
             <p class="sell__error">{{ $message }}</p>
             @enderror
@@ -88,4 +94,22 @@
         <button type="submit" class="sell__submit-button">出品する</button>
     </form>
 </main>
+
+<!-- ✅ プレビュー用JavaScript -->
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('image-preview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result; // 選択した画像をプレビュー表示
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 @endsection

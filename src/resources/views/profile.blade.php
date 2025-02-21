@@ -13,12 +13,23 @@
             @method('PUT')
 
             <div class="profile__icon">
-                <img src="{{ $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : asset('storage/images/default-user-icon.png') }}" alt="ユーザーアイコン">
+                <!-- ✅ デフォルト画像のパスを定義 -->
+                @php
+                $defaultImage = asset('storage/images/default-user-icon.png');
+                @endphp
+
+                <!-- ✅ プレビュー用の画像タグ -->
+                <img id="profile-preview" src="{{ $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : $defaultImage }}" alt="ユーザーアイコン">
+
                 <label for="profile_image" class="profile__icon-btn">画像を選択する</label>
-                <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                <input type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(event)">
+
                 @error('profile_image')
                 <p class="profile__error">{{ $message }}</p>
                 @enderror
+
+                <!-- ✅ リセットボタンを追加 -->
+                <button type="button" class="profile__reset-btn" onclick="resetImage()">デフォルトに戻す</button>
             </div>
 
             <div class="profile__group">
@@ -57,4 +68,35 @@
         </form>
     </div>
 </main>
+
+<!-- ✅ プレビュー用JavaScript -->
+<script>
+    const defaultImage = "{{ $defaultImage }}"; // Bladeからデフォルト画像のパスを取得
+
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('profile-preview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result; // 画像をプレビューに反映
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = defaultImage; // ファイルがない場合、デフォルト画像を表示
+        }
+    }
+
+    // ✅ デフォルトに戻す関数
+    function resetImage() {
+        const preview = document.getElementById('profile-preview');
+        const input = document.getElementById('profile_image');
+
+        preview.src = defaultImage; // プレビューをデフォルト画像に変更
+        input.value = ''; // ファイル選択をクリア
+    }
+</script>
 @endsection
