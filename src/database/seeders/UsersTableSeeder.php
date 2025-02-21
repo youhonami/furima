@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => '三毛猫',
                 'email' => 'qqq@qqq',
-                'email_verified_at' => now(),
+                'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'シャムネコ',
                 'email' => 'www@www',
-                'email_verified_at' => now(),
+                'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'ちしゃ猫',
                 'email' => 'eee@eee',
-                'email_verified_at' => now(),
+                'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),
                 'updated_at' => now(),

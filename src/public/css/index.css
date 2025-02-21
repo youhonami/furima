@@ -69,6 +69,8 @@ body {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
+    overflow: hidden; /* はみ出た部分を非表示 */
+    text-overflow: ellipsis; /* 省略記号（…）を表示 */
 }
 
 /* 購入済みのカード */

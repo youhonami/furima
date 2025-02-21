@@ -29,7 +29,7 @@
             @foreach ($listedItems as $item)
             <a href="{{ route('item.show', $item->id) }}" class="mypage__item-card {{ $item->isSold() ? 'mypage__item-card--sold' : '' }}">
                 <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $item->name }}" class="mypage__item-image">
-                <h2 class="mypage__item-name">{{ $item->name }}</h2>
+                <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
                 @if ($item->isSold())
                 <p class="mypage__sold-label">Sold</p>
                 @endif
@@ -45,7 +45,7 @@
             @foreach ($purchasedItems as $purchase)
             <div class="mypage__item-card mypage__item-card--sold">
                 <img src="{{ $purchase->item->img ? asset('storage/' . $purchase->item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $purchase->item->name }}" class="mypage__item-image">
-                <h2 class="mypage__item-name">{{ $purchase->item->name }}</h2>
+                <h2 class="mypage__item-name">{{ Str::limit($item->name,20, '...') }}</h2>
                 <p class="mypage__sold-label">Sold</p>
             </div>
             @endforeach
