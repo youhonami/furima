@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => '三毛猫',
-                'email' => 'qqq@qqq',
+                'email' => 'qqq@qqq.co.jp',
                 'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'シャムネコ',
-                'email' => 'www@www',
+                'email' => 'www@www.co.jp',
                 'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'ちしゃ猫',
-                'email' => 'eee@eee',
+                'email' => 'eee@eee.co.jp',
                 'email_verified_at' => null, // 空白に設定
                 'password' => Hash::make('aaaaaaaaaa'),
                 'created_at' => now(),

@@ -104,9 +104,12 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [ItemController::class, 'index'])->name('item.index'); // トップページも保護
     Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
     Route::get('/sell', [SellController::class, 'index'])->name('sell.index');
+    Route::get('/items', [ItemController::class, 'index'])->name('item.index');
 });
+
 
 Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
 

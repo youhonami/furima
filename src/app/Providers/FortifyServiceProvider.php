@@ -79,29 +79,19 @@ class FortifyServiceProvider extends ServiceProvider
             return $user; // 認証成功
         });
 
+        // FortifyServiceProvider.php
 
-        // 登録後のリダイレクト先を認証待ちページにカスタマイズ
-        app()->singleton(
-            \Laravel\Fortify\Contracts\RegisterResponse::class,
-            function () {
-                return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
-                    public function toResponse($request)
-                    {
-                        session(['from_registration' => true]);
-                        return Redirect::to('/email/verify');
-                    }
-                };
-            }
-        );
-
-        // ログイン後のリダイレクト先をメール認証待ちページに変更
         app()->singleton(
             \Laravel\Fortify\Contracts\LoginResponse::class,
             function () {
                 return new class implements \Laravel\Fortify\Contracts\LoginResponse {
                     public function toResponse($request)
                     {
-                        return Redirect::to('/email/verify');
+                        if (!$request->user()->hasVerifiedEmail()) {
+                            return Redirect::to('/email/verify'); // メール未認証なら認証ページへ
+                        }
+
+                        return Redirect::to('/'); // メール認証済みならトップページへ
                     }
                 };
             }
