@@ -10,25 +10,27 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
+        // ログイン済みかつ未認証のユーザーは /email/verify にリダイレクト
+        if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
         $filter = $request->input('filter', 'recommended');
         $search = $request->input('search');
 
         if ($filter === 'mylist') {
             if (Auth::check()) {
-                // ユーザーが「いいね」した商品のみ取得
                 $query = Item::whereIn('id', Auth::user()->likedItems->pluck('id'));
             } else {
-                $query = Item::whereRaw('1 = 0'); // ログインしていない場合は空
+                $query = Item::whereRaw('1 = 0');
             }
         } else {
-            // ログインユーザーが出品した商品を除外
             $query = Item::query();
             if (Auth::check()) {
                 $query->where('user_id', '!=', Auth::id());
             }
         }
 
-        // 検索処理（商品名のみを対象）
         if ($search) {
             $query->where('name', 'like', "%{$search}%");
         }
