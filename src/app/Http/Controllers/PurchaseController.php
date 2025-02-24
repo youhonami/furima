@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
@@ -60,9 +59,12 @@ class PurchaseController extends Controller
 
         $purchase->save();
 
+        // 支払い方法の判定
+        $paymentMethodType = $request->payment_method === 'convenience_store' ? 'konbini' : 'card';
+
         // Stripeセッションの作成
         $session = StripeSession::create([
-            'payment_method_types' => ['card'],
+            'payment_method_types' => [$paymentMethodType],
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'jpy',
@@ -75,7 +77,7 @@ class PurchaseController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => route('item.index'), // 決済成功時
-            'cancel_url' => route('purchase.cancel', ['id' => $item->id]), // ← ここでキャンセルURLを設定
+            'cancel_url' => route('purchase.cancel', ['id' => $item->id]), // キャンセルURL
         ]);
 
         return redirect($session->url);
