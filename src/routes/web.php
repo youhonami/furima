@@ -13,6 +13,7 @@ use Laravel\Fortify\Fortify;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\StripeWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,3 +122,5 @@ Route::get('/purchase/cancel', function () {
 })->name('purchase.cancel');
 
 Route::get('/items', [ItemController::class, 'index'])->name('item.index');
+
+Route::get('/purchase/cancel/{id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
