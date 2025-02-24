@@ -68,10 +68,6 @@ Route::post('/purchase/complete', [PurchaseController::class, 'completePurchase'
 
 Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
 
-
-Route::get('/mypage', [UserController::class, 'show'])->middleware('auth')->name('mypage');
-
-
 // 1) 認証待ちページ
 Route::get('/email/verify', function () {
     return view('auth.verify-email'); // ここで「メール認証してください」画面を表示

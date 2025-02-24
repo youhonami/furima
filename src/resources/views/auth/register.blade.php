@@ -9,6 +9,7 @@
     <h1 class="register__title">会員登録</h1>
     <form class="register__form" action="/register" method="post">
         @csrf
+
         <!-- 名前入力 -->
         <div class="register__group">
             <label for="name" class="register__label">ユーザー名</label>
@@ -32,7 +33,9 @@
             <label for="password" class="register__label">パスワード</label>
             <input id="password" type="password" name="password" class="register__input">
             @error('password')
+            @if ($message !== 'パスワードと一致しません。')
             <div class="register__error">{{ $message }}</div>
+            @endif
             @enderror
         </div>
 
@@ -42,6 +45,13 @@
             <input id="password_confirmation" type="password" name="password_confirmation" class="register__input">
             @error('password_confirmation')
             <div class="register__error">{{ $message }}</div>
+            @enderror
+
+            {{-- パスワード確認エラーをここに表示 --}}
+            @error('password')
+            @if ($message === 'パスワードと一致しません。')
+            <div class="register__error">{{ $message }}</div>
+            @endif
             @enderror
         </div>
 

@@ -45,7 +45,7 @@
             @foreach ($purchasedItems as $purchase)
             <div class="mypage__item-card mypage__item-card--sold">
                 <img src="{{ $purchase->item->img ? asset('storage/' . $purchase->item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $purchase->item->name }}" class="mypage__item-image">
-                <h2 class="mypage__item-name">{{ Str::limit($item->name,20, '...') }}</h2>
+                <h2 class="mypage__item-name">{{ Str::limit($purchase->item->name, 20, '...') }}</h2>
                 <p class="mypage__sold-label">Sold</p>
             </div>
             @endforeach

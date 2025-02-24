@@ -44,15 +44,15 @@ class PurchaseController extends Controller
         $purchase->item_id = $item->id;
         $purchase->payment_method = $request->payment_method;
 
-        $profile = $user->profile;
-        if ($profile) {
-            $purchase->postal_code = $profile->postal_code;
-            $purchase->address = $profile->address;
-            $purchase->building = $profile->building;
-        } elseif (session('temp_address')) {
+        // セッションの配送先があれば優先する
+        if (session('temp_address')) {
             $purchase->postal_code = session('temp_address.postal_code');
             $purchase->address = session('temp_address.address');
             $purchase->building = session('temp_address.building');
+        } elseif ($user->profile) {
+            $purchase->postal_code = $user->profile->postal_code;
+            $purchase->address = $user->profile->address;
+            $purchase->building = $user->profile->building;
         } else {
             return back()->withErrors(['address' => '配送先が登録されていません。']);
         }
@@ -76,12 +76,13 @@ class PurchaseController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('item.index'), // 決済成功時
-            'cancel_url' => route('purchase.cancel', ['id' => $item->id]), // キャンセルURL
+            'success_url' => route('item.index'),
+            'cancel_url' => route('purchase.cancel', ['id' => $item->id]),
         ]);
 
         return redirect($session->url);
     }
+
 
     public function cancel($id)
     {
