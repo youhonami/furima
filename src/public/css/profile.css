@@ -4,7 +4,6 @@ body {
     padding: 0;
 }
 
-/* メインコンテナ */
 .profile {
     max-width: 800px;
     margin: 0 auto;
@@ -18,7 +17,6 @@ body {
     font-weight: bold;
 }
 
-/* プロフィールカード */
 .profile__card {
     background: #fff;
     padding: 30px;
@@ -29,7 +27,6 @@ body {
     margin: 0 auto;
 }
 
-/* アイコンエリア */
 .profile__icon {
     margin-bottom: 20px;
     position: relative;
@@ -42,7 +39,6 @@ body {
     border: 1px solid #ccc;
 }
 
-/* 画像選択ボタン */
 .profile__icon-btn {
     margin-top: 10px;
     padding: 8px 15px;
@@ -58,7 +54,6 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 入力フォーム */
 .profile__form {
     text-align: left;
     margin-top: 20px;
@@ -82,7 +77,6 @@ body {
     border-radius: 5px;
 }
 
-/* 更新ボタン */
 .profile__button {
     display: inline-block;
     width: 100%;
@@ -100,21 +94,16 @@ body {
     background-color: #ff4a4a;
 }
 
-/* ファイル選択インプットは非表示 */
 input[type="file"] {
     display: none;
 }
 
-/* エラーメッセージ */
 .profile__error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
 }
 
-/* レスポンシブ対応 */
-
-/* 画面幅が850px以下の場合 */
 @media screen and (max-width: 850px) {
     .profile {
         padding: 15px;
@@ -136,7 +125,6 @@ input[type="file"] {
     }
 }
 
-/* 画面幅が768px以下の場合 */
 @media screen and (max-width: 768px) {
     .profile {
         width: 95%;
@@ -145,20 +133,4 @@ input[type="file"] {
     .profile__title {
         font-size: 1.5em;
     }
-}
-
-/* リセットボタン */
-.profile__reset-btn {
-    margin-top: 10px;
-    padding: 8px 15px;
-    font-size: 0.9em;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-
-.profile__reset-btn:hover {
-    background-color: #e0e0e0;
 }

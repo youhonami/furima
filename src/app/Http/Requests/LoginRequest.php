@@ -29,9 +29,7 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * バリデーションメッセージのカスタマイズ
-     */
+
     public function messages()
     {
         return [

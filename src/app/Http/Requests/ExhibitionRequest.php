@@ -14,14 +14,14 @@ class ExhibitionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255', // 入力必須
-            'brand' => 'nullable|string|max:255', // 未入力可
-            'price' => 'required|numeric|min:0', // 入力必須、数値型、0円以上
-            'description' => 'required|string|max:255', // 入力必須、最大255文字
-            'image' => 'required|image|mimes:jpeg,png|max:2048', // 商品画像のアップロード必須
-            'condition' => 'required|integer|exists:conditions,id', // 選択必須
-            'categories' => 'required|array', // カテゴリーは配列で受け取る
-            'categories.*' => 'exists:categories,id', // 各カテゴリーがDBに存在することを確認
+            'name' => 'required|string|max:255',
+            'brand' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png|max:2048',
+            'condition' => 'required|integer|exists:conditions,id',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
         ];
     }
 

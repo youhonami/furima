@@ -14,9 +14,9 @@
         <div class="sell__group">
             <label for="image" class="sell__label">商品画像</label>
 
-            <!-- ✅ プレビュー用の枠を追加 -->
+            <!--  プレビュー用の枠-->
             <div class="sell__image-preview">
-                <img id="image-preview" src="{{ asset('storage/images/default-product.png') }}" alt="商品プレビュー">
+                <img id="image-preview" src="" alt="商品プレビュー" style="display: none;">
             </div>
 
             <input type="file" id="image" name="image" class="sell__input" accept="image/*" onchange="previewImage(event)">
@@ -95,7 +95,7 @@
     </form>
 </main>
 
-<!-- ✅ プレビュー用JavaScript -->
+<!--  プレビュー用JavaScript -->
 <script>
     function previewImage(event) {
         const input = event.target;
@@ -105,7 +105,7 @@
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                preview.src = e.target.result; // 選択した画像をプレビュー表示
+                preview.src = e.target.result;
             };
 
             reader.readAsDataURL(input.files[0]);

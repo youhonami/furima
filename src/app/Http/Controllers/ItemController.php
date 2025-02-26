@@ -52,7 +52,6 @@ class ItemController extends Controller
     {
         $item = Item::create($request->only(['name', 'price', 'description', 'img', 'condition_id']));
 
-        // 選択されたカテゴリを関連付ける
         $item->categories()->sync($request->input('category_ids'));
     }
 }

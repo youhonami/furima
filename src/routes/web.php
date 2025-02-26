@@ -35,12 +35,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/mypage', [ProfileController::class, 'show'])->name('mypage'); // マイページ表示
+Route::get('/mypage', [ProfileController::class, 'show'])->name('mypage');
 Route::get('/mypage/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/mypage/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 
-// 商品一覧を表示するためのルート（必要な場合）
+// 商品一覧を表示するためのルート
 Route::get('/sell', [SellController::class, 'index'])->name('sell.index');
 
 // 商品出品ページ（現在の目的）
@@ -70,13 +70,13 @@ Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.s
 
 // 1) 認証待ちページ
 Route::get('/email/verify', function () {
-    return view('auth.verify-email'); // ここで「メール認証してください」画面を表示
+    return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 // 認証リンクをクリックしたときの処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); // 認証を完了
-    return redirect()->route('profile.edit'); // 認証後にプロフィール編集ページへリダイレクト
+    $request->fulfill();
+    return redirect()->route('profile.edit');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // 3) 認証メール再送
@@ -86,12 +86,12 @@ Route::post('/email/resend', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); // 認証を完了
+    $request->fulfill();
 
     // ユーザーの直前のページを確認
     if (session('from_registration')) {
-        session()->forget('from_registration'); // セッション削除
-        return redirect()->route('profile.edit'); // 新規会員登録後はプロフィール編集へ
+        session()->forget('from_registration');
+        return redirect()->route('profile.edit');
     }
 
     // ログイン時は商品一覧ページへリダイレクト

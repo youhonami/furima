@@ -13,7 +13,7 @@
             @method('PUT')
 
             <div class="profile__icon">
-                <!-- ✅ デフォルト画像の設定 -->
+                <!--  デフォルト画像の設定 -->
                 @php
                 $defaultImage = asset('storage/images/default-user-icon.png');
                 $userImage = $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : $defaultImage;
@@ -28,9 +28,6 @@
                 @error('profile_image')
                 <p class="profile__error">{{ $message }}</p>
                 @enderror
-
-                <!-- ✅ リセットボタンを追加 -->
-                <button type="button" class="profile__reset-btn" onclick="resetImage()">デフォルトに戻す</button>
             </div>
 
             <div class="profile__group">
@@ -70,10 +67,8 @@
     </div>
 </main>
 
-<!-- ✅ プレビュー用JavaScript -->
+<!-- プレビュー用JavaScript -->
 <script>
-    const defaultImage = "{{ $defaultImage }}"; // Bladeからデフォルト画像のパスを取得
-
     function previewImage(event) {
         const input = event.target;
         const preview = document.getElementById('profile-preview');
@@ -82,22 +77,11 @@
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                preview.src = e.target.result; // 画像をプレビューに反映
+                preview.src = e.target.result;
             };
 
             reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = defaultImage; // ファイルがない場合、デフォルト画像を表示
         }
-    }
-
-    // ✅ デフォルトに戻す関数
-    function resetImage() {
-        const preview = document.getElementById('profile-preview');
-        const input = document.getElementById('profile_image');
-
-        preview.src = defaultImage; // プレビューをデフォルト画像に変更
-        input.value = ''; // ファイル選択をクリア
     }
 </script>
 @endsection

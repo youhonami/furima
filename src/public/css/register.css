@@ -4,7 +4,6 @@ body {
     padding: 0;
 }
 
-/* 登録ページ全体 */
 .register {
     width: 100%;
     max-width: 400px;
@@ -62,7 +61,6 @@ body {
     font-weight: bold;
 }
 
-/* 登録ボタン */
 .register__button {
     width: 100%;
     padding: 12px 0;
@@ -79,7 +77,6 @@ body {
     background-color: #e64444;
 }
 
-/* ログインリンク */
 .register__login-link {
     text-align: center;
     margin-top: 15px;
@@ -96,7 +93,6 @@ body {
     color: #e64444;
 }
 
-/* メディアクエリ */
 @media screen and (max-width: 850px) {
     .register {
         width: 90%;

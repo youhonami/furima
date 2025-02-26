@@ -24,12 +24,12 @@ class AddressController extends Controller
             'temp_address' => [
                 'postal_code' => $request->postal_code,
                 'address' => $request->address,
-                'building' => $building, // 修正後の建物名を保存
+                'building' => $building,
             ]
         ]);
 
         // 商品IDを取得（商品購入画面から遷移してきた場合）
-        $itemId = session('current_item_id'); // 商品IDを取得
+        $itemId = session('current_item_id');
 
         // 商品IDが存在しない場合の処理（適切なリダイレクトを指定）
         if (!$itemId) {

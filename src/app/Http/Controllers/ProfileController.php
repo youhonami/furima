@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Profile;
-use App\Http\Requests\ProfileRequest; // 追加
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -21,8 +21,8 @@ class ProfileController extends Controller
     // プロフィール編集画面の表示
     public function edit()
     {
-        $user = Auth::user(); // 現在ログインしているユーザー情報を取得
-        return view('profile', compact('user')); // ビューにユーザー情報を渡す
+        $user = Auth::user();
+        return view('profile', compact('user'));
     }
 
     // プロフィール更新処理
@@ -36,7 +36,7 @@ class ProfileController extends Controller
             'postal_code' => 'required|string|max:10',
             'address' => 'required',
             'building' => 'nullable',
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 画像のバリデーション
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // プロフィール画像の処理
@@ -63,7 +63,7 @@ class ProfileController extends Controller
                 'postal_code' => $request->input('postal_code'),
                 'address' => $request->input('address'),
                 'building' => $request->input('building'),
-                'img' => $profileImagePath, // プロフィール画像パスを保存
+                'img' => $profileImagePath,
             ]
         );
 

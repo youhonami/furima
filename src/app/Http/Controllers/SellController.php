@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
-use App\Http\Requests\ExhibitionRequest; // 追加
+use App\Http\Requests\ExhibitionRequest;
 
 class SellController extends Controller
 {
@@ -26,10 +26,10 @@ class SellController extends Controller
 
         // 画像保存
         $imagePath = null;
-        // 画像のアップロード処理
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/items-img');
-            $imagePath = str_replace('public/', '', $imagePath); // パスの調整
+            $imagePath = str_replace('public/', '', $imagePath);
         }
 
         // データ保存
@@ -39,7 +39,7 @@ class SellController extends Controller
             'description' => $validated['description'],
             'img' => $imagePath,
             'condition_id' => $validated['condition'],
-            'user_id' => auth()->id(), // ログイン中のユーザーID
+            'user_id' => auth()->id(),
         ]);
 
         // カテゴリーと紐付け

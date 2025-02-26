@@ -15,11 +15,11 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // usersテーブルのidを外部キーとして設定
-            $table->string('img')->nullable(); // ユーザー画像
-            $table->string('postal_code')->nullable(); // 郵便番号
-            $table->string('address')->nullable(); // 住所
-            $table->string('building')->nullable(); // 建物名
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('img')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('address')->nullable();
+            $table->string('building')->nullable();
             $table->timestamps();
         });
     }

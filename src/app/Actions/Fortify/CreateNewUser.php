@@ -33,7 +33,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
 
-        // ✅ 新規会員登録のフラグをセッションに保存
+        // 新規会員登録のフラグをセッションに保存
         Session::put('from_registration', true);
 
         return $user;

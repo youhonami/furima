@@ -13,14 +13,14 @@ class UserController extends Controller
         $user = Auth::user();
 
         // クエリパラメータでタブを切り替える
-        $tab = request('tab', 'listed'); // デフォルトは "listed"
-        $listedItems = collect(); // 空のコレクション
+        $tab = request('tab', 'listed');
+        $listedItems = collect();
         $purchasedItems = collect();
 
         if ($tab === 'listed') {
-            $listedItems = Item::where('user_id', $user->id)->get(); // 出品した商品を取得
+            $listedItems = Item::where('user_id', $user->id)->get();
         } elseif ($tab === 'purchased') {
-            $purchasedItems = Purchase::where('user_id', $user->id)->with('item')->get(); // 購入した商品を取得
+            $purchasedItems = Purchase::where('user_id', $user->id)->with('item')->get();
         }
 
         return view('mypage', compact('user', 'tab', 'listedItems', 'purchasedItems'));

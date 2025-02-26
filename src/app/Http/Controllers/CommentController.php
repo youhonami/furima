@@ -18,7 +18,7 @@ class CommentController extends Controller
 
         // コメントを作成
         $item->comments()->create([
-            'content' => $request->input('content'), // 'comment' → 'content' に統一
+            'content' => $request->input('content'),
             'user_id' => Auth::id(),
         ]);
 

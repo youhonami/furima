@@ -17,7 +17,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Route; // 追加
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -36,7 +36,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        // メール認証でカスタム通知を使用する（ここで設定）
+        // メール認証でカスタム通知を使用する
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new \App\Notifications\CustomVerifyEmail())->toMail($notifiable);
         });
@@ -67,19 +67,19 @@ class FortifyServiceProvider extends ServiceProvider
             $user = User::where('email', $validated['email'])->first();
 
             if (!$user || !Hash::check($validated['password'], $user->password)) {
-                return null; // 認証失敗
+                return null;
             }
 
             // メール認証が未完了の場合、最初のリクエスト時にメール送信
             if (is_null($user->email_verified_at) && !$request->session()->has('verification_mail_sent')) {
                 $user->sendEmailVerificationNotification();
-                $request->session()->put('verification_mail_sent', true); // メール送信済みフラグを設定
+                $request->session()->put('verification_mail_sent', true);
             }
 
-            return $user; // 認証成功
+            return $user;
         });
 
-        // FortifyServiceProvider.php
+
 
         app()->singleton(
             \Laravel\Fortify\Contracts\LoginResponse::class,
@@ -88,10 +88,10 @@ class FortifyServiceProvider extends ServiceProvider
                     public function toResponse($request)
                     {
                         if (!$request->user()->hasVerifiedEmail()) {
-                            return Redirect::to('/email/verify'); // メール未認証なら認証ページへ
+                            return Redirect::to('/email/verify');
                         }
 
-                        return Redirect::to('/'); // メール認証済みならトップページへ
+                        return Redirect::to('/');
                     }
                 };
             }

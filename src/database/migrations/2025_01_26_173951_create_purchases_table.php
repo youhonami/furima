@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // 購入者のID
-            $table->unsignedBigInteger('item_id'); // 商品のID
-            $table->string('payment_method'); // 支払い方法
-            $table->string('postal_code'); // 配送先の郵便番号
-            $table->string('address'); // 配送先の住所
-            $table->string('building')->nullable(); // 配送先の建物（任意）
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('item_id');
+            $table->string('payment_method');
+            $table->string('postal_code');
+            $table->string('address');
+            $table->string('building')->nullable();
             $table->timestamps();
 
             // 外部キー制約

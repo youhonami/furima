@@ -27,6 +27,6 @@ class Purchase extends Model
     // 購入商品とアイテムのリレーション
     public function item()
     {
-        return $this->belongsTo(Item::class, 'item_id'); // リレーション定義
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

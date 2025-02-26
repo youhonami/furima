@@ -17,7 +17,7 @@ class Profile extends Model
         'building'
     ];
 
-    // リレーションを定義（ユーザーとの関連）
+
     public function user()
     {
         return $this->belongsTo(User::class);
