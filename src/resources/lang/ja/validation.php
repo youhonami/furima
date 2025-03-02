@@ -29,7 +29,7 @@ return [
         'array'   => ':attributeの項目は、:min個から:max個にしてください。',
     ],
     'boolean'              => ":attributeには、'true'か'false'を指定してください。",
-    'confirmed'            => ':attributeと一致しません。',
+    'confirmed'            => ':attributeと一致しません',
     'date'                 => ':attributeは、正しい日付ではありません。',
     'date_equals'          => ':attributeは:dateに等しい日付でなければなりません。',
     'date_format'          => ":attributeの形式は、':format'と合いません。",
@@ -52,7 +52,7 @@ return [
     'gte'                  => [
         'numeric' => ':attributeは、:value以上でなければなりません。',
         'file'    => ':attributeは、:value KB以上でなければなりません。',
-        'string'  => ':attributeは、:value文字以上でなければなりません。',
+        'string'  => ':attributeは、:value文字以上で入力してください',
         'array'   => ':attributeの項目数は、:value個以上でなければなりません。',
     ],
     'image'                => ':attributeには、画像を指定してください。',
@@ -86,7 +86,7 @@ return [
     'min'                  => [
         'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'file'    => ':attributeには、:min KB以上のファイルを指定してください。',
-        'string'  => ':attributeは、:min文字以上にしてください。',
+        'string'  => ':attributeは:min文字以上で入力してください',
         'array'   => ':attributeの項目は、:min個以上にしてください。',
     ],
     'multiple_of'          => 'The :attribute must be a multiple of :value',
@@ -103,7 +103,7 @@ return [
     'required_with_all'    => ':valuesが全て指定されている場合、:attributeも指定してください。',
     'required_without'     => ':valuesが指定されていない場合、:attributeを指定してください。',
     'required_without_all' => ':valuesが全て指定されていない場合、:attributeを指定してください。',
-    'same'                 => ':attributeと:otherが一致しません。',
+    'same'                 => ':attributeと一致しません',
     'size'                 => [
         'numeric' => ':attributeには、:sizeを指定してください。',
         'file'    => ':attributeには、:size KBのファイルを指定してください。',

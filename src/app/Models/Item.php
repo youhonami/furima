@@ -45,4 +45,9 @@ class Item extends Model
 
         return \App\Models\Purchase::where('item_id', $this->id)->exists();
     }
+
+    public function purchase()
+    {
+        return $this->hasOne(Purchase::class, 'item_id');
+    }
 }

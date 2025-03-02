@@ -31,18 +31,14 @@ use Illuminate\Support\Str;
         <!-- 購入済み商品 -->
         <div class="item-list__card item-list__card--sold">
             <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-list__image">
-            <h2 class="item-list__name">{{ Str::limit($item->name,20
-
-                , '...') }}</h2>
+            <h2 class="item-list__name">{{ Str::limit($item->name, 20, '...') }}</h2>
             <p class="item-list__sold-label">Sold</p>
         </div>
         @else
         <!-- 購入可能商品 -->
         <a href="{{ route('item.show', $item->id) }}" class="item-list__card">
             <img src="{{ asset('storage/' . $item->img) }}" alt="{{ $item->name }}" class="item-list__image">
-            <h2 class="item-list__name">{{ Str::limit($item->name,20
-
-                , '...') }}</h2>
+            <h2 class="item-list__name">{{ Str::limit($item->name, 20, '...') }}</h2>
         </a>
         @endif
         @endforeach
