@@ -23,9 +23,10 @@
                     @auth
                     <form action="{{ route('like', ['id' => $item->id]) }}" method="POST" class="product__like-form">
                         @csrf
-                        <button type="submit" class="product__like-btn">
+                        <button type="submit" class="product__like-btn {{ $item->isLikedBy(Auth::user()) ? 'liked' : '' }}">
                             {{ $item->isLikedBy(Auth::user()) ? '❤️' : '🤍' }}
                         </button>
+
                         <span class="product__like-count">{{ $item->likes->count() }}</span>
                     </form>
                     @else

@@ -61,7 +61,7 @@ Route::post('/items/{id}/like', [LikeController::class, 'toggleLike'])->name('li
 
 Route::get('/items', [ItemController::class, 'index'])->name('item.index');
 
-Route::post('/comments/{item}', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/{item}', [CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 
 Route::post('/address/update', [AddressController::class, 'updateAddress'])->name('address.update');
 Route::post('/purchase/complete', [PurchaseController::class, 'completePurchase'])->name('purchase.complete');

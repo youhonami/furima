@@ -9,6 +9,7 @@ use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
+
     public function store(CommentRequest $request, Item $item)
     {
         // ログインしていない場合、ログインページにリダイレクト
