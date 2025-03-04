@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('postal_code');
             $table->string('address');
-            $table->string('building')->nullable();
+            $table->string('building');
             $table->timestamps();
 
             // 外部キー制約

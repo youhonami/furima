@@ -18,8 +18,8 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('brand')->nullable();
             $table->integer('price');
-            $table->text('description')->nullable();
-            $table->string('img')->nullable();
+            $table->text('description');
+            $table->string('img');
             $table->foreignId('condition_id')->constrained('conditions')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

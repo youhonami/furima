@@ -28,19 +28,19 @@ class ExhibitionRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '商品名を入力してください。',
-            'price.required' => '価格を入力してください。',
-            'price.numeric' => '価格は数値で入力してください。',
-            'price.min' => '価格は0円以上にしてください。',
-            'description.required' => '商品の説明を入力してください。',
-            'description.max' => '商品の説明は255文字以内で入力してください。',
-            'image.required' => '商品画像を選択してください。',
-            'image.mimes' => '画像の形式はJPEGまたはPNGのみ選択してください。',
-            'image.max' => '画像のサイズは2MB以下にしてください。',
-            'condition.required' => '商品の状態を選択してください。',
-            'condition.exists' => '選択された商品の状態は無効です。',
-            'categories.required' => 'カテゴリーを選択してください。',
-            'categories.*.exists' => '選択されたカテゴリーは無効です。',
+            'name.required' => '商品名を入力してください',
+            'price.required' => '価格を入力してください',
+            'price.numeric' => '価格は数値で入力してください',
+            'price.min' => '価格は0円以上にしてください',
+            'description.required' => '商品の説明を入力してください',
+            'description.max' => '商品の説明は255文字以内で入力してください',
+            'image.required' => '商品画像を選択してください',
+            'image.mimes' => '画像の形式はJPEGまたはPNGのみ選択してください',
+            'image.max' => '画像のサイズは2MB以下にしてください',
+            'condition.required' => '商品の状態を選択してください',
+            'condition.exists' => '選択された商品の状態は無効です',
+            'categories.required' => 'カテゴリーを選択してください',
+            'categories.*.exists' => '選択されたカテゴリーは無効です',
         ];
     }
 }
