@@ -21,20 +21,20 @@ class SellController extends Controller
 
     public function store(ExhibitionRequest $request)
     {
-        // バリデーション済みデータを取得
         $validated = $request->validated();
 
-        // 画像保存
         $imagePath = null;
-
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/items-img');
             $imagePath = str_replace('public/', '', $imagePath);
         }
 
-        // データ保存
+        // `dd($validated);` を追加して、データが渡っているか確認
+        dd($validated);
+
         $item = Item::create([
             'name' => $validated['name'],
+            'brand' => $validated['brand'] ?? null,
             'price' => $validated['price'],
             'description' => $validated['description'],
             'img' => $imagePath,
@@ -42,11 +42,11 @@ class SellController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        // カテゴリーと紐付け
         $item->categories()->sync($validated['categories']);
 
         return redirect('/')->with('success', '商品を出品しました。');
     }
+
 
     public function create()
     {

@@ -20,7 +20,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertRedirect('/profile'); // プロフィール設定画面に遷移するか確認
+        $response->assertRedirect('/profile');
         $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
     }
 

@@ -7,18 +7,18 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Purchase;
-use App\Models\Condition;
 use App\Models\Profile;
 
 class AddressUpdateTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test 住所変更後に購入画面に正しく反映される */
+    /** @test */
     public function 住所変更後に購入画面に正しく反映される()
     {
+        /** @var User $user */
         $user = User::factory()->create();
-        $item = Item::factory()->create(); // ✅ $item を定義
+        $item = Item::factory()->create();
 
         Profile::factory()->create([
             'user_id' => $user->id,
@@ -33,17 +33,18 @@ class AddressUpdateTest extends TestCase
             'building' => 'テストマンション202'
         ])->assertRedirect();
 
-        $this->get(route('purchase', ['id' => $item->id])) // ✅ $item->id を使用
+        $this->get(route('purchase', ['id' => $item->id]))
             ->assertSee('987-6543')
             ->assertSee('大阪府大阪市')
             ->assertSee('テストマンション202');
     }
 
-    /** @test 購入時に住所が正しく紐づく */
+    /** @test */
     public function 購入時に住所が正しく紐づく()
     {
+        /** @var User $user */
         $user = User::factory()->create();
-        $item = Item::factory()->create(); // ✅ $item を定義
+        $item = Item::factory()->create();
 
         Profile::factory()->create([
             'user_id' => $user->id,

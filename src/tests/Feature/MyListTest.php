@@ -12,16 +12,22 @@ class MyListTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(\Database\Seeders\ConditionsTableSeeder::class);
+    }
+
     /** @test */
     public function いいねした商品だけが表示される()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
 
         $likedItem = Item::factory()->create();
         $otherItem = Item::factory()->create();
 
-        // いいねの関連付け
         $user->likes()->attach($likedItem->id);
 
         $response = $this->get(route('item.index', ['filter' => 'mylist']));
@@ -33,6 +39,7 @@ class MyListTest extends TestCase
     /** @test */
     public function 購入済み商品には_Sold_のラベルが表示される()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
 
@@ -50,6 +57,7 @@ class MyListTest extends TestCase
     /** @test */
     public function 自分が出品した商品は表示されない()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
 
@@ -71,11 +79,5 @@ class MyListTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('検索結果が見つかりませんでした。');
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(\Database\Seeders\ConditionsTableSeeder::class);
     }
 }

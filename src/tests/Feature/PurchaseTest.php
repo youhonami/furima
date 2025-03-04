@@ -22,6 +22,7 @@ class PurchaseTest extends TestCase
     /** @test */
     public function ユーザーは購入を完了できる()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $item = Item::factory()->create(['condition_id' => 1]);
 
@@ -34,7 +35,6 @@ class PurchaseTest extends TestCase
             'address' => '東京都渋谷区道玄坂1-1-1',
         ]);
 
-        // ✅ 正しいリダイレクト先を確認
         $response->assertRedirect(route('purchase.success'));
 
         $this->assertDatabaseHas('purchases', [
@@ -49,6 +49,7 @@ class PurchaseTest extends TestCase
     /** @test */
     public function 購入した商品は商品一覧に「sold」と表示される()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $item = Item::factory()->create(['condition_id' => 1]);
 
@@ -60,7 +61,6 @@ class PurchaseTest extends TestCase
             'address' => '東京都渋谷区道玄坂1-1-1',
         ]);
 
-        // `is_sold` フラグを更新
         $item->update(['is_sold' => true]);
 
         $this->actingAs($user);
@@ -72,6 +72,7 @@ class PurchaseTest extends TestCase
     /** @test */
     public function 購入した商品がプロフィールの購入履歴に追加される()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $item = Item::factory()->create(['condition_id' => 1]);
 
@@ -85,7 +86,6 @@ class PurchaseTest extends TestCase
 
         $this->actingAs($user);
 
-        // ✅ 購入履歴が表示されることを確認
         $response = $this->get(route('mypage'));
         $response->assertSee(htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8'));
     }

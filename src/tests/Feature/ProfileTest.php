@@ -15,11 +15,11 @@ class ProfileTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function test_ユーザー情報が取得できる()
+    public function ユーザー情報が取得できる()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $profile = Profile::factory()->create(['user_id' => $user->id]);
-
         $item = Item::factory()->create(['user_id' => $user->id]);
 
         $response = $this->actingAs($user)->get(route('mypage'));
@@ -32,8 +32,9 @@ class ProfileTest extends TestCase
     }
 
     /** @test */
-    public function test_ユーザー情報変更画面の初期値が正しく設定されている()
+    public function ユーザー情報変更画面の初期値が正しく設定されている()
     {
+        /** @var User $user */
         $user = User::factory()->create();
         Profile::factory()->create([
             'user_id' => $user->id,
@@ -51,10 +52,11 @@ class ProfileTest extends TestCase
     }
 
     /** @test */
-    public function test_ユーザーがプロフィールを更新できる()
+    public function ユーザーがプロフィールを更新できる()
     {
         Storage::fake('public');
 
+        /** @var User $user */
         $user = User::factory()->create();
         Profile::factory()->create(['user_id' => $user->id]);
 
@@ -81,7 +83,6 @@ class ProfileTest extends TestCase
         ]);
 
         Storage::disk('public')->assertExists('profile_images/' . $file->hashName());
-
         $response->assertRedirect(route('profile.edit'));
     }
 }
