@@ -14,11 +14,11 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
+            'name' => $this->faker->word, // ✅ name カラムに値をセット
+            'condition_id' => \App\Models\Condition::factory(),
             'img' => 'sample.jpg',
-            'price' => $this->faker->numberBetween(1000, 10000),
-            'condition_id' => Condition::inRandomOrder()->first()->id ?? 1,
-            'user_id' => User::factory(),
+            'price' => 1000,
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }
