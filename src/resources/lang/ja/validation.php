@@ -149,6 +149,7 @@ return [
     'attributes' => [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
-        'name' => 'お名前'
+        'name' => 'お名前',
+        'payment method' => '支払い方法'
     ],
 ];

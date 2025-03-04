@@ -106,6 +106,7 @@
 
             reader.onload = function(e) {
                 preview.src = e.target.result;
+                preview.style.display = "block"; // 画像を表示する
             };
 
             reader.readAsDataURL(input.files[0]);

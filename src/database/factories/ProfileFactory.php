@@ -13,10 +13,10 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(), // ユーザーと関連付け
-            'postal_code' => $this->faker->postcode,
-            'address' => $this->faker->address,
-            'building' => $this->faker->secondaryAddress,
+            'user_id' => User::factory(),
+            'postal_code' => '123-4567', // 固定値
+            'address' => '東京都新宿区',
+            'building' => 'テストマンション101'
         ];
     }
 }

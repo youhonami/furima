@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -25,11 +26,10 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(PurchaseRequest $request) // 👈 修正
     {
-        $request->validate([
-            'payment_method' => 'required',
-        ]);
+        // バリデーション済みのデータを取得
+        $validated = $request->validated();
 
         $user = Auth::user();
         $itemId = session('current_item_id');
@@ -42,7 +42,7 @@ class PurchaseController extends Controller
         $purchase = new Purchase();
         $purchase->user_id = $user->id;
         $purchase->item_id = $item->id;
-        $purchase->payment_method = $request->payment_method;
+        $purchase->payment_method = $validated['payment_method']; // ✅ 修正
 
         // セッションの配送先があれば優先する
         if (session('temp_address')) {
@@ -79,7 +79,6 @@ class PurchaseController extends Controller
             'success_url' => route('item.index'),
             'cancel_url' => route('purchase.cancel', ['id' => $item->id]),
         ]);
-
         return redirect($session->url);
     }
 
