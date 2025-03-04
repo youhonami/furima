@@ -29,9 +29,6 @@ class SellController extends Controller
             $imagePath = str_replace('public/', '', $imagePath);
         }
 
-        // `dd($validated);` を追加して、データが渡っているか確認
-        dd($validated);
-
         $item = Item::create([
             'name' => $validated['name'],
             'brand' => $validated['brand'] ?? null,

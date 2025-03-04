@@ -71,7 +71,7 @@ Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.s
 // 1) 認証待ちページ
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+})->name('verification.notice');
 
 // 認証リンクをクリックしたときの処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

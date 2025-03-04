@@ -147,16 +147,16 @@ return [
     'features' => [
         Features::registration(),
         Features::emailVerification([
-            'expire' => 60,  // リンク有効期限を60分（1時間）に変更
+            'expire' => 60,
         ]),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
             'confirm' => true,
             'confirmPassword' => true,
-            // 'window' => 0,
+
         ]),
     ],
 

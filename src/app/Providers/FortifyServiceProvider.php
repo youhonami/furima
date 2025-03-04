@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -79,8 +80,6 @@ class FortifyServiceProvider extends ServiceProvider
             return $user;
         });
 
-
-
         app()->singleton(
             \Laravel\Fortify\Contracts\LoginResponse::class,
             function () {
@@ -88,10 +87,20 @@ class FortifyServiceProvider extends ServiceProvider
                     public function toResponse($request)
                     {
                         if (!$request->user()->hasVerifiedEmail()) {
-                            return Redirect::to('/email/verify');
+                            return redirect('/email/verify'); // ✅ 確実にリダイレクトする
                         }
-
-                        return Redirect::to('/');
+                        return redirect('/');
+                    }
+                };
+            }
+        );
+        app()->singleton(
+            RegisterResponse::class,
+            function () {
+                return new class implements RegisterResponse {
+                    public function toResponse($request)
+                    {
+                        return redirect('/email/verify'); // ✅ 登録後に /email/verify にリダイレクト
                     }
                 };
             }
