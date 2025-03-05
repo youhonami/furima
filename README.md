@@ -23,6 +23,7 @@
 - 商品の購入
 - 配送先の変更
 - 購入した商品の一覧（マイページ）
+- テストケース
 
 ## 使用技術(実行環境)
 
@@ -71,6 +72,9 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+
+
+MAIL_FROM_ADDRESS=送信元となるメールアドレスを入力してください
 ```
 
 5. アプリケーションキーの作成
