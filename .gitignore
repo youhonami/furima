@@ -8,12 +8,13 @@ docker/mysql/data/undo_002
 /docker/mysql/data/*
 
 /storage/*
-!storage/app/public
-!storage/app/public/*
-!storage/app/public/images/
-!storage/app/public/images/*
-!storage/app/public/items-img/
-!storage/app/public/items-img/*
-!storage/app/public/profile_images/
-!storage/app/public/profile_images/*
+!/storage/app/
+!/storage/app/public/
+!/storage/app/public/images/
+!/storage/app/public/images/*
+!/storage/app/public/items-img/
+!/storage/app/public/items-img/*
+!/storage/app/public/profile_images/
+!/storage/app/public/profile_images/*
+
 
