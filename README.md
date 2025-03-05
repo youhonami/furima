@@ -10,7 +10,7 @@
 
 - 新規会員登録
 - ログイン
-- メール認証機能（MailHog）
+- メール認証機能:会員登録時とログイン時（MailHog）
 - ログアウト
 - プロフィール設定
 - 商品の出品
@@ -27,7 +27,7 @@
 
 ## 使用技術(実行環境)
 
-- PHP8.3.0
+- PHP7.4.9
 - Laravel8.83.27
 - MySQL8.0.26
 - MailHog
@@ -62,6 +62,7 @@ mysql:
 
 1. `docker-compose exec php bash`
 2. `composer install`
+   > \_composer install に失敗する場合は、laravel/sail を個別にインストールしてみてください。`composer require laravel/sail --dev`その後`composer install`
 3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.env ファイルを作成
 4. .env に以下の環境変数を追加
 
@@ -73,8 +74,7 @@ DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 
-
-MAIL_FROM_ADDRESS=送信元となるメールアドレスを入力してください
+MAIL_FROM_ADDRESS=認証メールの送信元となるメールアドレスを入力してください
 ```
 
 5. アプリケーションキーの作成
@@ -93,6 +93,21 @@ php artisan migrate
 
 ```bash
 php artisan db:seed
+```
+
+8. ストレージのシンボリックリンクを作成
+
+```bash
+php artisan storage:link
+```
+
+9. Stripe API 設定
+   **Stripe の管理画面** から API キーを取得してください。
+   `.env` ファイルを開き、以下のように設定してください。
+
+```bash
+STRIPE_KEY=sk_test_あなたのAPIキー
+STRIPE_SECRET=sk_test_あなたのシークレットキー
 ```
 
 ## URL
