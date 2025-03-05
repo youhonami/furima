@@ -1,0 +1,9 @@
+*
+!public/
+!public/images/
+!public/images/*
+!public/items-img/
+!public/items-img/*
+!public/profile_images/
+!public/profile_images/*
+!.gitignore
