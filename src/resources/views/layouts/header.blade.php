@@ -71,15 +71,49 @@
 
         let timeout = null;
 
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function(event) {
             clearTimeout(timeout);
 
-            // 入力後500ms待ってから検索を実行
             timeout = setTimeout(() => {
-                searchForm.submit();
+                performSearch();
             }, 500);
+        });
+
+        function performSearch() {
+            const searchQuery = searchInput.value;
+            const filterValue = document.querySelector('input[name="filter"]').value;
+            const url = `{{ route('item.index') }}?search=${encodeURIComponent(searchQuery)}&filter=${encodeURIComponent(filterValue) }`;
+
+            fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    // メインコンテンツだけを更新
+                    const newMainContent = doc.querySelector('.main');
+                    if (newMainContent) {
+                        document.querySelector('.main').innerHTML = newMainContent.innerHTML;
+                    }
+
+                    // 検索ボックスにフォーカスを戻す
+                    searchInput.focus();
+                })
+                .catch(error => console.error('検索エラー:', error));
+        }
+
+        // フォームのデフォルト送信を防ぐ
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            performSearch();
         });
     });
 </script>
+
 
 </html>
