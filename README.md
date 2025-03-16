@@ -110,6 +110,18 @@ STRIPE_KEY=sk_test_あなたのAPIキー
 STRIPE_SECRET=sk_test_あなたのシークレットキー
 ```
 
+10. テストケース(PHPUnit) 設定
+
+```
+docker-compose exec mysql mysql -u root -p
+パスワードが求められたら root と記入
+CREATE DATABASE demo_test;
+
+docker-compose exec php bash
+php artisan migrate --env=testing --seed
+php artisan test
+```
+
 ## URL
 
 - 開発環境:http://localhost
