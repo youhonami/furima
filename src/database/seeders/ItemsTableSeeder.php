@@ -34,7 +34,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/HDD+Hard+Disk.jpg',
                 'condition_id' => 2,
                 'categories' => [2],
-                'user_id' => 2,
+                'user_id' => 1,
             ],
             [
                 'name' => '玉ねぎ3束',
@@ -43,7 +43,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/iLoveIMG+d.jpg',
                 'condition_id' => 3,
                 'categories' => [10],
-                'user_id' => 3,
+                'user_id' => 1,
             ],
             [
                 'name' => '革靴',
@@ -63,7 +63,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/Living+Room+Laptop.jpg',
                 'condition_id' => 1,
                 'categories' => [2],
-                'user_id' => 2,
+                'user_id' => 1,
             ],
             [
                 'name' => 'マイク',
@@ -73,7 +73,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/Music+Mic+4632231.jpg',
                 'condition_id' => 2,
                 'categories' => [2],
-                'user_id' => 3,
+                'user_id' => 2,
             ],
             [
                 'name' => 'ショルダーバッグ',
@@ -83,7 +83,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/Purse+fashion+pocket.jpg',
                 'condition_id' => 3,
                 'categories' => [1, 4],
-                'user_id' => 1,
+                'user_id' => 2,
             ],
             [
                 'name' => 'タンブラー',
@@ -103,7 +103,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/Waitress+with+Coffee+Grinder.jpg',
                 'condition_id' => 1,
                 'categories' => [10],
-                'user_id' => 3,
+                'user_id' => 2,
             ],
             [
                 'name' => 'メイクセット',
@@ -113,7 +113,7 @@ class ItemsTableSeeder extends Seeder
                 'img' => 'items-img/makeup+set.jpg',
                 'condition_id' => 2,
                 'categories' => [6],
-                'user_id' => 1,
+                'user_id' => 2,
             ],
         ];
 

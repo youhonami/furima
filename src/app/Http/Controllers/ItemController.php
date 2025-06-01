@@ -20,7 +20,8 @@ class ItemController extends Controller
 
         if ($filter === 'mylist') {
             if (Auth::check()) {
-                $query = Item::whereIn('id', Auth::user()->likedItems->pluck('id'));
+                $query = Item::whereIn('id', Auth::user()->likedItems->pluck('id'))
+                    ->where('user_id', '!=', Auth::id()); // 自分が出品した商品を除外
             } else {
                 $query = Item::whereRaw('1 = 0');
             }
@@ -39,7 +40,6 @@ class ItemController extends Controller
 
         return view('index', compact('items', 'search', 'filter'));
     }
-
 
     // 商品詳細ページ
     public function show($id)
