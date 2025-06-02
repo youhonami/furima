@@ -41,18 +41,31 @@
                     </div>
                 </div>
 
-                <!-- 購入手続きボタン -->
+                <!-- 購入手続き・出品者へ連絡ボタン -->
                 <div class="product__purchase-btn-wrap">
                     @auth
                     @if ($item->user_id !== Auth::id())
                     <!-- 出品者以外のみ有効 -->
-                    <a href="{{ route('purchase', ['id' => $item->id]) }}" class="product__purchase-btn">購入手続きへ</a>
+                    <a href="{{ route('purchase', ['id' => $item->id]) }}" class="product__purchase-btn">
+                        <i class="bi bi-cart-fill"></i> 購入手続きへ
+                    </a>
+                    <a href="{{ route('chat.show', ['chat' => $chat->id]) }}" class="product__contact-btn">
+                        <i class="bi bi-envelope-fill"></i> 出品者へ連絡
+                    </a>
+
                     @else
                     <!-- 出品者には無効化 -->
-                    <button class="product__purchase-btn product__purchase-btn--disabled" disabled>購入手続きへ</button>
+                    <button class="product__purchase-btn product__purchase-btn--disabled" disabled>
+                        <i class="bi bi-cart-fill"></i> 購入手続きへ
+                    </button>
                     @endif
                     @else
-                    <a href="{{ route('login') }}" class="product__purchase-btn">購入手続きへ</a>
+                    <a href="{{ route('login') }}" class="product__purchase-btn">
+                        <i class="bi bi-cart-fill"></i> 購入手続きへ
+                    </a>
+                    <a href="{{ route('login') }}" class="product__contact-btn">
+                        <i class="bi bi-envelope-fill"></i> 出品者へ連絡
+                    </a>
                     @endauth
                 </div>
             </div>

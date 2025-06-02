@@ -20,6 +20,13 @@
     <nav class="mypage__tab-menu">
         <a href="{{ route('mypage', ['tab' => 'listed']) }}" class="mypage__tab {{ $tab === 'listed' ? 'mypage__tab--active' : '' }}">出品した商品</a>
         <a href="{{ route('mypage', ['tab' => 'purchased']) }}" class="mypage__tab {{ $tab === 'purchased' ? 'mypage__tab--active' : '' }}">購入した商品</a>
+        <a href="{{ route('mypage', ['tab' => 'inprogress']) }}" class="mypage__tab {{ $tab === 'inprogress' ? 'mypage__tab--active' : '' }}">
+            <i class="fas fa-exchange-alt"></i> 取引中の商品
+            @if($newMessageCount > 0)
+            <span class="mypage__tab-badge">{{ $newMessageCount }}</span>
+            @endif
+        </a>
+
     </nav>
 
     <div class="mypage__tab-content">
@@ -39,6 +46,7 @@
             <p>出品した商品はありません。</p>
             @endif
         </div>
+
         @elseif ($tab === 'purchased')
         <div class="mypage__item-grid">
             @if ($purchasedItems->isNotEmpty())
@@ -51,6 +59,40 @@
             @endforeach
             @else
             <p>購入した商品はありません。</p>
+            @endif
+        </div>
+
+        @elseif ($tab === 'inprogress')
+        <div class="mypage__item-grid">
+            @if ($inProgressItems->isNotEmpty())
+            @foreach ($inProgressItems as $item)
+            @php
+            // チャット（出品者・購入者どちらからのメッセージでもOK）
+            $chat = $item->chats()->first();
+
+            $unreadCount = 0;
+            if ($chat) {
+            $unreadCount = $chat->messages()
+            ->where('user_id', '!=', $user->id)
+            ->where('is_read', false)
+            ->count();
+            }
+            @endphp
+
+            @if($chat)
+            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card">
+                <div class="mypage__item-image-wrapper">
+                    <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $item->name }}" class="mypage__item-image">
+                    @if($unreadCount > 0)
+                    <span class="mypage__badge">{{ $unreadCount }}</span>
+                    @endif
+                </div>
+                <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
+            </a>
+            @endif
+            @endforeach
+            @else
+            <p>取引中の商品はありません。</p>
             @endif
         </div>
         @endif

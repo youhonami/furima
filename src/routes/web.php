@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StripeWebhookController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,3 +121,11 @@ Route::get('/purchase/cancel', function () {
 Route::get('/items', [ItemController::class, 'index'])->name('item.index');
 
 Route::get('/purchase/cancel/{id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
+
+//取引チャット
+Route::get('/chat/{chat}', [ChatController::class, 'show'])->name('chat.show');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chat/{chat}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{chat}/message', [ChatController::class, 'store'])->name('chat.message.store');
+});

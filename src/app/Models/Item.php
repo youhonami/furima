@@ -50,4 +50,9 @@ class Item extends Model
     {
         return $this->hasOne(Purchase::class, 'item_id');
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

@@ -186,3 +186,32 @@ body {
         margin-left: 20px;
     }
 }
+
+.mypage__item-image-wrapper {
+    position: relative;
+}
+
+.mypage__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: #d9534f;
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 5px 8px;
+    line-height: 1;
+    z-index: 1;
+}
+
+.mypage__tab-badge {
+    background-color: #d9534f;
+    color: #fff;
+    font-size: 0.75em;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 3px 7px;
+    margin-left: 5px;
+    vertical-align: middle;
+}

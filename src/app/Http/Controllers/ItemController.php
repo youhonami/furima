@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Chat;  // 追記
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -45,7 +46,29 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::findOrFail($id);
-        return view('item', compact('item'));
+
+        $chat = null;
+
+        if (auth()->check() && $item->user_id !== auth()->id()) {
+            // ログインしていて、出品者ではない場合のみ
+            $chat = Chat::where('item_id', $item->id)
+                ->where(function ($query) {
+                    $query->where('seller_id', auth()->id())
+                        ->orWhere('buyer_id', auth()->id());
+                })
+                ->first();
+
+            // チャットがなければ新規作成
+            if (!$chat) {
+                $chat = Chat::create([
+                    'item_id' => $item->id,
+                    'seller_id' => $item->user_id,
+                    'buyer_id' => auth()->id(),
+                ]);
+            }
+        }
+
+        return view('item', compact('item', 'chat'));
     }
 
     public function store(Request $request)
