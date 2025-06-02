@@ -47,15 +47,32 @@
             <div class="chat__messages">
                 @foreach($messages as $message)
                 <div class="chat__message {{ $message->user_id === Auth::id() ? 'chat__message--own' : '' }}">
-                    <div class="chat__message-user">{{ $message->user->name }}</div>
-                    <div class="chat__message-content">{{ $message->message }}</div>
+                    <div class="chat__message-content">
+                        <div class="chat__message-user">{{ $message->user->name }}</div>
+                        <div>{{ $message->message }}</div>
+                    </div>
+                    @if($message->user_id === Auth::id())
+                    <div class="chat__message-actions">
+                        <a href="{{ route('chat.message.edit', [$chat->id, $message->id]) }}" class="chat__edit-btn">編集</a>
+                        <form action="{{ route('chat.message.destroy', [$chat->id, $message->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="chat__delete-btn">削除</button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
                 @endforeach
             </div>
 
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" class="chat__form">
                 @csrf
-                <textarea name="message" class="chat__textarea" placeholder="取引メッセージを入力してください"></textarea>
+                <div class="chat__input-wrapper">
+                    <textarea name="message" class="chat__textarea" placeholder="取引メッセージを入力してください"></textarea>
+                    <button type="button" class="chat__image-btn">
+                        <i class="fas fa-image">画像を追加</i>
+                    </button>
+                </div>
                 <button type="submit" class="chat__send-btn">送信</button>
             </form>
         </div>

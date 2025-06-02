@@ -125,6 +125,11 @@ Route::get('/purchase/cancel/{id}', [PurchaseController::class, 'cancel'])->name
 //取引チャット
 Route::get('/chat/{chat}', [ChatController::class, 'show'])->name('chat.show');
 
+Route::get('/chat/{chat}/message/{message}/edit', [ChatController::class, 'edit'])->name('chat.message.edit');
+Route::put('/chat/{chat}/message/{message}', [ChatController::class, 'update'])->name('chat.message.update');
+Route::delete('/chat/{chat}/message/{message}', [ChatController::class, 'destroy'])->name('chat.message.destroy');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/chat/{chat}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/chat/{chat}/message', [ChatController::class, 'store'])->name('chat.message.store');
