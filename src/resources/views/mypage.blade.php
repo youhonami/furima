@@ -26,7 +26,6 @@
             <span class="mypage__tab-badge">{{ $newMessageCount }}</span>
             @endif
         </a>
-
     </nav>
 
     <div class="mypage__tab-content">
@@ -67,9 +66,7 @@
             @if ($inProgressItems->isNotEmpty())
             @foreach ($inProgressItems as $item)
             @php
-            // チャット（出品者・購入者どちらからのメッセージでもOK）
             $chat = $item->chats()->first();
-
             $unreadCount = 0;
             if ($chat) {
             $unreadCount = $chat->messages()
@@ -98,5 +95,21 @@
         @endif
     </div>
 </main>
+@endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatLinks = document.querySelectorAll('.mypage__item-card');
+
+        chatLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const badge = this.querySelector('.mypage__badge');
+                if (badge) {
+                    badge.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 @endsection

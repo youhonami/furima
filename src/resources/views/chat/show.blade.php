@@ -72,8 +72,18 @@
 
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
+
+                {{-- テキストエリアの上にエラーメッセージ --}}
+                @if ($errors->any())
+                <div class="chat__error-messages">
+                    @foreach ($errors->all() as $error)
+                    <div class="chat__error">{{ $error }}</div>
+                    @endforeach
+                </div>
+                @endif
+
                 <div class="chat__input-wrapper">
-                    <textarea name="message" class="chat__textarea" placeholder="取引メッセージを入力してください"></textarea>
+                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください">{{ old('message') }}</textarea>
                     <label class="chat__image-btn">
                         <i class="fas fa-image"></i> 画像を追加
                         <input type="file" name="image" accept="image/*" style="display: none;">
@@ -84,4 +94,33 @@
         </div>
     </div>
 </main>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('chatMessage');
+        const chatId = '{{ $chat->id }}';
+        const storageKey = 'chat_message_draft_' + chatId;
+
+        // LocalStorageから下書きを読み込み（old()がなければ）
+        if (!textarea.value) {
+            const savedDraft = localStorage.getItem(storageKey);
+            if (savedDraft) {
+                textarea.value = savedDraft;
+            }
+        }
+
+        // 入力イベントで保存
+        textarea.addEventListener('input', function() {
+            localStorage.setItem(storageKey, textarea.value);
+        });
+
+        // 送信時に下書きを削除
+        const form = textarea.closest('form');
+        form.addEventListener('submit', function() {
+            localStorage.removeItem(storageKey);
+        });
+    });
+</script>
 @endsection

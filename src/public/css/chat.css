@@ -271,3 +271,14 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+.chat__error-messages {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.chat__error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 3px;
+}

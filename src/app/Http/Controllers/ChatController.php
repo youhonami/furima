@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreChatMessageRequest;
 
 class ChatController extends Controller
 {
@@ -17,6 +18,12 @@ class ChatController extends Controller
         if (!in_array(Auth::id(), [$chat->seller_id, $chat->buyer_id])) {
             abort(403, '権限がありません');
         }
+
+        // 未読メッセージを既読にする
+        $chat->messages()
+            ->where('user_id', '!=', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
 
         $partner = Auth::id() === $chat->seller_id ? $chat->buyer : $chat->seller;
 
@@ -37,7 +44,8 @@ class ChatController extends Controller
         ]);
     }
 
-    public function store(Request $request, $chatId)
+
+    public function store(StoreChatMessageRequest $request, $chatId)
     {
         $chat = Chat::findOrFail($chatId);
 
@@ -45,15 +53,7 @@ class ChatController extends Controller
             abort(403, '権限がありません');
         }
 
-        $validated = $request->validate([
-            'message' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|max:2048',
-        ]);
-
-        // バリデーション: メッセージか画像がどちらか必須
-        if (empty($validated['message']) && !$request->hasFile('image')) {
-            return back()->withErrors(['message' => 'メッセージまたは画像を入力してください。'])->withInput();
-        }
+        $validated = $request->validated();
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -63,7 +63,7 @@ class ChatController extends Controller
         Message::create([
             'chat_id' => $chat->id,
             'user_id' => Auth::id(),
-            'message' => $validated['message'] ?? '',
+            'message' => $validated['message'],
             'image_path' => $imagePath,
         ]);
 

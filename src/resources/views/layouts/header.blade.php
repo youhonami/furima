@@ -63,6 +63,8 @@
     <footer class="footer">
         &copy; 2025 COACHTECH
     </footer>
+
+    @yield('scripts') {{-- ← これを追加 --}}
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
