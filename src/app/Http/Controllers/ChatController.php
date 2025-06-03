@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
-    /**
-     * チャットルームを表示
-     */
     public function show($chatId)
     {
         $chat = Chat::with(['item', 'seller', 'buyer', 'messages.user'])->findOrFail($chatId);
@@ -39,9 +37,6 @@ class ChatController extends Controller
         ]);
     }
 
-    /**
-     * メッセージを送信
-     */
     public function store(Request $request, $chatId)
     {
         $chat = Chat::findOrFail($chatId);
@@ -51,21 +46,30 @@ class ChatController extends Controller
         }
 
         $validated = $request->validate([
-            'message' => 'required|string|max:1000',
+            'message' => 'nullable|string|max:1000',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        // バリデーション: メッセージか画像がどちらか必須
+        if (empty($validated['message']) && !$request->hasFile('image')) {
+            return back()->withErrors(['message' => 'メッセージまたは画像を入力してください。'])->withInput();
+        }
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('messages', 'public');
+        }
 
         Message::create([
             'chat_id' => $chat->id,
             'user_id' => Auth::id(),
-            'message' => $validated['message'],
+            'message' => $validated['message'] ?? '',
+            'image_path' => $imagePath,
         ]);
 
         return redirect()->route('chat.show', $chat->id);
     }
 
-    /**
-     * メッセージ編集画面を表示
-     */
     public function edit($chatId, $messageId)
     {
         $chat = Chat::with('item')->findOrFail($chatId);
@@ -78,9 +82,6 @@ class ChatController extends Controller
         return view('chat.edit', compact('chat', 'message'));
     }
 
-    /**
-     * メッセージを更新
-     */
     public function update(Request $request, $chatId, $messageId)
     {
         $chat = Chat::findOrFail($chatId);
@@ -101,9 +102,6 @@ class ChatController extends Controller
         return redirect()->route('chat.show', $chat->id)->with('success', 'メッセージを更新しました');
     }
 
-    /**
-     * メッセージを削除
-     */
     public function destroy($chatId, $messageId)
     {
         $chat = Chat::findOrFail($chatId);
@@ -111,6 +109,10 @@ class ChatController extends Controller
 
         if ($message->user_id !== Auth::id()) {
             abort(403, '権限がありません');
+        }
+
+        if ($message->image_path) {
+            Storage::disk('public')->delete($message->image_path);
         }
 
         $message->delete();

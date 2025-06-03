@@ -50,6 +50,11 @@
                     <div class="chat__message-content">
                         <div class="chat__message-user">{{ $message->user->name }}</div>
                         <div>{{ $message->message }}</div>
+                        @if($message->image_path)
+                        <div class="chat__message-image">
+                            <img src="{{ asset('storage/' . $message->image_path) }}" alt="添付画像">
+                        </div>
+                        @endif
                     </div>
                     @if($message->user_id === Auth::id())
                     <div class="chat__message-actions">
@@ -65,13 +70,14 @@
                 @endforeach
             </div>
 
-            <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" class="chat__form">
+            <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
                 <div class="chat__input-wrapper">
                     <textarea name="message" class="chat__textarea" placeholder="取引メッセージを入力してください"></textarea>
-                    <button type="button" class="chat__image-btn">
-                        <i class="fas fa-image">画像を追加</i>
-                    </button>
+                    <label class="chat__image-btn">
+                        <i class="fas fa-image"></i> 画像を追加
+                        <input type="file" name="image" accept="image/*" style="display: none;">
+                    </label>
                 </div>
                 <button type="submit" class="chat__send-btn">送信</button>
             </form>

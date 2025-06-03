@@ -13,6 +13,7 @@ class Message extends Model
         'chat_id',
         'user_id',
         'message',
+        'image_path',
     ];
 
     public function chat()

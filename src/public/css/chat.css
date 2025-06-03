@@ -263,3 +263,11 @@ body {
     background-color: #bbb;
     color: #fff;
 }
+
+.chat__message-image img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
