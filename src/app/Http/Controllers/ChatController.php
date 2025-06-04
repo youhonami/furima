@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreChatMessageRequest;
@@ -35,15 +36,41 @@ class ChatController extends Controller
             ->where('id', '!=', $chat->id)
             ->get();
 
+        // 評価済み判定
+        $user = Auth::user();
+        $item = $chat->item;
+
+        // 購入者側の評価済み確認
+        $hasBuyerRated = Rating::where('rater_id', $user->id)
+            ->where('ratee_id', $partner->id)
+            ->where('item_id', $item->id)
+            ->where('role', 'seller')
+            ->exists();
+
+        // 出品者側の評価済み確認
+        $hasSellerRated = Rating::where('rater_id', $user->id)
+            ->where('ratee_id', $partner->id)
+            ->where('item_id', $item->id)
+            ->where('role', 'buyer')
+            ->exists();
+
+        // 出品者が評価メッセージを受け取ったかどうか
+        $receivedCompleteMessage = Message::where('chat_id', $chat->id)
+            ->where('user_id', '!=', $user->id)
+            ->where('message', '評価を完了しました！')
+            ->exists();
+
         return view('chat.show', [
             'chat' => $chat,
-            'item' => $chat->item,
+            'item' => $item,
             'partner' => $partner,
             'messages' => $chat->messages()->with('user')->orderBy('created_at')->get(),
-            'otherChats' => $otherChats
+            'otherChats' => $otherChats,
+            'hasBuyerRated' => $hasBuyerRated,
+            'hasSellerRated' => $hasSellerRated,
+            'receivedCompleteMessage' => $receivedCompleteMessage,
         ]);
     }
-
 
     public function store(StoreChatMessageRequest $request, $chatId)
     {

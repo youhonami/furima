@@ -28,9 +28,13 @@
                     「{{ $partner->name }}」さんとの取引画面
                 </h1>
                 @if(Auth::id() === $chat->buyer_id)
+                @if(!$hasBuyerRated)
                 <button type="button" class="chat__complete-btn">
                     <i class="fas fa-check-circle"></i> 取引を完了する
                 </button>
+                @else
+                <button type="button" class="chat__complete-btn" disabled>取引完了済み</button>
+                @endif
                 @endif
             </div>
 
@@ -56,33 +60,14 @@
                         </div>
                         @endif
                     </div>
-                    @if($message->user_id === Auth::id())
-                    <div class="chat__message-actions">
-                        <a href="{{ route('chat.message.edit', [$chat->id, $message->id]) }}" class="chat__edit-btn">編集</a>
-                        <form action="{{ route('chat.message.destroy', [$chat->id, $message->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="chat__delete-btn">削除</button>
-                        </form>
-                    </div>
-                    @endif
                 </div>
                 @endforeach
             </div>
 
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
-
-                @if ($errors->any())
-                <div class="chat__error-messages">
-                    @foreach ($errors->all() as $error)
-                    <div class="chat__error">{{ $error }}</div>
-                    @endforeach
-                </div>
-                @endif
-
                 <div class="chat__input-wrapper">
-                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください">{{ old('message') }}</textarea>
+                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください"></textarea>
                     <label class="chat__image-btn">
                         <i class="fas fa-image"></i> 画像を追加
                         <input type="file" name="image" accept="image/*" style="display: none;">
@@ -94,18 +79,17 @@
     </div>
 </main>
 
-<!-- モーダル -->
+<!-- 購入者評価モーダル -->
+@if(!$hasBuyerRated && Auth::id() === $chat->buyer_id)
 <div id="completeModal" class="modal">
     <div class="modal-content">
         <p>取引が完了しました。</p>
         <p>今回の取引相手はどうでしたか？</p>
-
         <div class="rating">
             @for ($i = 1; $i <= 5; $i++)
                 <span class="star" data-value="{{ $i }}">&#9733;</span>
                 @endfor
         </div>
-
         <form id="ratingForm" action="{{ route('ratings.store') }}" method="POST">
             @csrf
             <input type="hidden" name="ratee_id" value="{{ $partner->id }}">
@@ -114,86 +98,79 @@
             <input type="hidden" name="rating" id="selectedRating" value="0">
             <button type="submit" class="modal-submit-btn">送信する</button>
         </form>
-
         <button id="closeModal">閉じる</button>
     </div>
 </div>
+@endif
 
+<!-- 出品者評価モーダル -->
+@if(!$hasSellerRated && Auth::id() === $item->user_id && $receivedCompleteMessage)
+<div id="sellerRatingModal" class="modal">
+    <div class="modal-content">
+        <p>購入者を評価してください。</p>
+        <div class="rating">
+            @for ($i = 1; $i <= 5; $i++)
+                <span class="seller-star" data-value="{{ $i }}">&#9733;</span>
+                @endfor
+        </div>
+        <form id="sellerRatingForm" action="{{ route('ratings.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="ratee_id" value="{{ $partner->id }}">
+            <input type="hidden" name="item_id" value="{{ $item->id }}">
+            <input type="hidden" name="role" value="buyer">
+            <input type="hidden" name="rating" id="sellerSelectedRating" value="0">
+            <button type="submit" class="modal-submit-btn">送信する</button>
+        </form>
+        <button id="closeSellerModal">閉じる</button>
+    </div>
+</div>
+@endif
 @endsection
 
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const textarea = document.getElementById('chatMessage');
-        const chatId = '{{ $chat->id }}';
-        const storageKey = 'chat_message_draft_' + chatId;
+        const completeBtn = document.querySelector('.chat__complete-btn');
+        const completeModal = document.getElementById('completeModal');
+        const closeModal = document.getElementById('closeModal');
         const stars = document.querySelectorAll('.star');
         const ratingInput = document.getElementById('selectedRating');
         let selectedRating = 0;
 
-        if (!textarea.value) {
-            const savedDraft = localStorage.getItem(storageKey);
-            if (savedDraft) {
-                textarea.value = savedDraft;
-            }
-        }
-
-        textarea.addEventListener('input', function() {
-            localStorage.setItem(storageKey, textarea.value);
-        });
-
-        const form = textarea.closest('form');
-        form.addEventListener('submit', function() {
-            localStorage.removeItem(storageKey);
-        });
-
-        // モーダル処理
-        const completeBtn = document.querySelector('.chat__complete-btn');
-        const modal = document.getElementById('completeModal');
-        const closeModal = document.getElementById('closeModal');
-
-        if (completeBtn && modal && closeModal) {
+        if (completeBtn && completeModal && closeModal) {
             completeBtn.addEventListener('click', function() {
-                modal.style.display = 'flex';
+                completeModal.style.display = 'flex';
             });
-
             closeModal.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
+                completeModal.style.display = 'none';
             });
             stars.forEach(star => {
-                star.addEventListener('mouseover', function() {
-                    const val = parseInt(this.getAttribute('data-value'));
-                    highlightStars(val);
-                });
-
-                star.addEventListener('mouseout', function() {
-                    highlightStars(selectedRating);
-                });
-
                 star.addEventListener('click', function() {
                     selectedRating = parseInt(this.getAttribute('data-value'));
                     ratingInput.value = selectedRating;
-                    highlightStars(selectedRating);
+                    stars.forEach(s => s.classList.toggle('selected', parseInt(s.getAttribute('data-value')) <= selectedRating));
                 });
             });
+        }
 
-            function highlightStars(rating) {
-                stars.forEach(star => {
-                    const val = parseInt(star.getAttribute('data-value'));
-                    if (val <= rating) {
-                        star.classList.add('selected');
-                    } else {
-                        star.classList.remove('selected');
-                    }
+        const sellerModal = document.getElementById('sellerRatingModal');
+        const closeSellerModal = document.getElementById('closeSellerModal');
+        const sellerStars = document.querySelectorAll('.seller-star');
+        const sellerRatingInput = document.getElementById('sellerSelectedRating');
+        let sellerSelectedRating = 0;
+
+        if (sellerModal && closeSellerModal) {
+            sellerModal.style.display = 'flex';
+            closeSellerModal.addEventListener('click', function() {
+                sellerModal.style.display = 'none';
+            });
+            sellerStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    sellerSelectedRating = parseInt(this.getAttribute('data-value'));
+                    sellerRatingInput.value = sellerSelectedRating;
+                    sellerStars.forEach(s => s.classList.toggle('selected', parseInt(s.getAttribute('data-value')) <= sellerSelectedRating));
                 });
-            }
-
+            });
         }
     });
 </script>

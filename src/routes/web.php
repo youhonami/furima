@@ -136,5 +136,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/chat/{chat}/message', [ChatController::class, 'store'])->name('chat.message.store');
 });
 
-
+//評価関連
 Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
+Route::get('/', [ItemController::class, 'index'])->name('items.index');
+Route::get('/items', [ItemController::class, 'index'])->name('items.index');

@@ -204,7 +204,7 @@ body {
 
 .chat__textarea {
     flex: 1;
-    width: 65%; /* テキストエリアの幅を狭める */
+    width: 65%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
@@ -292,7 +292,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    display: none; /* デフォルトは非表示 */
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -314,13 +314,16 @@ body {
     margin: 10px 0;
 }
 
-.star {
+.star,
+.seller-star {
     display: inline-block;
     transition: color 0.2s;
 }
 
 .star.hover,
-.star.selected {
+.star.selected,
+.seller-star.hover,
+.seller-star.selected {
     color: gold;
 }
 

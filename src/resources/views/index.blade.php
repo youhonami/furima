@@ -12,13 +12,14 @@ use Illuminate\Support\Str;
 <main class="main">
 
     <!-- タブメニュー -->
+    <!-- タブメニュー -->
     <div class="tabs">
-        <a href="{{ route('item.index', ['filter' => 'recommended', 'search' => request('search')]) }}"
+        <a href="{{ route('items.index', ['filter' => 'recommended', 'search' => request('search')]) }}"
             class="tabs__item {{ request('filter') !== 'mylist' ? 'tabs__item--active' : '' }}">
             おすすめ
         </a>
 
-        <a href="{{ route('item.index', ['filter' => 'mylist', 'search' => request('search')]) }}"
+        <a href="{{ route('items.index', ['filter' => 'mylist', 'search' => request('search')]) }}"
             class="tabs__item {{ request('filter') === 'mylist' ? 'tabs__item--active' : '' }}">
             マイリスト
         </a>

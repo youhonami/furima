@@ -26,7 +26,7 @@
 
         @unless (request()->is('login') || request()->is('register') || request()->is('email/verify'))
         <div class="header__search-bar">
-            <form method="GET" action="{{ route('item.index') }}" id="searchForm">
+            <form method="GET" action="{{ route('items.index') }}" id="searchForm">
                 <input type="hidden" name="filter" value="{{ request('filter', 'recommended') }}">
                 <input
                     type="text"
@@ -36,7 +36,6 @@
                     value="{{ request('search') }}">
             </form>
         </div>
-
 
         <nav class="header__nav-links">
             @auth
@@ -54,7 +53,6 @@
         </nav>
         @endunless
     </header>
-
 
     <main class="main">
         @yield('content')
