@@ -5,14 +5,27 @@
 @endsection
 
 @section('content')
-
 <main class="mypage__container">
     <section class="mypage__profile">
         <div class="mypage__icon">
             <img src="{{ $user->profile && $user->profile->img ? asset('storage/' . $user->profile->img) : asset('storage/images/default-user-icon.png') }}" alt="ユーザーアイコン">
         </div>
         <div class="mypage__info">
-            <h1 class="mypage__username">{{ $user->name }}</h1>
+            <div>
+                <h1 class="mypage__username">{{ $user->name }}</h1>
+                @if($averageRating > 0)
+                <div class="mypage__rating">
+                    @for($i = 1; $i <= 5; $i++)
+                        @if($i <=$averageRating)
+                        <span class="star filled">&#9733;</span>
+                        @else
+                        <span class="star">&#9733;</span>
+                        @endif
+                        @endfor
+                </div>
+                @endif
+
+            </div>
             <a href="{{ route('profile.edit') }}" class="mypage__edit-btn">プロフィールを編集</a>
         </div>
     </section>

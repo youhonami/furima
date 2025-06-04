@@ -37,6 +37,27 @@ body {
     margin: 0;
 }
 
+.mypage__rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.star {
+    font-size: 1.5em;
+    color: #ddd;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.mypage__rating-text {
+    font-size: 0.9em;
+    color: #555;
+}
+
 .mypage__info {
     display: flex;
     align-items: center;

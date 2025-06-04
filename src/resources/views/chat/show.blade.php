@@ -73,7 +73,6 @@
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
 
-                {{-- テキストエリアの上にエラーメッセージ --}}
                 @if ($errors->any())
                 <div class="chat__error-messages">
                     @foreach ($errors->all() as $error)
@@ -94,6 +93,32 @@
         </div>
     </div>
 </main>
+
+<!-- モーダル -->
+<div id="completeModal" class="modal">
+    <div class="modal-content">
+        <p>取引が完了しました。</p>
+        <p>今回の取引相手はどうでしたか？</p>
+
+        <div class="rating">
+            @for ($i = 1; $i <= 5; $i++)
+                <span class="star" data-value="{{ $i }}">&#9733;</span>
+                @endfor
+        </div>
+
+        <form id="ratingForm" action="{{ route('ratings.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="ratee_id" value="{{ $partner->id }}">
+            <input type="hidden" name="item_id" value="{{ $item->id }}">
+            <input type="hidden" name="role" value="seller">
+            <input type="hidden" name="rating" id="selectedRating" value="0">
+            <button type="submit" class="modal-submit-btn">送信する</button>
+        </form>
+
+        <button id="closeModal">閉じる</button>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -102,8 +127,10 @@
         const textarea = document.getElementById('chatMessage');
         const chatId = '{{ $chat->id }}';
         const storageKey = 'chat_message_draft_' + chatId;
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('selectedRating');
+        let selectedRating = 0;
 
-        // LocalStorageから下書きを読み込み（old()がなければ）
         if (!textarea.value) {
             const savedDraft = localStorage.getItem(storageKey);
             if (savedDraft) {
@@ -111,16 +138,63 @@
             }
         }
 
-        // 入力イベントで保存
         textarea.addEventListener('input', function() {
             localStorage.setItem(storageKey, textarea.value);
         });
 
-        // 送信時に下書きを削除
         const form = textarea.closest('form');
         form.addEventListener('submit', function() {
             localStorage.removeItem(storageKey);
         });
+
+        // モーダル処理
+        const completeBtn = document.querySelector('.chat__complete-btn');
+        const modal = document.getElementById('completeModal');
+        const closeModal = document.getElementById('closeModal');
+
+        if (completeBtn && modal && closeModal) {
+            completeBtn.addEventListener('click', function() {
+                modal.style.display = 'flex';
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const val = parseInt(this.getAttribute('data-value'));
+                    highlightStars(val);
+                });
+
+                star.addEventListener('mouseout', function() {
+                    highlightStars(selectedRating);
+                });
+
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-value'));
+                    ratingInput.value = selectedRating;
+                    highlightStars(selectedRating);
+                });
+            });
+
+            function highlightStars(rating) {
+                stars.forEach(star => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    if (val <= rating) {
+                        star.classList.add('selected');
+                    } else {
+                        star.classList.remove('selected');
+                    }
+                });
+            }
+
+        }
     });
 </script>
 @endsection

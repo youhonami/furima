@@ -25,7 +25,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -80,5 +79,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmail);
+    }
+
+    /**
+     * ユーザーが受け取った評価（受け手側）
+     */
+    public function receivedRatings()
+    {
+        return $this->hasMany(Rating::class, 'ratee_id');
     }
 }

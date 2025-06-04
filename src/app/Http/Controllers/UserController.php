@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\Chat;
+use App\Models\Rating;  // ← 追加
 
 class UserController extends Controller
 {
@@ -59,13 +60,18 @@ class UserController extends Controller
             $inProgressItems = $allInProgressItems;
         }
 
+        // 平均評価
+        $averageRating = $user->receivedRatings()->avg('rating');
+        $averageRating = $averageRating ? round($averageRating) : 0;
+
         return view('mypage', compact(
             'user',
             'tab',
             'listedItems',
             'purchasedItems',
             'inProgressItems',
-            'newMessageCount'
+            'newMessageCount',
+            'averageRating'  // 追加
         ));
     }
 }

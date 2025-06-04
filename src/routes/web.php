@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -134,3 +135,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat/{chat}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/chat/{chat}/message', [ChatController::class, 'store'])->name('chat.message.store');
 });
+
+
+Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
