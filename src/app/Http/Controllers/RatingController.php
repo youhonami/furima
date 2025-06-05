@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Rating;
 use App\Models\Item;
 use App\Models\Message;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SellerRatedNotification;
 
 class RatingController extends Controller
 {
@@ -44,6 +47,15 @@ class RatingController extends Controller
                 'user_id' => auth()->id(),
                 'message' => '評価を完了しました！',
             ]);
+        }
+
+        // 【追加部分】購入者が評価をした場合に出品者にメール通知を送る
+        if ($request->role === 'seller') {
+            $seller = User::findOrFail($request->ratee_id);
+            $buyerName = auth()->user()->name;
+            $itemName = $item->name;
+
+            Mail::to($seller->email)->send(new SellerRatedNotification($buyerName, $itemName));
         }
 
         return redirect()->route('items.index')->with('success', '評価を送信しました。');
