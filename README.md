@@ -24,9 +24,11 @@
 - 配送先の変更
 - 購入した商品の一覧（マイページ）
 - テストケース
-
-- 取引チャット（実装中）
-- 取引評価（実装中）
+<!-- 以下、プロ入会テスト要件 -->
+- 取引チャット（商品詳細ページ、マイページからチャットページに遷移可能）
+- 送信済みメッセージの編集・削除機能
+- 取引評価（購入者が評価したらメールで通知）
+- 評価平均確認機能（マイページに表示）
 
 ## 使用技術(実行環境)
 
@@ -48,6 +50,21 @@
 **Docker ビルド**
 
 1. https://github.com/youhonami/furima.git
+
+- ターミナルで git clone git@github.com:youhonami/furima.git を実行
+
+  - リモートリポジトリを作成
+  - ターミナルで git remote set-url origin 新規リポジトリの紐付け先リンク　を実行
+  - ターミナルで git remote -v を実行。変更を確認。
+  - ローカルリポジトリの変更を新しいリモートリポジトリに反映
+
+  ```
+  git status
+  git add .
+  git commit -m "例：リモートリポジトリの変更"
+  git push origin main
+  ```
+
 2. DockerDesktop アプリを立ち上げる
 3. `docker-compose up -d --build`
 
@@ -130,3 +147,7 @@ php artisan test
 - 開発環境:http://localhost
 - phpMyAdmin:http://localhost:8080/
 - MailHog:http://localhost:8025/
+
+##備考
+
+-
