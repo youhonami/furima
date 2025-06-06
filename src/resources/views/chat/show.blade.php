@@ -90,7 +90,7 @@
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
 
-                <!-- 🆕 バリデーションエラー表示 -->
+                {{-- 🆕 テキストエリアの上にバリデーションメッセージ --}}
                 @if ($errors->any())
                 <div class="chat__error-messages">
                     @foreach ($errors->all() as $error)
@@ -99,16 +99,17 @@
                 </div>
                 @endif
 
-                <div class="chat__input-wrapper">
+                <div class="chat__input-row">
                     <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください">{{ old('message') }}</textarea>
+
                     <label class="chat__image-btn">
                         <i class="fas fa-image"></i> 画像を追加
                         <input type="file" name="image" accept="image/*" style="display: none;">
                     </label>
-                </div>
-                <button type="submit" class="chat__send-btn">送信</button>
-            </form>
 
+                    <button type="submit" class="chat__send-btn">送信</button>
+                </div>
+            </form>
         </div>
     </div>
     <!-- 画像拡大モーダル -->

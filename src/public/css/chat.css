@@ -65,7 +65,7 @@ body {
     font-weight: bold;
 }
 
-/* チャットメインエリア */
+/* メインエリア */
 .chat__container {
     flex: 1;
 }
@@ -94,20 +94,18 @@ body {
     border: 1px solid #ddd;
 }
 
-/* 取引完了ボタン */
 .chat__complete-btn {
     font-size: 0.9em;
     color: #5cb85c;
-    text-decoration: none;
     border: 1px solid #5cb85c;
     padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color 0.2s, color 0.2s;
+    background-color: transparent;
     display: inline-flex;
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    background-color: transparent;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .chat__complete-btn:hover {
@@ -156,18 +154,13 @@ body {
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
     gap: 10px;
 }
 
 .chat__message--own {
     background-color: #dff0d8;
+    flex-direction: row-reverse;
     text-align: right;
-}
-
-.chat__message-content {
-    flex: 1;
-    word-wrap: break-word;
 }
 
 .chat__message-user {
@@ -177,6 +170,12 @@ body {
     font-size: 0.9em;
     color: #555;
     margin-bottom: 5px;
+    justify-content: flex-start;
+}
+
+.chat__message--own .chat__message-user {
+    justify-content: flex-end;
+    text-align: right;
 }
 
 .chat__message-user-icon {
@@ -187,22 +186,32 @@ body {
     border: 1px solid #ddd;
 }
 
+.chat__message-content {
+    flex: 1;
+    word-wrap: break-word;
+}
+
 .chat__message-actions {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-self: center;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5px;
 }
 
 .chat__edit-btn,
 .chat__delete-btn {
-    font-size: 0.75em;
+    display: inline-flex;
+    font-size: 0.85em;
     color: #777;
     text-decoration: none;
     border: none;
     background: none;
     cursor: pointer;
-    padding: 0;
+    transition: color 0.2s;
+    padding: 10px 2px;
+    border-radius: 2px;
 }
 
 .chat__edit-btn:hover,
@@ -213,15 +222,21 @@ body {
 /* 入力エリア */
 .chat__form {
     display: flex;
+    flex-direction: column; /* フォーム全体は縦積み */
     gap: 10px;
-    align-items: center;
 }
 
-.chat__input-wrapper {
+.chat__input-row {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
+}
+.chat__input-wrapper {
+    display: flex;
+    flex-direction: column; /* 縦方向に積む */
+    align-items: stretch; /* 幅いっぱいにする */
+    gap: 5px; /* エラーとテキストエリアの間に余白をつける */
 }
 
 .chat__textarea {
@@ -256,43 +271,13 @@ body {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px;
+    padding: 14px;
     cursor: pointer;
+    font-size: 1.2em;
 }
 
 .chat__send-btn:hover {
     background-color: #c9302c;
-}
-
-.chat__form-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.chat__cancel-btn {
-    background-color: #ddd;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
-
-.chat__cancel-btn:hover {
-    background-color: #bbb;
-    color: #fff;
-}
-
-.chat__message-image img {
-    width: 100px;
-    height: auto;
-    object-fit: contain;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    cursor: pointer;
 }
 
 .chat__error-messages {
@@ -306,15 +291,24 @@ body {
     margin-bottom: 3px;
 }
 
-/* モーダルウインドウ */
+.chat__message-image img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* モーダル */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 9999;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
     display: none;
     justify-content: center;
     align-items: center;
@@ -324,98 +318,11 @@ body {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    min-width: 300px;
     max-width: 90%;
     text-align: center;
 }
 
-.rating {
-    font-size: 2em;
-    color: #ddd;
-    cursor: pointer;
-    display: inline-block;
-    margin: 10px 0;
-}
-
-.star,
-.seller-star {
-    display: inline-block;
-    transition: color 0.2s;
-}
-
-.star.hover,
-.star.selected,
-.seller-star.hover,
-.seller-star.selected {
-    color: gold;
-}
-
-.modal-submit-btn {
-    background-color: #5cb85c;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.modal-submit-btn:hover {
-    background-color: #4cae4c;
-}
-
-/* 自分のメッセージ（右寄せ） */
-.chat__message--own {
-    background-color: #dff0d8;
-    text-align: right;
-    flex-direction: row-reverse;
-}
-
-/* 送信者のアイコンと名前を右側に配置 */
-.chat__message--own .chat__message-user {
-    justify-content: flex-end;
-    text-align: right;
-}
-
-.chat__message-actions {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-    justify-content: flex-end; /* 右寄せ */
-    margin-top: 5px;
-}
-
-.chat__edit-btn,
-.chat__delete-btn {
-    display: inline-flex;
-    font-size: 0.85em;
-    color: #777;
-    text-decoration: none;
-    border: none;
-    background: none;
-    padding: 10px 2px;
-    border-radius: 2px;
-    transition: color 0.2s;
-}
-
-/* 画像拡大用モーダル */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    padding-top: 50px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
+.modal-content img {
     max-width: 90%;
     max-height: 90%;
     border-radius: 8px;
@@ -434,4 +341,36 @@ body {
 
 .modal-close:hover {
     color: #bbb;
+}
+
+.rating {
+    font-size: 2em;
+    color: #ddd;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.star,
+.seller-star {
+    display: inline-block;
+    transition: color 0.2s;
+}
+
+.star.selected,
+.seller-star.selected {
+    color: gold;
+}
+
+.modal-submit-btn {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.modal-submit-btn:hover {
+    background-color: #4cae4c;
 }
