@@ -1,0 +1,142 @@
+/* ベース */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.chat {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat__container {
+    flex: 1;
+}
+
+/* タイトル */
+.chat__title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* 商品情報 */
+.chat__item-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.chat__item-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.chat__item-details h2 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.chat__item-details p {
+    color: #d9534f;
+    margin: 5px 0 0;
+    font-weight: bold;
+}
+
+/* フォーム */
+.chat__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat__textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.chat__form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.chat__send-btn {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.chat__send-btn:hover {
+    background-color: #4cae4c;
+}
+
+.chat__image-btn {
+    background-color: #f0ad4e; /* 背景色をオレンジ系 */
+    border: none;
+    border-radius: 5px;
+    padding: 14px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #fff; /* 白文字にして見やすく */
+    transition: background-color 0.2s;
+}
+
+.chat__image-btn:hover {
+    background-color: #ec971f; /* ホバー時に少し濃い色 */
+    color: #fff;
+}
+
+.chat__cancel-btn {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.chat__cancel-btn:hover {
+    background-color: #c9302c;
+    color: #fff;
+}
+
+/* エラー */
+.chat__error-messages {
+    margin-bottom: 10px;
+}
+
+.chat__error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 3px;
+}
+
+/* 画像表示 */
+.chat__message-image img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

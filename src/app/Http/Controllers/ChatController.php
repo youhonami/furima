@@ -120,14 +120,29 @@ class ChatController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:1000',
+            'image' => 'nullable|image|max:2048', // ← 画像のバリデーションを追加
         ]);
 
-        $message->update([
-            'message' => $validated['message'],
-        ]);
+        // メッセージ本文を更新
+        $message->message = $validated['message'];
+
+        // 画像がアップロードされた場合は既存画像を削除して新しく保存
+        if ($request->hasFile('image')) {
+            // 既存の画像を削除
+            if ($message->image_path && Storage::disk('public')->exists($message->image_path)) {
+                Storage::disk('public')->delete($message->image_path);
+            }
+
+            // 新しい画像を保存
+            $path = $request->file('image')->store('messages', 'public');
+            $message->image_path = $path;
+        }
+
+        $message->save();
 
         return redirect()->route('chat.show', $chat->id)->with('success', 'メッセージを更新しました');
     }
+
 
     public function destroy($chatId, $messageId)
     {

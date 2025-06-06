@@ -25,6 +25,7 @@
         <div class="chat__container">
             <div class="chat__header">
                 <h1 class="chat__title">
+                    <img src="{{ asset('storage/' . ($partner->profile->img ?? 'images/default-user-icon.png')) }}" class="chat__partner-icon">
                     「{{ $partner->name }}」さんとの取引画面
                 </h1>
                 @if(Auth::id() === $chat->buyer_id)
@@ -52,11 +53,31 @@
                 @foreach($messages as $message)
                 <div class="chat__message {{ $message->user_id === Auth::id() ? 'chat__message--own' : '' }}">
                     <div class="chat__message-content">
-                        <div class="chat__message-user">{{ $message->user->name }}</div>
+                        <div class="chat__message-user">
+                            <img
+                                src="{{ asset('storage/' . ($message->user->profile->img ?? 'images/default-user-icon.png')) }}"
+                                alt="ユーザーアイコン"
+                                class="chat__message-user-icon">
+                            {{ $message->user->name }}
+                        </div>
                         <div>{{ $message->message }}</div>
                         @if($message->image_path)
                         <div class="chat__message-image">
                             <img src="{{ asset('storage/' . $message->image_path) }}" alt="添付画像">
+                        </div>
+                        @endif
+                        @if(Auth::id() === $message->user_id)
+                        <div class="chat__message-actions">
+                            <a href="{{ route('chat.message.edit', [$chat->id, $message->id]) }}" class="chat__edit-btn">
+                                <i class="fas fa-edit"></i> 編集
+                            </a>
+                            <form action="{{ route('chat.message.destroy', [$chat->id, $message->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="chat__delete-btn" onclick="return confirm('削除してもよろしいですか？')">
+                                    <i class="fas fa-trash-alt"></i> 削除
+                                </button>
+                            </form>
                         </div>
                         @endif
                     </div>
@@ -64,10 +85,22 @@
                 @endforeach
             </div>
 
+
+            <!-- チャット送信フォーム -->
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
+
+                <!-- 🆕 バリデーションエラー表示 -->
+                @if ($errors->any())
+                <div class="chat__error-messages">
+                    @foreach ($errors->all() as $error)
+                    <div class="chat__error">{{ $error }}</div>
+                    @endforeach
+                </div>
+                @endif
+
                 <div class="chat__input-wrapper">
-                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください"></textarea>
+                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください">{{ old('message') }}</textarea>
                     <label class="chat__image-btn">
                         <i class="fas fa-image"></i> 画像を追加
                         <input type="file" name="image" accept="image/*" style="display: none;">
@@ -75,8 +108,15 @@
                 </div>
                 <button type="submit" class="chat__send-btn">送信</button>
             </form>
+
         </div>
     </div>
+    <!-- 画像拡大モーダル -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
 </main>
 
 <!-- 購入者評価モーダル -->
@@ -87,7 +127,7 @@
         <p>今回の取引相手はどうでしたか？</p>
         <div class="rating">
             @for ($i = 1; $i <= 5; $i++)
-                <span class="star" data-value="{{ $i }}">&#9733;</span>
+                <span class="star {{ $i == 1 ? 'selected' : '' }}" data-value="{{ $i }}">&#9733;</span>
                 @endfor
         </div>
         <form id="ratingForm" action="{{ route('ratings.store') }}" method="POST">
@@ -95,13 +135,14 @@
             <input type="hidden" name="ratee_id" value="{{ $partner->id }}">
             <input type="hidden" name="item_id" value="{{ $item->id }}">
             <input type="hidden" name="role" value="seller">
-            <input type="hidden" name="rating" id="selectedRating" value="0">
+            <input type="hidden" name="rating" id="selectedRating" value="1">
             <button type="submit" class="modal-submit-btn">送信する</button>
         </form>
         <button id="closeModal">閉じる</button>
     </div>
 </div>
 @endif
+
 
 <!-- 出品者評価モーダル -->
 @if(!$hasSellerRated && Auth::id() === $item->user_id && $receivedCompleteMessage)
@@ -110,7 +151,7 @@
         <p>購入者を評価してください。</p>
         <div class="rating">
             @for ($i = 1; $i <= 5; $i++)
-                <span class="seller-star" data-value="{{ $i }}">&#9733;</span>
+                <span class="seller-star {{ $i == 1 ? 'selected' : '' }}" data-value="{{ $i }}">&#9733;</span>
                 @endfor
         </div>
         <form id="sellerRatingForm" action="{{ route('ratings.store') }}" method="POST">
@@ -118,13 +159,14 @@
             <input type="hidden" name="ratee_id" value="{{ $partner->id }}">
             <input type="hidden" name="item_id" value="{{ $item->id }}">
             <input type="hidden" name="role" value="buyer">
-            <input type="hidden" name="rating" id="sellerSelectedRating" value="0">
+            <input type="hidden" name="rating" id="sellerSelectedRating" value="1">
             <button type="submit" class="modal-submit-btn">送信する</button>
         </form>
         <button id="closeSellerModal">閉じる</button>
     </div>
 </div>
 @endif
+
 @endsection
 
 @section('scripts')
@@ -172,6 +214,29 @@
                 });
             });
         }
+
+        // 🆕 チャットメッセージ初期位置を最下部にスクロールする
+        const messagesContainer = document.querySelector('.chat__messages');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    });
+
+    // 画像クリックでモーダル表示
+    document.querySelectorAll('.chat__message-image img').forEach(image => {
+        image.addEventListener('click', function() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = this.src;
+        });
+    });
+
+    // モーダルを閉じる
+    const modalClose = document.getElementById('modalClose');
+    modalClose.addEventListener('click', function() {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
     });
 </script>
 @endsection

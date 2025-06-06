@@ -79,8 +79,19 @@ body {
 }
 
 .chat__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 1.5em;
     margin: 0;
+}
+
+.chat__partner-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
 }
 
 /* 取引完了ボタン */
@@ -160,9 +171,20 @@ body {
 }
 
 .chat__message-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 0.9em;
     color: #555;
     margin-bottom: 5px;
+}
+
+.chat__message-user-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
 }
 
 .chat__message-actions {
@@ -217,7 +239,7 @@ body {
     background-color: #ddd;
     border: none;
     border-radius: 5px;
-    padding: 10px;
+    padding: 14px;
     cursor: pointer;
     font-size: 1.2em;
     color: #555;
@@ -234,7 +256,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 0 20px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -270,6 +292,7 @@ body {
     object-fit: contain;
     border-radius: 5px;
     border: 1px solid #ccc;
+    cursor: pointer;
 }
 
 .chat__error-messages {
@@ -339,4 +362,76 @@ body {
 
 .modal-submit-btn:hover {
     background-color: #4cae4c;
+}
+
+/* 自分のメッセージ（右寄せ） */
+.chat__message--own {
+    background-color: #dff0d8;
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+/* 送信者のアイコンと名前を右側に配置 */
+.chat__message--own .chat__message-user {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chat__message-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end; /* 右寄せ */
+    margin-top: 5px;
+}
+
+.chat__edit-btn,
+.chat__delete-btn {
+    display: inline-flex;
+    font-size: 0.85em;
+    color: #777;
+    text-decoration: none;
+    border: none;
+    background: none;
+    padding: 10px 2px;
+    border-radius: 2px;
+    transition: color 0.2s;
+}
+
+/* 画像拡大用モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #bbb;
 }
