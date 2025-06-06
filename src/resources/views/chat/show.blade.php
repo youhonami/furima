@@ -85,7 +85,6 @@
                 @endforeach
             </div>
 
-
             <!-- チャット送信フォーム -->
             <form action="{{ route('chat.message.store', $chat->id) }}" method="POST" enctype="multipart/form-data" class="chat__form">
                 @csrf
@@ -100,7 +99,12 @@
                 @endif
 
                 <div class="chat__input-row">
-                    <textarea id="chatMessage" name="message" class="chat__textarea" rows="1" placeholder="取引メッセージを入力してください">{{ old('message') }}</textarea>
+                    <textarea id="chatMessage"
+                        name="message"
+                        class="chat__textarea"
+                        rows="1"
+                        placeholder="取引メッセージを入力してください"
+                        data-chat-id="{{ $chat->id }}">{{ old('message') }}</textarea>
 
                     <label class="chat__image-btn">
                         <i class="fas fa-image"></i> 画像を追加
@@ -112,12 +116,12 @@
             </form>
         </div>
     </div>
+
     <!-- 画像拡大モーダル -->
     <div id="imageModal" class="modal">
         <span class="modal-close" id="modalClose">&times;</span>
         <img class="modal-content" id="modalImage">
     </div>
-
 </main>
 
 <!-- 購入者評価モーダル -->
@@ -143,7 +147,6 @@
     </div>
 </div>
 @endif
-
 
 <!-- 出品者評価モーダル -->
 @if(!$hasSellerRated && Auth::id() === $item->user_id && $receivedCompleteMessage)
@@ -173,6 +176,34 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // draft保存
+        const chatMessage = document.getElementById('chatMessage');
+        const storageKey = 'chatMessageDraft_' + chatMessage.dataset.chatId;
+
+        // ページ読み込み時、保存されたデータがあればセット
+        const savedDraft = localStorage.getItem(storageKey);
+        if (savedDraft) {
+            chatMessage.value = savedDraft;
+        }
+
+        // 入力時に保存
+        chatMessage.addEventListener('input', function() {
+            localStorage.setItem(storageKey, chatMessage.value);
+        });
+
+        // 送信時に削除
+        const chatForm = document.querySelector('.chat__form');
+        chatForm.addEventListener('submit', function() {
+            localStorage.removeItem(storageKey);
+        });
+
+        // チャットメッセージ初期位置を最下部にスクロール
+        const messagesContainer = document.querySelector('.chat__messages');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // 完了ボタンのモーダル表示
         const completeBtn = document.querySelector('.chat__complete-btn');
         const completeModal = document.getElementById('completeModal');
         const closeModal = document.getElementById('closeModal');
@@ -196,6 +227,7 @@
             });
         }
 
+        // 出品者モーダル
         const sellerModal = document.getElementById('sellerRatingModal');
         const closeSellerModal = document.getElementById('closeSellerModal');
         const sellerStars = document.querySelectorAll('.seller-star');
@@ -216,28 +248,22 @@
             });
         }
 
-        // 🆕 チャットメッセージ初期位置を最下部にスクロールする
-        const messagesContainer = document.querySelector('.chat__messages');
-        if (messagesContainer) {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-    });
-
-    // 画像クリックでモーダル表示
-    document.querySelectorAll('.chat__message-image img').forEach(image => {
-        image.addEventListener('click', function() {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'block';
-            modalImg.src = this.src;
+        // 画像モーダル
+        document.querySelectorAll('.chat__message-image img').forEach(image => {
+            image.addEventListener('click', function() {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+            });
         });
-    });
 
-    // モーダルを閉じる
-    const modalClose = document.getElementById('modalClose');
-    modalClose.addEventListener('click', function() {
-        const modal = document.getElementById('imageModal');
-        modal.style.display = 'none';
+        // 画像モーダル閉じる
+        const modalClose = document.getElementById('modalClose');
+        modalClose.addEventListener('click', function() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        });
     });
 </script>
 @endsection
