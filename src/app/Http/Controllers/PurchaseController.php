@@ -26,7 +26,7 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function store(PurchaseRequest $request) // 👈 修正
+    public function store(PurchaseRequest $request)
     {
         // バリデーション済みのデータを取得
         $validated = $request->validated();
@@ -42,7 +42,7 @@ class PurchaseController extends Controller
         $purchase = new Purchase();
         $purchase->user_id = $user->id;
         $purchase->item_id = $item->id;
-        $purchase->payment_method = $validated['payment_method']; // ✅ 修正
+        $purchase->payment_method = $validated['payment_method'];
 
         // セッションの配送先があれば優先する
         if (session('temp_address')) {
@@ -76,12 +76,12 @@ class PurchaseController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('item.index'),
+            'success_url' => route('items.index'),
             'cancel_url' => route('purchase.cancel', ['id' => $item->id]),
         ]);
+
         return redirect($session->url);
     }
-
 
     public function cancel($id)
     {

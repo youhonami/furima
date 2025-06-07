@@ -8,7 +8,7 @@ class StoreChatMessageRequest extends FormRequest
 {
     public function authorize()
     {
-        return true; // 権限チェックはController側でするのでOK
+        return true;
     }
 
     public function rules()

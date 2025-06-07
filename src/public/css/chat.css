@@ -222,7 +222,7 @@ body {
 /* 入力エリア */
 .chat__form {
     display: flex;
-    flex-direction: column; /* フォーム全体は縦積み */
+    flex-direction: column;
     gap: 10px;
 }
 
@@ -234,9 +234,9 @@ body {
 }
 .chat__input-wrapper {
     display: flex;
-    flex-direction: column; /* 縦方向に積む */
-    align-items: stretch; /* 幅いっぱいにする */
-    gap: 5px; /* エラーとテキストエリアの間に余白をつける */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
 }
 
 .chat__textarea {

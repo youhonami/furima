@@ -15,7 +15,7 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('item_id'); // 商品ID（今回はあえて外部キー制約は省略、必要なら追加）
+            $table->unsignedBigInteger('item_id');
             $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

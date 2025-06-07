@@ -51,7 +51,7 @@
 
 1. https://github.com/youhonami/furima.git
 
-- ターミナルで git clone git@github.com:youhonami/furima.git を実行
+- ターミナルで git clone git@git@github.com:youhonami/furima.git を実行
 
   - リモートリポジトリを作成
   - ターミナルで git remote set-url origin 新規リポジトリの紐付け先リンク　を実行

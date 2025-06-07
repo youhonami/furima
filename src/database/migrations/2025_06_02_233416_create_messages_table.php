@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('chat_id')->constrained('chats')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('message');
-            $table->string('image_path')->nullable(); // ← 追加
+            $table->string('image_path')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });

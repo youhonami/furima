@@ -34,6 +34,7 @@ class ChatController extends Controller
                     ->orWhere('buyer_id', Auth::id());
             })
             ->where('id', '!=', $chat->id)
+            ->whereHas('messages')
             ->get();
 
         // 評価済み判定
@@ -120,7 +121,7 @@ class ChatController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:1000',
-            'image' => 'nullable|image|max:2048', // ← 画像のバリデーションを追加
+            'image' => 'nullable|image|max:2048',
         ]);
 
         // メッセージ本文を更新

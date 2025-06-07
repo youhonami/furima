@@ -17,9 +17,9 @@
                 <div class="mypage__rating">
                     @for($i = 1; $i <= 5; $i++)
                         @if($i <=$averageRating)
-                        <span class="star filled">&#9733;</span>
+                        <span class="mypage__star--filled">&#9733;</span>
                         @else
-                        <span class="star">&#9733;</span>
+                        <span class="mypage__star">&#9733;</span>
                         @endif
                         @endfor
                 </div>
@@ -90,11 +90,14 @@
             @endphp
 
             @if($chat)
-            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card">
+            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card {{ $item->isSold() ? 'mypage__item-card--sold' : '' }}">
                 <div class="mypage__item-image-wrapper">
                     <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $item->name }}" class="mypage__item-image">
                     @if($unreadCount > 0)
-                    <span class="mypage__badge">{{ $unreadCount }}</span>
+                    <span class="mypage__item-badge">{{ $unreadCount }}</span>
+                    @endif
+                    @if ($item->isSold())
+                    <p class="mypage__sold-label">Sold</p>
                     @endif
                 </div>
                 <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
@@ -106,6 +109,7 @@
             @endif
         </div>
         @endif
+
     </div>
 </main>
 @endsection
@@ -117,7 +121,7 @@
 
         chatLinks.forEach(link => {
             link.addEventListener('click', function() {
-                const badge = this.querySelector('.mypage__badge');
+                const badge = this.querySelector('.mypage__item-badge');
                 if (badge) {
                     badge.style.display = 'none';
                 }

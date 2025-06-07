@@ -44,13 +44,14 @@ body {
     margin-top: 5px;
 }
 
-.star {
+.mypage__star {
     font-size: 1.5em;
     color: #ddd;
 }
 
-.star.filled {
+.mypage__star--filled {
     color: gold;
+    font-size: 1.5em;
 }
 
 .mypage__rating-text {
@@ -212,7 +213,7 @@ body {
     position: relative;
 }
 
-.mypage__badge {
+.mypage__item-badge {
     position: absolute;
     top: 8px;
     left: 8px;
