@@ -90,14 +90,11 @@
             @endphp
 
             @if($chat)
-            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card {{ $item->isSold() ? 'mypage__item-card--sold' : '' }}">
+            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card">
                 <div class="mypage__item-image-wrapper">
                     <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $item->name }}" class="mypage__item-image">
                     @if($unreadCount > 0)
                     <span class="mypage__item-badge">{{ $unreadCount }}</span>
-                    @endif
-                    @if ($item->isSold())
-                    <p class="mypage__sold-label">Sold</p>
                     @endif
                 </div>
                 <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
@@ -109,7 +106,6 @@
             @endif
         </div>
         @endif
-
     </div>
 </main>
 @endsection

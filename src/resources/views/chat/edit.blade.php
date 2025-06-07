@@ -47,7 +47,7 @@
             <!-- 新しい画像をアップロード -->
             <div class="chat__input-wrapper">
                 <label class="chat__image-btn">
-                    <i class="fas fa-image"></i> 画像を変更
+                    <i class="fas fa-image"></i> 画像を変更/追加
                     <input type="file" name="image" accept="image/*" style="display: none;">
                 </label>
             </div>
