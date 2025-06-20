@@ -79,28 +79,43 @@
             @if ($inProgressItems->isNotEmpty())
             @foreach ($inProgressItems as $item)
             @php
-            $chat = $item->chats()->first();
-            $unreadCount = 0;
-            if ($chat) {
-            $unreadCount = $chat->messages()
+            // 該当ユーザーとのチャットがあれば取得
+            $chat = $item->chats()
+            ->where(function ($q) use ($user) {
+            $q->where('seller_id', $user->id)
+            ->orWhere('buyer_id', $user->id);
+            })->first();
+
+            $unreadCount = $chat
+            ? $chat->messages()
             ->where('user_id', '!=', $user->id)
             ->where('is_read', false)
-            ->count();
-            }
+            ->count()
+            : 0;
             @endphp
 
-            @if($chat)
-            <a href="{{ route('chat.show', $chat->id) }}" class="mypage__item-card">
+            {{-- チャットがあればチャット画面へ、無ければ商品詳細へ --}}
+            <a href="{{ $chat ? route('chat.show', $chat->id)
+                      : route('item.show', $item->id) }}"
+                class="mypage__item-card">
+
                 <div class="mypage__item-image-wrapper">
-                    <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}" alt="{{ $item->name }}" class="mypage__item-image">
-                    @if($unreadCount > 0)
+                    <img src="{{ $item->img
+                         ? asset('storage/' . $item->img)
+                         : asset('storage/images/product-placeholder.png') }}"
+                        alt="{{ $item->name }}"
+                        class="mypage__item-image">
+
+                    @if ($unreadCount > 0)
                     <span class="mypage__item-badge">{{ $unreadCount }}</span>
                     @endif
                 </div>
-                <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
+                <h2 class="mypage__item-name">
+                    {{ Str::limit($item->name, 20, '...') }}
+                </h2>
             </a>
-            @endif
             @endforeach
+
             @else
             <p>取引中の商品はありません。</p>
             @endif

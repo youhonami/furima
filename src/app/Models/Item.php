@@ -46,10 +46,12 @@ class Item extends Model
         return \App\Models\Purchase::where('item_id', $this->id)->exists();
     }
 
-    public function purchase()
+    // app/Models/Item.php
+    public function purchases()
     {
-        return $this->hasOne(Purchase::class, 'item_id');
+        return $this->hasMany(Purchase::class);
     }
+
 
     public function chats()
     {

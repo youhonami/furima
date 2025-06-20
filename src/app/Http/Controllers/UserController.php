@@ -13,56 +13,41 @@ class UserController extends Controller
     public function show()
     {
         $user = Auth::user();
+        $tab  = request('tab', 'listed');
 
-        // クエリパラメータでタブを切り替える
-        $tab = request('tab', 'listed');
-        $listedItems = collect();
-        $purchasedItems = collect();
-        $inProgressItems = collect();
-
-        // 取引中商品の取得（自分が送信者でも受信者でも）
-        $allInProgressItems = Item::whereHas('chats', function ($query) {
-            $query->whereHas('messages');
+        // 「取引中」＋「購入済み」をどちらも取得
+        $allInProgressItems = Item::whereHas('purchases', function ($query) use ($user) {
+            $query->where('user_id', $user->id); // 自分が購入者
+        })->orWhere(function ($query) use ($user) {
+            $query->where('user_id', $user->id) // 自分が出品者で
+                ->whereHas('purchases');     // 購入された商品
         })
-            ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id) // 出品者
-                    ->orWhereHas('chats', function ($query) use ($user) {
-                        $query->where('buyer_id', $user->id); // 購入者
-                    });
-            })
-            ->with(['chats.messages' => function ($query) {
-                $query->latest('created_at');
-            }])
+            ->with(['chats.messages' => fn($q) => $q->latest('created_at')])
             ->get()
             ->sortByDesc(function ($item) {
-                return optional($item->chats->flatMap->messages)->max('created_at');
+                return optional($item->chats->flatMap->messages)->max('created_at') ?? $item->updated_at;
             });
 
-        // 新着メッセージ合計件数を計算
-        $newMessageCount = 0;
-        foreach ($allInProgressItems as $item) {
+
+        // 新着メッセージ数
+        $newMessageCount = $allInProgressItems->reduce(function ($carry, $item) use ($user) {
             $chat = $item->chats()->first();
             if ($chat) {
-                $unreadCount = $chat->messages()
+                $carry += $chat->messages()
                     ->where('user_id', '!=', $user->id)
                     ->where('is_read', false)
                     ->count();
-                $newMessageCount += $unreadCount;
             }
-        }
+            return $carry;
+        }, 0);
 
-        // タブごとのデータ
-        if ($tab === 'listed') {
-            $listedItems = Item::where('user_id', $user->id)->get();
-        } elseif ($tab === 'purchased') {
-            $purchasedItems = Purchase::where('user_id', $user->id)->with('item')->get();
-        } elseif ($tab === 'inprogress') {
-            $inProgressItems = $allInProgressItems;
-        }
+        // タブ別データ
+        $listedItems    = $tab === 'listed'    ? Item::where('user_id', $user->id)->get()           : collect();
+        $purchasedItems = $tab === 'purchased' ? Purchase::where('user_id', $user->id)->with('item')->get() : collect();
+        $inProgressItems = $tab === 'inprogress' ? $allInProgressItems                                 : collect();
 
         // 平均評価
-        $averageRating = $user->receivedRatings()->avg('rating');
-        $averageRating = $averageRating ? round($averageRating) : 0;
+        $averageRating  = round($user->receivedRatings()->avg('rating') ?? 0);
 
         return view('mypage', compact(
             'user',
@@ -71,7 +56,7 @@ class UserController extends Controller
             'purchasedItems',
             'inProgressItems',
             'newMessageCount',
-            'averageRating'  // 追加
+            'averageRating'
         ));
     }
 }
