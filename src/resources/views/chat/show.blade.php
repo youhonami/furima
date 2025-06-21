@@ -11,13 +11,26 @@
         <aside class="chat__sidebar">
             <h2 class="chat__sidebar-title">その他の取引</h2>
             <ul class="chat__sidebar-list">
-                @foreach($otherChats as $otherChat)
+                @forelse ($otherItems as $otherItem)
+                @php
+                // 該当アイテムのチャットを取得
+                $chatForItem = $otherItem->chats()
+                ->where(function ($query) use ($partner, $user) {
+                $query->where('seller_id', $user->id)
+                ->orWhere('buyer_id', $user->id);
+                })
+                ->first();
+                @endphp
+                @if ($chatForItem)
                 <li>
-                    <a href="{{ route('chat.show', $otherChat->id) }}" class="chat__sidebar-item">
-                        <p class="chat__sidebar-name">{{ Str::limit($otherChat->item->name, 20, '...') }}</p>
+                    <a href="{{ route('chat.show', $chatForItem->id) }}" class="chat__sidebar-item">
+                        <p class="chat__sidebar-name">{{ Str::limit($otherItem->name, 20, '...') }}</p>
                     </a>
                 </li>
-                @endforeach
+                @endif
+                @empty
+                <li>他の取引はありません。</li>
+                @endforelse
             </ul>
         </aside>
 

@@ -79,40 +79,30 @@
             @if ($inProgressItems->isNotEmpty())
             @foreach ($inProgressItems as $item)
             @php
-            // 該当ユーザーとのチャットがあれば取得
-            $chat = $item->chats()
-            ->where(function ($q) use ($user) {
-            $q->where('seller_id', $user->id)
-            ->orWhere('buyer_id', $user->id);
-            })->first();
+            /* 自分が参加しているチャットの最新1件を取得 */
+            $chat = $item->chats
+            ->sortByDesc('updated_at')
+            ->first();
 
             $unreadCount = $chat
-            ? $chat->messages()
+            ? $chat->messages
             ->where('user_id', '!=', $user->id)
             ->where('is_read', false)
             ->count()
             : 0;
             @endphp
 
-            {{-- チャットがあればチャット画面へ、無ければ商品詳細へ --}}
-            <a href="{{ $chat ? route('chat.show', $chat->id)
-                      : route('item.show', $item->id) }}"
+            <a href="{{ $chat ? route('chat.show', $chat->id) : route('item.show', $item->id) }}"
                 class="mypage__item-card">
-
                 <div class="mypage__item-image-wrapper">
-                    <img src="{{ $item->img
-                         ? asset('storage/' . $item->img)
-                         : asset('storage/images/product-placeholder.png') }}"
+                    <img src="{{ $item->img ? asset('storage/' . $item->img) : asset('storage/images/product-placeholder.png') }}"
                         alt="{{ $item->name }}"
                         class="mypage__item-image">
-
-                    @if ($unreadCount > 0)
+                    @if($unreadCount > 0)
                     <span class="mypage__item-badge">{{ $unreadCount }}</span>
                     @endif
                 </div>
-                <h2 class="mypage__item-name">
-                    {{ Str::limit($item->name, 20, '...') }}
-                </h2>
+                <h2 class="mypage__item-name">{{ Str::limit($item->name, 20, '...') }}</h2>
             </a>
             @endforeach
 
